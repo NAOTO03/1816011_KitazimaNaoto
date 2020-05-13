@@ -9,6 +9,7 @@
 #include "enemy.h"
 #include "effectEData.h"
 #include "score.h"
+#include "item.h"
 
 
 class Game
@@ -19,11 +20,12 @@ class Game
 	PLAYER *player;
 	// エネミークラス
 	ENEMY *enemy[ENEMY_NUM];
-
 	//敵消滅エフェクトクラス
 	EFFECT_EDEAD *effectEData[EFFECT_EDEADNUM];
 	// スコアクラス
 	SCORE *score;
+	//アイテムクラス
+	ITEM *item[ITEM_NUM];
 
 	// サウンドハンドル
 	int soundPShot;

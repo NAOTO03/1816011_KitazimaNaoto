@@ -24,6 +24,12 @@ Game::Game()
 	// スコアクラス
 	score = new SCORE;
 
+	//アイテムクラス
+	for (int i = 0; i < ITEM_NUM; ++i) 
+	{
+		item[i] = new ITEM;
+	}
+
 	FILE *fp = NULL;
 	ENEMYDATA data[ENEMY_NUM];
 	char buf[100];
@@ -133,6 +139,11 @@ Game::~Game()
 	}
 
 	delete(score);
+
+	for (int i = 0; i < ITEM_NUM; ++i)
+	{
+		delete(item[i]);
+	}
 }
 
 void Game::All()
@@ -181,6 +192,14 @@ void Game::All()
 		if (effectEData[i]->GetFlag()) 
 		{
 			effectEData[i]->All();
+		}
+	}
+
+	for (int i = 0; i < ITEM_NUM; ++i)
+	{
+		if (item[i]->GetFlag())
+		{
+			item[i]->All();
 		}
 	}
 
@@ -251,7 +270,7 @@ bool Game::CircleCollision(double c1, double c2, double cx1, double cx2, double 
 
 void Game::CollisionAll()
 {
-	double px, py, ex, ey;
+	double px, py, ex, ey, ix, iy;
 
 	int playerColor = 0;
 	int	enemyType = 0;
@@ -290,6 +309,14 @@ void Game::CollisionAll()
 							player->SetShotFlag(i, false);
 							// 得点を加える
 							score->SetScore(CURRENT_SCORE, 100);
+							for (int k = 0; k < ITEM_NUM; ++k)
+							{
+								if (!item[k]->GetFlag())
+								{
+									item[k]->SetFlag(ex, ey, enemy[j]->GetItem());
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -394,6 +421,31 @@ void Game::CollisionAll()
 					}
 
 				}
+			}
+		}
+	}
+
+
+	//アイテムとプレイヤーの当たり判定
+	for (int i = 0; i < ITEM_NUM; ++i) 
+	{
+		if (item[i]->GetFlag()) 
+		{
+			item[i]->GetPosition(&ix, &iy);
+			if (CircleCollision(PLAYER_COLLISION, ITEM_COLLISION, px, ix, py, iy))
+			{
+				switch (item[i]->GetType())
+				{
+				case 0:
+					score->SetScore(CURRENT_SCORE, 300);
+					break;
+				case 1:
+					score->SetScore(POWER_SCORE, 1);
+					break;
+				}
+				item[i]->Delete();
+				//アイテム取得音をセット
+				// item_flag = true;
 			}
 		}
 	}

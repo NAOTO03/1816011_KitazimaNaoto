@@ -49,6 +49,8 @@ ENEMY::ENEMY(int type, int shotType, int movePattern, int shotPattern, int inTim
 	this->shotTime = shotTime;
 	this->outTime = outTime;
 
+	this->item = item;
+
 	rad = 0;
 	shotNum = 0;
 	count = 0;		// エネミーが出現してからのカウント
@@ -502,6 +504,10 @@ bool ENEMY::GetShotSound()
 	return soundShot;
 }
 
+int ENEMY::GetItem()
+{
+	return item;
+}
 
 bool ENEMY::All()
 {

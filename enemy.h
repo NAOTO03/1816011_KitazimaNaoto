@@ -54,6 +54,7 @@ public:
 	void SetDeadFlag();
 	bool GetDeadFlag();
 	bool GetShotSound();
+	int GetItem();
 	bool All();
 	
 private:

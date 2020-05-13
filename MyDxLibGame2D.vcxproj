@@ -166,6 +166,7 @@
     <ClCompile Include="effectPData.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="score.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="effectPData.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="score.h" />
   </ItemGroup>

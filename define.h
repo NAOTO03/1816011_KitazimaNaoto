@@ -23,6 +23,7 @@ extern int gameCount;
 //プレイヤーの弾の数
 #define PSHOT_NUM 50
 //弾スピード
+
 #define PSHOT_SPEED 8
 
 // エネミーの数
@@ -39,3 +40,8 @@ extern int gameCount;
 
 // スコアの文字描画の基準となるX座標
 #define SCORE_X 660
+
+//アイテムの当たり判定用半径
+#define ITEM_COLLISION 18
+//アイテムの総数
+#define ITEM_NUM 30

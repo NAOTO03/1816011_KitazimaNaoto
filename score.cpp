@@ -9,11 +9,13 @@ SCORE::SCORE()
 	graph[0] = LoadGraph("data/png/Score/HighScore.png");
 	graph[1] = LoadGraph("data/png/Score/score.png");
 	graph[2] = LoadGraph("data/png/Score/life.png");
+	graph[3] = LoadGraph("data/png/Score/power.png");
 	LoadDivGraph("data/png/Score/number.png", 10, 10, 1, 19, 27, graphNumber);
 
 	highScore = 0;
 	score = 0;
 	life = 0;
+	power = 0;
 }
 
 
@@ -29,6 +31,9 @@ void SCORE::SetScore(SCOREDATA data, int val)
 		break;
 	case LIFE_SCORE:
 		life = val;
+		break;
+	case POWER_SCORE:
+		power = val;
 		break;
 	}
 }
@@ -46,6 +51,9 @@ int SCORE::GetScore(SCOREDATA data)
 	case LIFE_SCORE:
 		return life;
 		break;
+	case POWER_SCORE:
+		return power;
+		break;
 	}
 }
 
@@ -58,6 +66,7 @@ void SCORE::Draw()
 	DrawGraph(SCORE_X, 10, graph[0], TRUE);	 // ハイスコア
 	DrawGraph(SCORE_X, 70, graph[1], TRUE);  // 現在のスコア
 	DrawGraph(SCORE_X, 160, graph[2], TRUE); // ライフ
+	DrawGraph(SCORE_X, 200, graph[3], FALSE); // パワー
 
 	// ハイスコア描画
 	num = snprintf(buf, sizeof(buf), "%d", highScore);
@@ -78,6 +87,13 @@ void SCORE::Draw()
 	for (int i = 0; i < num; ++i)
 	{
 		DrawGraph(SCORE_X + 100 + i * 19, 160, graphNumber[buf[i] - '0'], TRUE);
+	}
+
+	// パワー描画
+	num = snprintf(buf, sizeof(buf), "%d", power);
+	for (int i = 0; i < num; ++i)
+	{
+		DrawGraph(SCORE_X + 150 + i * 19, 215, graphNumber[buf[i] - '0'], TRUE);
 	}
 }
 
