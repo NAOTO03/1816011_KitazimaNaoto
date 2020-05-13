@@ -11,6 +11,7 @@ Game::Game()
 {
 	// 背景クラス
 	back = new BACK;
+
 	//プレイヤークラスの生成
 	player = new PLAYER;
 

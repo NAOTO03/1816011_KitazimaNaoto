@@ -10,6 +10,7 @@
 #include "effectEData.h"
 #include "score.h"
 
+
 class Game
 {
 	// ”wŒiƒNƒ‰ƒX
