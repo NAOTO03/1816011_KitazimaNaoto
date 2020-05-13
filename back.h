@@ -3,6 +3,7 @@
 
 class BACK
 {
+private:
 	double x, y;	// 座標
 	int graph;		// グラフィックハンドル
 private:
