@@ -55,9 +55,9 @@ void SCORE::Draw()
 	int num;
 
 	// スコアの文字描画
-	DrawGraph(SCORE_X, 10, graph[0], TRUE);	// ハイスコア
-	DrawGraph(SCORE_X, 70, graph[1], TRUE); // 現在のスコア
-	DrawGraph(SCORE_X, 160, graph[2], TRUE);// ライフ
+	DrawGraph(SCORE_X, 10, graph[0], TRUE);	 // ハイスコア
+	DrawGraph(SCORE_X, 70, graph[1], TRUE);  // 現在のスコア
+	DrawGraph(SCORE_X, 160, graph[2], TRUE); // ライフ
 
 	// ハイスコア描画
 	num = snprintf(buf, sizeof(buf), "%d", highScore);
