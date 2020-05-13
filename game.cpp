@@ -135,7 +135,7 @@ Game::~Game()
 	//エフェクトクラスのインスタンス解放
 	for (int i = 0; i < EFFECT_EDEADNUM; ++i) 
 	{
-		delete effectEData[i];
+		delete(effectEData[i]);
 	}
 
 	delete(score);
@@ -427,25 +427,27 @@ void Game::CollisionAll()
 
 
 	//アイテムとプレイヤーの当たり判定
-	for (int i = 0; i < ITEM_NUM; ++i) 
+	if (!player->GetDamageFlag())
 	{
-		if (item[i]->GetFlag()) 
+		player->GetPosition(&px, &py);
+		for (int i = 0; i < ITEM_NUM; ++i)
 		{
-			item[i]->GetPosition(&ix, &iy);
-			if (CircleCollision(PLAYER_COLLISION, ITEM_COLLISION, px, ix, py, iy))
+			if (item[i]->GetFlag())
 			{
-				switch (item[i]->GetType())
+				item[i]->GetPosition(&ix, &iy);
+				if (CircleCollision(PLAYER_COLLISION, ITEM_COLLISION, px, ix, py, iy))
 				{
-				case 0:
-					score->SetScore(CURRENT_SCORE, 300);
-					break;
-				case 1:
-					score->SetScore(POWER_SCORE, 1);
-					break;
+					switch (item[i]->GetType())
+					{
+					case 0:
+						score->SetScore(CURRENT_SCORE, 300);
+						break;
+					case 1:
+						score->SetScore(POWER_SCORE, 1);
+						break;
+					}
+					item[i]->Delete();
 				}
-				item[i]->Delete();
-				//アイテム取得音をセット
-				// item_flag = true;
 			}
 		}
 	}
