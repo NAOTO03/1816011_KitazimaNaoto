@@ -32,6 +32,7 @@ public:
 	void SetDamageFlag();
 	bool GetDamageFlag();
 	int GetPlayerColor();
+	int GetLife();
 	void All();
 private:
 	void Update();

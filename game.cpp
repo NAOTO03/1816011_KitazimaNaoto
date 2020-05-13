@@ -20,6 +20,9 @@ Game::Game()
 		 effectEData[i] = new EFFECT_EDEAD;
 	}
 
+	// スコアクラス
+	score = new SCORE;
+
 	FILE *fp = NULL;
 	ENEMYDATA data[ENEMY_NUM];
 	char buf[100];
@@ -109,6 +112,8 @@ out:
 //-----------------------------------------------------------------------------
 Game::~Game()
 {
+	delete(back);
+
 	// プレイヤーを削除.
 	delete(player);
 
@@ -120,19 +125,13 @@ Game::~Game()
 		}
 	}
 
-	for (int i = 0; i < ENEMY_NUM; ++i)
-	{
-		if (enemy[i] != NULL)
-		{
-			delete enemy[i];
-		}
-	}
-
 	//エフェクトクラスのインスタンス解放
 	for (int i = 0; i < EFFECT_EDEADNUM; ++i) 
 	{
 		delete effectEData[i];
 	}
+
+	delete(score);
 }
 
 void Game::All()
@@ -185,6 +184,8 @@ void Game::All()
 	}
 
 	SoundAll();
+
+	score->All();
 
 	++gameCount;
 }
@@ -286,6 +287,8 @@ void Game::CollisionAll()
 							EnemyDeadEffect(ex, ey, enemy[j]->GetEnemyType());
 							// 当たった弾のフラグを戻す
 							player->SetShotFlag(i, false);
+							// 得点を加える
+							score->SetScore(CURRENT_SCORE, 100);
 						}
 					}
 				}
@@ -378,6 +381,8 @@ void Game::CollisionAll()
 						eDeadFlag = true;
 						//敵消滅エフェクトセット
 						EnemyDeadEffect(ex, ey, enemy[i]->GetEnemyType());
+						// 得点を加える
+						score->SetScore(CURRENT_SCORE, 500);
 					}
 					else
 					{
@@ -391,6 +396,9 @@ void Game::CollisionAll()
 			}
 		}
 	}
+
+	// ライフは毎回取得
+	score->SetScore(LIFE_SCORE, player->GetLife());
 }
 
 void Game::EnemyDeadEffect(double x, double y, int index)

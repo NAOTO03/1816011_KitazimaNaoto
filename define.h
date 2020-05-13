@@ -36,3 +36,6 @@ extern int gameCount;
 
 // プレイヤーのエフェクトの数
 #define EFFECT_PDEADNUM 60
+
+// スコアの文字描画の基準となるX座標
+#define SCORE_X 660

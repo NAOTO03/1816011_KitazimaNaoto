@@ -15,7 +15,7 @@ PLAYER::PLAYER()
 	height = 24;
 	color = RED;
 	move = 1.0f;
-	life = 0;
+	life = 5;
 	shotCount = 0;
 	damageCount = 0;
 
@@ -283,6 +283,8 @@ void PLAYER::SetShotFlag(int index, bool flag)
 void PLAYER::SetDamageFlag()
 {
 	damageFlag = true;
+	// ライフを減らす
+	--life;
 	// 消滅エフェクトのフラグを立てる
 	effectPDead.SetFlag(playerX, playerY, color);
 }
@@ -295,6 +297,11 @@ bool PLAYER::GetDamageFlag()
 int  PLAYER::GetPlayerColor()
 {
 	return color;
+}
+
+int PLAYER::GetLife()
+{
+	return life;
 }
 
 void PLAYER::All()
