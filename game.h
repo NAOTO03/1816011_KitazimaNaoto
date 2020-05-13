@@ -4,12 +4,15 @@
 
 #include "DxLib.h"
 #include <time.h>
+#include "back.h"
 #include "player.h"
 #include "enemy.h"
 #include "effectEData.h"
 
 class Game
 {
+	// 背景クラス
+	BACK *back;
 	// プレイヤークラス
 	PLAYER* player;
 	// エネミークラス

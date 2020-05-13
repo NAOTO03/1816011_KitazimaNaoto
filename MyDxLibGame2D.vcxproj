@@ -161,6 +161,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="back.cpp" />
     <ClCompile Include="effectEData.cpp" />
     <ClCompile Include="effectPData.cpp" />
     <ClCompile Include="enemy.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="back.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="effectEData.h" />
     <ClInclude Include="effectPData.h" />

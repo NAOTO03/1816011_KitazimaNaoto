@@ -9,6 +9,8 @@
 //-----------------------------------------------------------------------------
 Game::Game()
 {
+	// 背景クラス
+	back = new BACK;
 	//プレイヤークラスの生成
 	player = new PLAYER;
 
@@ -140,6 +142,8 @@ void Game::All()
 	eShotFlag = false;
 	pDeadFlag = false;
 	eDeadFlag = false;
+
+	back->All();
 
 	//プレイヤークラスのAll関数実行
 	player->All();
