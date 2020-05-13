@@ -8,18 +8,21 @@
 #include "player.h"
 #include "enemy.h"
 #include "effectEData.h"
+#include "score.h"
 
 class Game
 {
 	// 背景クラス
 	BACK *back;
 	// プレイヤークラス
-	PLAYER* player;
+	PLAYER *player;
 	// エネミークラス
-	ENEMY* enemy[ENEMY_NUM];
+	ENEMY *enemy[ENEMY_NUM];
 
 	//敵消滅エフェクトクラス
 	EFFECT_EDEAD *effectEData[EFFECT_EDEADNUM];
+	// スコアクラス
+	SCORE *score;
 
 	// サウンドハンドル
 	int soundPShot;
