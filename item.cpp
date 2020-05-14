@@ -80,13 +80,19 @@ bool ITEM::GetFlag()
 
 void ITEM::GetPosition(double *x, double *y)
 {
-	*x = this->x + width / 2;
-	*y = this->y + height / 2;
+	*x = this->x + width / 6;
+	*y = this->y + height / 6;
 }
 
 int ITEM::GetType()
 {
 	return type;
+}
+
+void ITEM::GetSize(int *width, int *height)
+{
+	*width = this->width;
+	*height = this->height;
 }
 
 void ITEM::All()
