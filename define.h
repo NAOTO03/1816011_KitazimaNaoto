@@ -21,7 +21,7 @@ extern int gameCount;
 #define PLAYER_SPEED 4
 
 //プレイヤーの弾の数
-#define PSHOT_NUM 50
+#define PSHOT_NUM 100
 //弾スピード
 
 #define PSHOT_SPEED 8
