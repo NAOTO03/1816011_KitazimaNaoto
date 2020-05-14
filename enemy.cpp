@@ -447,8 +447,8 @@ bool ENEMY::ShotOutCheck(int i)
 
 void ENEMY::GetPosition(double *x, double *y)
 {
-	*x = this->enemyX;
-	*y = this->enemyY;
+	*x = this->enemyX + width / 2;
+	*y = this->enemyY + height / 2;
 }
 
 bool ENEMY::GetShotPosition(int index, double *x, double *y)
