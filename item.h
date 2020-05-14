@@ -10,6 +10,8 @@ private:
 	// 座標
 	double x, y;
 	double prevY;
+	//画像幅
+	int width, height;	
 	// アイテムが落下し始めるフラグ
 	bool fallFlag;
 	// 出現中かどうかのフラグ

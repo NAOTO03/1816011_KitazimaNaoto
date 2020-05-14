@@ -16,6 +16,8 @@ ITEM::ITEM()
 	y = 0;
 	prevY = 0;
 
+	GetGraphSize(graph[0], &width, &height);
+
 	fallFlag = false;
 	flag = false;
 }
@@ -56,7 +58,8 @@ void ITEM::Delete()
 
 void ITEM::Draw()
 {
-	DrawGraph(x, y, graph[type], FALSE);
+	// DrawGraph(x, y, graph[type], FALSE);
+	DrawExtendGraph(x, y, x + width / 2, y + height / 2, graph[type], FALSE);	// k¬•\Ž¦
 }
 
 void ITEM::SetFlag(double x, double y, int type)
@@ -77,8 +80,8 @@ bool ITEM::GetFlag()
 
 void ITEM::GetPosition(double *x, double *y)
 {
-	*x = this->x;
-	*y = this->y;
+	*x = this->x + width / 2;
+	*y = this->y + height / 2;
 }
 
 int ITEM::GetType()
