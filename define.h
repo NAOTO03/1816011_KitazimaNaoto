@@ -42,6 +42,6 @@ extern int gameCount;
 #define SCORE_X 660
 
 //アイテムの当たり判定用半径
-#define ITEM_COLLISION 18
+#define ITEM_COLLISION 10
 //アイテムの総数
 #define ITEM_NUM 30
