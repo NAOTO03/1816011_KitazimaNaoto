@@ -274,6 +274,7 @@ void Game::CollisionAll()
 
 	int playerColor = 0;
 	int	enemyType = 0;
+	int itemW, itemH;
 
 	bool tempFlag = false;
 
@@ -311,9 +312,10 @@ void Game::CollisionAll()
 							score->SetScore(CURRENT_SCORE, 100);
 							for (int k = 0; k < ITEM_NUM; ++k)
 							{
+								item[k]->GetSize(&itemW, &itemH);
 								if (!item[k]->GetFlag())
 								{
-									item[k]->SetFlag(ex, ey, enemy[j]->GetItem());
+									item[k]->SetFlag(ex + itemW / 6, ey + itemH / 6, enemy[j]->GetItem());
 									break;
 								}
 							}
