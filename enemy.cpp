@@ -164,7 +164,7 @@ void ENEMY::Update()
 				enemyY += 1;
 				if (count % 10 == 0)
 				{ 
-					enemyX -= 1;
+					enemyX -= 2;
 				}
 			}
 			break;
@@ -175,7 +175,7 @@ void ENEMY::Update()
 				enemyY += 1;
 				if (count % 10 == 0)
 				{
-					enemyX += 1;
+					enemyX += 2;
 				}
 			}
 			break;
