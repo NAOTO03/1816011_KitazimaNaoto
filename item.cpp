@@ -32,7 +32,7 @@ void ITEM::Updata()
 		// 頂点まで行ったらフラグを立てる
 		if ((y - prevY) + 1 == 0)
 		{
-			fallFlag = false;
+			fallFlag = true;
 		}
 		prevY = tempY;
 	}
