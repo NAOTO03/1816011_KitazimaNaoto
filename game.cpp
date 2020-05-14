@@ -315,7 +315,7 @@ void Game::CollisionAll()
 								item[k]->GetSize(&itemW, &itemH);
 								if (!item[k]->GetFlag())
 								{
-									item[k]->SetFlag(ex + itemW / 6, ey + itemH / 6, enemy[j]->GetItem());
+									item[k]->SetFlag(ex - itemW / 4, ey + itemH / 6, enemy[j]->GetItem());
 									break;
 								}
 							}

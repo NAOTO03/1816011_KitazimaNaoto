@@ -5,7 +5,7 @@ extern int gameCount;
 
 //“–‚½‚è”»’è—p”¼Œa’è‹`
 #define PLAYER_COLLISION 10
-#define ENEMY_COLLISION 16
+#define ENEMY_COLLISION 14
 
 #define PSHOT_COLLISION 3
 #define ESHOT0_COLLISION 6

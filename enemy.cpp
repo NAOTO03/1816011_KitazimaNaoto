@@ -416,6 +416,7 @@ void ENEMY::Draw()
 	if (!deadFlag)
 	{
 		DrawGraph(enemyX, enemyY, graph, TRUE);
+		// DrawCircle(enemyX + width / 2, enemyY + height / 3, 14, 0x000000, true);
 	}
 }
 
@@ -448,7 +449,7 @@ bool ENEMY::ShotOutCheck(int i)
 void ENEMY::GetPosition(double *x, double *y)
 {
 	*x = this->enemyX + width / 2;
-	*y = this->enemyY + height / 2;
+	*y = this->enemyY + height / 3;
 }
 
 bool ENEMY::GetShotPosition(int index, double *x, double *y)
