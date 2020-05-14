@@ -6,11 +6,12 @@
 #include "effectPData.h"
 
 struct PSHOT {
-	bool flag;//弾が発射中かどうか
+	bool flag;         //弾が発射中かどうか
 	double x;
 	double y; 
 	int graph[3];
 	int width, height; //画像の幅と高さ
+	double rad;		   // 角度
 };
 
 enum COLOR {
@@ -33,6 +34,8 @@ public:
 	bool GetDamageFlag();
 	int GetPlayerColor();
 	int GetLife();
+	void SetPower(int p);
+	int GetPower();
 	void All();
 private:
 	void Update();
@@ -44,6 +47,7 @@ private:
 	int graph[3];	//グラフィックハンドル格納用配列
 	float move;		// 移動係数	
 	int life;		// プレイヤーのライフ
+	int power;		// プレイヤーのパワー
 	bool damageFlag;
 	bool endFlag;
 	int damageCount;// ダメージ中のカウント

@@ -380,6 +380,8 @@ void Game::CollisionAll()
 								enemy[i]->SetShotFlag(j, false);
 								// プレイヤーの消滅音フラグ
 								pDeadFlag = true;
+								// プレイヤーのパワーを減らす
+								player->SetPower(-2);
 								// 一時フラグを戻す
 								tempFlag = false;
 							}
@@ -418,6 +420,8 @@ void Game::CollisionAll()
 					{
 						// 当たっていれば、deadFlagを立てる
 						player->SetDamageFlag();
+						// プレイヤーのパワーを減らす
+						player->SetPower(-2);
 						// プレイヤーの消滅音フラグ
 						pDeadFlag = true;
 					}
@@ -445,7 +449,7 @@ void Game::CollisionAll()
 						score->SetScore(CURRENT_SCORE, 300);
 						break;
 					case 1:
-						score->SetScore(POWER_SCORE, 1);
+						player->SetPower(1);
 						break;
 					}
 					item[i]->Delete();
@@ -456,6 +460,8 @@ void Game::CollisionAll()
 
 	// ライフは毎回取得
 	score->SetScore(LIFE_SCORE, player->GetLife());
+	// パワーは毎回取得
+	score->SetScore(POWER_SCORE, player->GetPower());
 }
 
 void Game::EnemyDeadEffect(double x, double y, int index)

@@ -2,6 +2,7 @@
 
 #include "DxLib.h"
 #include "player.h"
+#include "math.h"
 
 // プレイヤーを初期化する
 PLAYER::PLAYER()
@@ -16,6 +17,7 @@ PLAYER::PLAYER()
 	color = RED;
 	move = 1.0f;
 	life = 5;
+	power = 5;
 	shotCount = 0;
 	damageCount = 0;
 
@@ -123,6 +125,7 @@ void PLAYER::Update()
 void PLAYER::Shot()
 {
 	soundShot = false;
+	int num = 0;
 
 	if (!damageFlag)
 	{
@@ -133,11 +136,49 @@ void PLAYER::Shot()
 			{
 				if (shot[i].flag == false)
 				{
-					shot[i].flag = true;
-					// 弾の位置をセット、位置はプレイヤーの中心にする
-					shot[i].x = playerX + width / 6;
-					shot[i].y = playerY - height / 2; 
-					break;
+					// パワーが5より小さいとき前方にショットを撃つ
+					if (power < 5)
+					{
+					    shot[i].flag = true;
+						// 弾の位置をセット、位置はプレイヤーの中心にする
+						shot[i].x = playerX + width / 2;
+						shot[i].y = playerY - height / 2;
+						shot[i].rad = -1.57;
+						break;
+					}
+					else if (power >= 5)	// 3方向にショットを打つ
+					{
+						// 0の時が前方にショット
+						if (num == 0)
+						{
+							shot[i].flag = true;
+							shot[i].x = playerX + width / 2;
+							shot[i].y = playerY - height / 2;
+							shot[i].rad = -1.57;
+						}
+						else if (num == 1)	// 1の時が左斜め上
+						{
+							shot[i].flag = true;
+							shot[i].x = playerX + width / 2;
+							shot[i].y = playerY - height / 2;
+							shot[i].rad = -1.69;
+						}
+						else if (num == 2)	// 2の時が右斜め上
+						{
+							shot[i].flag = true;
+							shot[i].x = playerX + width / 2;
+							shot[i].y = playerY - height / 2;
+							shot[i].rad = -1.45;
+						}
+
+						++num;
+
+						// 3方向に打ったらループから抜ける
+						if (num == 3)
+						{
+							break;
+						}
+					}
 				}
 			}
 			// ショットサウンドフラグを立てる
@@ -151,9 +192,10 @@ void PLAYER::Shot()
 		//発射してる弾だけ
 		if (shot[i].flag) 
 		{
-			shot[i].y -= PSHOT_SPEED;
+			shot[i].x += cos(shot[i].rad) * PSHOT_SPEED;
+			shot[i].y += sin(shot[i].rad) * PSHOT_SPEED;
 			//画面の外にはみ出したらフラグを戻す
-			if (shot[i].y < -10)
+			if (shot[i].y < -10 || shot[i].x < -20 || shot[i].x > 640)
 			{
 				shot[i].flag = false;
 			}
@@ -171,13 +213,13 @@ void PLAYER::Draw()
 			switch (color)
 			{
 			case RED:
-				DrawGraph(shot[i].x, shot[i].y, shot[i].graph[0], TRUE);
+				DrawRotaGraph(shot[i].x, shot[i].y, 1.0, shot[i].rad + (90 * DX_PI / 180), shot[i].graph[0], TRUE);
 				break;
 			case BLUE:
-				DrawGraph(shot[i].x, shot[i].y, shot[i].graph[1], TRUE);
+				DrawRotaGraph(shot[i].x, shot[i].y, 1.0, shot[i].rad + (90 * DX_PI / 180), shot[i].graph[1], TRUE);
 				break;
 			case GREEN:
-				DrawGraph(shot[i].x, shot[i].y, shot[i].graph[2], TRUE);
+				DrawRotaGraph(shot[i].x, shot[i].y, 1.0, shot[i].rad + (90 * DX_PI / 180), shot[i].graph[2], TRUE);
 				break;
 			}
 		}
@@ -302,6 +344,21 @@ int  PLAYER::GetPlayerColor()
 int PLAYER::GetLife()
 {
 	return life;
+}
+
+void PLAYER::SetPower(int p)
+{
+	power += p;
+	if (power > 10)
+	{
+		// パワーの最大値を10にしておく
+		power = 10;
+	}
+}
+
+int PLAYER::GetPower()
+{
+	return power;
 }
 
 void PLAYER::All()
