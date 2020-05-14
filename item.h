@@ -26,6 +26,7 @@ public:
 	void Delete();
 	void GetPosition(double *x, double *y);
 	int GetType();
+	void GetSize(int *width, int *height);
 	void All();
 };
 
