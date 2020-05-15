@@ -31,11 +31,17 @@ private:
 	double moveX, moveY;
 	int state;
 
+	// カウント
+	int shotCount;
+
 	//ダメージを負ったかどうかのフラグ
 	bool damageFlag;
 
 	//生きてるかどうかのフラグ
 	bool flag;
+
+	// 弾を発射するためのフラグ
+	bool shotFlag;
 private:
 	void Updata();
 	void Appear();
@@ -43,6 +49,8 @@ private:
 	void MovePattern2();
 	void MovePattern3();
 	void MoveInit(double bx, double by, int state);
+	void Shot();
+	int ShotSearch();
 	void Draw();
 public:
 	BOSS();

@@ -2,6 +2,7 @@
 #include "math.h"
 #include "define.h"
 #include "boss.h"
+#include "Game.h"
 
 
 BOSS::BOSS()
@@ -40,6 +41,7 @@ BOSS::BOSS()
 	state = 0;
 	damageFlag = false;
 	flag = false;
+	shotFlag = false;
 }
 
 void BOSS::Updata()
@@ -73,8 +75,9 @@ void BOSS::Appear()
 	// 定位置まで移動したら移動パターンを変更
 	if (angle == 90)
 	{
-		movePattern = 3;
+		movePattern = 1;
 		angle = 0;
+		shotFlag = true;
 	}
 }
 
@@ -166,6 +169,48 @@ void BOSS::MoveInit(double bx, double by, int bState)
 	state = bState;
 }
 
+void  BOSS::Shot()
+{
+	// 何発発射したか
+	int num = 0;
+	// 空いてる弾の添え字
+	int index;
+	// shotCountを戻すかどうかのフラグ
+	bool shotCountFlag = false;
+
+	Game &game = Game::GetInstance();
+
+	double px, py;
+	static double trad;
+
+	if (!damageFlag)
+	{
+		game.GetPlayerPosition(&px, &py);
+
+		if (shotCount == 0)
+		{
+			trad = atan2(py - y, px - x);
+		}
+
+		// サウンドフラグを戻す
+		// shotSound = false;
+
+		switch (shotPattern)
+		{
+		case 0:
+			if (shotCount % 5 == 0 && shotCount <= 15)
+			{
+				while ((index = ShotSearch()) != -1)
+				{
+					shot[index].graph = shotGraph[1];
+					shot[index].pattern = 0;
+					shot[index].speed = 6;
+				}
+			}
+		}
+	}
+}
+
 void BOSS::SetDamageFlag()
 {
 
@@ -181,7 +226,33 @@ bool BOSS::GetFlag()
 	return flag;
 }
 
+int BOSS::ShotSearch()
+{
+	bool check = false;
+	int i;
 
+	for (i = 0; i < BOSS_SHOTNUM; ++i)
+	{
+		if (shot[i].flag == false) 
+		{
+			check = true;
+			break;
+		}
+	}
+
+	if (check)
+	{
+		shot[i].flag = true;
+		shot[i].x = x;
+		shot[i].y = y;
+	}
+	else 
+	{
+		i = -1;
+	}
+
+	return i;
+}
 
 void BOSS::Draw()
 {
