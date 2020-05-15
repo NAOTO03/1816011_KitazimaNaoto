@@ -41,7 +41,7 @@ void ITEM::Updata()
 	else
 	{
 		// —Ž‰ºŽž‚Íˆê’è‘¬“x‚Å—Ž‰º
-		y += 0.5;
+		y += 1.0;
 	}
 
 	if (y > 520)
@@ -58,8 +58,7 @@ void ITEM::Delete()
 
 void ITEM::Draw()
 {
-	// DrawGraph(x, y, graph[type], FALSE);
-	DrawExtendGraph(x, y, x + width / 2, y + height / 2, graph[type], FALSE);	// k¬•\Ž¦
+	DrawGraph(x, y, graph[type], FALSE);
 }
 
 void ITEM::SetFlag(double x, double y, int type)
@@ -80,8 +79,8 @@ bool ITEM::GetFlag()
 
 void ITEM::GetPosition(double *x, double *y)
 {
-	*x = this->x + width / 6;
-	*y = this->y + height / 6;
+	*x = this->x + width / 2;
+	*y = this->y + height / 2;
 }
 
 int ITEM::GetType()
