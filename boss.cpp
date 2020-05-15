@@ -8,7 +8,7 @@ BOSS::BOSS()
 {
 	x = 320;
 	y = -100;
-	prevX = 200;
+	prevX = 320;
 	prevY = -100;
 
 	bGraph[0] = LoadGraph("data/png/Boss/RedBoss.png");
@@ -34,7 +34,7 @@ BOSS::BOSS()
 	movePattern = 0;
 	shotPattern = 0;
 	moveX = 0;
-	moveY = 180;
+	moveY = 270;
 	waitCount = 0;
 	wait = false;
 	state = 0;
@@ -73,7 +73,7 @@ void BOSS::Appear()
 	// 定位置まで移動したら移動パターンを変更
 	if (angle == 90)
 	{
-		movePattern = 1;
+		movePattern = 3;
 		angle = 0;
 	}
 }
@@ -82,7 +82,7 @@ void BOSS::MovePattern1()
 {
 	angle += raise;
 
-	y = 80 + sin(angle * DX_PI / 180) * BOSS_SHAKE;
+	y = 170 + sin(angle * DX_PI / 180) * BOSS_SHAKE;
 
 	if (angle == 90)
 	{
@@ -98,17 +98,72 @@ void BOSS::MovePattern1()
 
 void BOSS::MovePattern2()
 {
+	if (!wait)
+	{
+		x += raise2;
 
+		if (x == 160)
+		{
+			raise2 = 2;
+			wait = true;
+		}
+		else if (x == 480)
+		{
+			raise2 = -2;
+			wait = true;
+		}
+	}
+
+	if (wait)
+	{
+		++waitCount;
+		if (waitCount == 30)
+		{
+			wait = false;
+			waitCount = 0;
+		}
+	}
 }
 
 void BOSS::MovePattern3()
 {
+	double temp;
 
+	angle += 2;
+
+	temp = sin(angle * DX_PI / 180);
+
+	x = prevX + temp * moveX;
+	y = prevY + temp * moveY;
+
+	if (angle == 90)
+	{
+		if (state == 0)
+		{
+			MoveInit(160, 170, 1);
+		}
+		else if (state == 1)
+		{
+			MoveInit(320, 270, 2);
+		}
+		else if (state == 2)
+		{
+			MoveInit(480, 170, 0);
+		}
+	}
 }
 
-void BOSS::MoveInit(double bx, double by, int state)
+void BOSS::MoveInit(double bx, double by, int bState)
 {
+	prevX = x;
+	prevY = y;
 
+	moveX = bx - x;
+	moveY = by - y;
+
+	angle = 0;
+
+	state = bState;
 }
 
 void BOSS::SetDamageFlag()
