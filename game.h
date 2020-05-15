@@ -10,6 +10,7 @@
 #include "effectEData.h"
 #include "score.h"
 #include "item.h"
+#include "boss.h"
 
 
 class Game
@@ -26,6 +27,8 @@ class Game
 	SCORE *score;
 	//アイテムクラス
 	ITEM *item[ITEM_NUM];
+	// ボスクラス
+	BOSS *boss;
 
 	// サウンドハンドル
 	int soundPShot;

@@ -30,6 +30,9 @@ Game::Game()
 		item[i] = new ITEM;
 	}
 
+	// ボスクラス
+	boss = new BOSS;
+
 	FILE *fp = NULL;
 	ENEMYDATA data[ENEMY_NUM];
 	char buf[100];
@@ -144,6 +147,8 @@ Game::~Game()
 	{
 		delete(item[i]);
 	}
+
+	delete(boss);
 }
 
 void Game::All()
@@ -182,6 +187,8 @@ void Game::All()
 			}
 		}
 	}
+
+	boss->All();
 
 	// 当たり判定
 	CollisionAll();

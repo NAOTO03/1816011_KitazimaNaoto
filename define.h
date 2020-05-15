@@ -46,6 +46,13 @@ extern int gameCount;
 //アイテムの総数
 #define ITEM_NUM 30
 
+// ボスの弾の数
+#define BOSS_SHOTNUM 200
+// ボスの揺れ幅
+#define BOSS_SHAKE 20
+// ボスのHP
+#define BOSS_HP 500
+
 struct ENEMYDATA
 {
 	int type;		// エネミーの種類
@@ -66,6 +73,7 @@ struct ENEMYDATA
 struct ESHOT
 {
 	bool flag;	// 弾が発射中かどうか
+	bool gFlag;
 	double x;
 	double y;
 	double rad;	// 角度(ラジアン)
