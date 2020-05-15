@@ -45,3 +45,32 @@ extern int gameCount;
 #define ITEM_COLLISION 10
 //アイテムの総数
 #define ITEM_NUM 30
+
+struct ENEMYDATA
+{
+	int type;		// エネミーの種類
+	int shotType;	// 弾の種類
+	int movePattern;// 移動パターン
+	int shotPattern;// 発射パターン
+	int inTime;		//出現時間
+	int stopTime;	// 停止時間
+	int shotTime;	// 弾発射時間
+	int outTime;	// 帰還時間	
+	int x;			// x座標
+	int y;			// y座標
+	int speed;		// スピード
+	int hp;			// HP
+	int item;		// アイテム
+};
+
+struct ESHOT
+{
+	bool flag;	// 弾が発射中かどうか
+	double x;
+	double y;
+	double rad;	// 角度(ラジアン)
+	int graph;
+	int width, height;
+	int pattern;	// ショットパターン
+	int speed;
+};
