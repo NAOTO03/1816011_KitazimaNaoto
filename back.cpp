@@ -13,7 +13,9 @@ BACK::BACK()
 
 void BACK::Draw()
 {
-	DrawGraph(x, y, graph, FALSE);
+	DrawGraph(x, y, graph, TRUE);
+	// DrawCircle(250, 300, 10, 0xffffff, true);
+	// DrawCircle(500, 300, 10, 0x000000, true);
 }
 
 void BACK::All()
