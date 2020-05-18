@@ -62,7 +62,7 @@ private:
 	// ショットが撃てるようになってからのカウント
 	int shotCount;
 	// ショット音が鳴ったかどうかを示すフラグ
-	bool soundShot; 
+	bool shotSound; 
 };
 
 
