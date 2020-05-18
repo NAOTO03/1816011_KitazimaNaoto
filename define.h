@@ -73,7 +73,6 @@ struct ENEMYDATA
 struct ESHOT
 {
 	bool flag;	// ’e‚ª”­ŽË’†‚©‚Ç‚¤‚©
-	bool gFlag;
 	double x;
 	double y;
 	double rad;	// Šp“x(ƒ‰ƒWƒAƒ“)
