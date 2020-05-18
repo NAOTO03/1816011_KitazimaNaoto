@@ -53,7 +53,7 @@ private:
 	int damageCount;// ダメージ中のカウント
 	PSHOT shot[PSHOT_NUM];
 	int shotCount;
-	bool soundShot; // ショット音が鳴ったかどうかを示すフラグ
+	bool shotSound; // ショット音が鳴ったかどうかを示すフラグ
 	COLOR color;
 	//プレイヤー消滅エフェクトクラス
 	EFFECT_PDEAD effectPDead;

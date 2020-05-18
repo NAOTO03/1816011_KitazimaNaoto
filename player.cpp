@@ -31,7 +31,7 @@ PLAYER::PLAYER()
 
 	damageFlag = false;
 	endFlag = false;
-	soundShot = false; // ショット音が鳴ったかどうかを示すフラグ 
+	shotSound = false; // ショット音が鳴ったかどうかを示すフラグ 
 
 	//フラグを全部falseにしとく
 	//グラフィックハンドルと画像のサイズを代入しとく
@@ -124,7 +124,7 @@ void PLAYER::Update()
 
 void PLAYER::Shot()
 {
-	soundShot = false;
+	shotSound = false;
 	int num = 0;
 
 	if (!damageFlag)
@@ -182,7 +182,7 @@ void PLAYER::Shot()
 				}
 			}
 			// ショットサウンドフラグを立てる
-			soundShot = true;
+			shotSound = true;
 		}
 	}
 
@@ -314,7 +314,7 @@ bool PLAYER::GetShotPosition(int index, double *x, double *y)
 
 bool PLAYER::GetShotSound()
 {
-	return soundShot;
+	return shotSound;
 }
 
 void PLAYER::SetShotFlag(int index, bool flag)
