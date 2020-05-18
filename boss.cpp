@@ -13,7 +13,7 @@ BOSS::BOSS()
 	prevY = -100;
 
 	bGraph[0] = LoadGraph("data/png/Boss/RedBoss.png");
-	shotGraph[0] = LoadGraph("data/png/EShot/RedSho1.png");
+	shotGraph[0] = LoadGraph("data/png/EShot/RedShot.png");
 	shotGraph[1] = LoadGraph("data/png/Eshot/RedShot2.png");
 	shotGraph[2] = LoadGraph("data/png/Eshot/RedShot3.png");
 
@@ -33,13 +33,14 @@ BOSS::BOSS()
 	raise2 = 2;
 	angle = 0;
 	movePattern = 0;
-	shotPattern = 0;
+	shotPattern = 3;
 	moveX = 0;
 	moveY = 270;
 	waitCount = 0;
 	wait = false;
 	state = 0;
 	shotCount = 0;
+	tempShotCount = 0;
 	damageFlag = false;
 	flag = false;
 	shotFlag = false;
@@ -83,6 +84,7 @@ void BOSS::Appear()
 	}
 }
 
+// ふわふわ上下移動
 void BOSS::MovePattern1()
 {
 	angle += raise;
@@ -101,6 +103,7 @@ void BOSS::MovePattern1()
 	x = 320;
 }
 
+// 単純な横移動
 void BOSS::MovePattern2()
 {
 	if (!wait)
@@ -130,6 +133,7 @@ void BOSS::MovePattern2()
 	}
 }
 
+// 三角形を描くように移動
 void BOSS::MovePattern3()
 {
 	double temp;
@@ -243,10 +247,95 @@ void  BOSS::Shot()
 			}
 			break;
 		case 1:
+			if (shotCount % 5 == 0)
+			{
+				if ((index = ShotSearch()) != 1)
+				{
+					shot[index].graph = shotGraph[2];
+					shot[index].speed = 4;
+					shot[index].rad = atan2(py - y, px - x) + (rand() % 41 - 20) * DX_PI / 180;	// プレイヤーの両側20度までの範囲内でランダム
+					shot[index].pattern = 1;
+
+					shotSound = true;
+				}
+			}
 			break;
 		case 2:
+			if (shotCount % 10 == 0)
+			{
+				trad = atan2(py - y, px - x);
+				while ((index = ShotSearch()) != -1)
+				{
+					shot[index].graph = shotGraph[0];
+					shot[index].speed = 5;
+					shot[index].rad = trad + num * ((360 - 20) * DX_PI / 180);
+					shot[index].pattern = 2;
+					
+					++num;
+
+					if (num == 20)
+					{
+						break;
+					}
+					shotSound = true;
+				}
+			}
 			break;
 		case 3:
+			if (shotCount % 15 == 0)
+			{
+				while ((index = ShotSearch()) != -1)
+				{
+					shot[index].graph = shotGraph[0];
+					shot[index].speed = 3;
+					shot[index].pattern = 3;
+					shot[index].rad = ((360 / 20) * DX_PI / 180) * num + ((shotCount / 15) * 0.08);
+
+					++num;
+
+					if (num == 20)
+					{
+						break;
+					}
+					shotSound = true;
+				}
+			}
+			
+			num = 0;
+
+			if (shotCount % 5 == 0 && tempShotCount <= shotCount)
+			{
+				while ((index = ShotSearch()) != -1)
+				{
+					shot[index].graph = shotGraph[1];
+					shot[index].speed = 6;
+					shot[index].pattern = 3;
+
+					if (num == 0)
+					{
+						shot[index].x = x - 50;
+						shot[index].rad = atan2(py - y, px - (x - 50));
+					}
+					else if (num == 1)
+					{
+						shot[index].x = x + 50;
+						shot[index].rad = atan2(py - y, px - (x + 50));
+					}
+
+					++num;
+
+					if (num == 2)
+					{
+						// 5発分撃ち終わったら 60ループ(一秒間)停止
+						if (tempShotCount + 20 == shotCount)
+						{
+							tempShotCount += 80;
+						}
+						break;
+					}
+					shotSound = true;
+				}
+			}
 			break;
 		}
 
@@ -267,10 +356,16 @@ void  BOSS::Shot()
 					}
 					break;
 				case 1:
+					shot[i].x += shot[i].speed * cos(shot[i].rad);
+					shot[i].y += shot[i].speed * sin(shot[i].rad);
 					break;
 				case 2:
+					shot[i].x += shot[i].speed * cos(shot[i].rad);
+					shot[i].y += shot[i].speed * sin(shot[i].rad);
 					break;
 				case 3:
+					shot[i].x += shot[i].speed * cos(shot[i].rad);
+					shot[i].y += shot[i].speed * sin(shot[i].rad);
 					break;
 				}
 

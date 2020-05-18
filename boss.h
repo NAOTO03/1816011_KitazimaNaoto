@@ -33,6 +33,7 @@ private:
 
 	// カウント
 	int shotCount;
+	int tempShotCount;
 
 	//ダメージを負ったかどうかのフラグ
 	bool damageFlag;
