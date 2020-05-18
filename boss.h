@@ -36,14 +36,12 @@ private:
 
 	//ダメージを負ったかどうかのフラグ
 	bool damageFlag;
-
 	//生きてるかどうかのフラグ
 	bool flag;
-
 	// 弾を発射するためのフラグ
 	bool shotFlag;
 	// ショット音が鳴ったかどうかを示すフラグ
-	bool soundShot;
+	bool shotSound;
 private:
 	void Updata();
 	void Appear();
