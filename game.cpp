@@ -108,11 +108,13 @@ out:
 	// サウンドファイル読み込み
 	pShotSound = LoadSoundMem("data/se/playerShot.mp3");
 	eShotSound = LoadSoundMem("data/se/enemyShot.mp3");
+	bShotSound = eShotSound;
 	pDeadSound = LoadSoundMem("data/se/playerDead.mp3");
 	eDeadSound = LoadSoundMem("data/se/enemyDead.mp3");
 
 	pShotFlag = false;
 	eShotFlag = false;
+	bShotFlag = false;
 	pDeadFlag = false;
 	eDeadFlag = false;
 }
@@ -156,6 +158,7 @@ void Game::All()
 	// サウンドフラグを初期化
 	pShotFlag = false;
 	eShotFlag = false;
+	bShotFlag = false;
 	pDeadFlag = false;
 	eDeadFlag = false;
 
@@ -189,6 +192,11 @@ void Game::All()
 	}
 
 	boss->All();
+	// プレイヤーショットサウンドフラグチェック
+	if (boss->GetShotSound())
+	{
+		eShotFlag = true;
+	}
 
 	// 当たり判定
 	CollisionAll();
