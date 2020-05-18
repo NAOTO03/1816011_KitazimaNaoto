@@ -106,10 +106,10 @@ out:
 	}
 
 	// サウンドファイル読み込み
-	soundPShot = LoadSoundMem("data/se/playerShot.mp3");
-	soundEShot = LoadSoundMem("data/se/enemyShot.mp3");
-	soundPDead = LoadSoundMem("data/se/playerDead.mp3");
-	soundEDead = LoadSoundMem("data/se/enemyDead.mp3");
+	pShotSound = LoadSoundMem("data/se/playerShot.mp3");
+	eShotSound = LoadSoundMem("data/se/enemyShot.mp3");
+	pDeadSound = LoadSoundMem("data/se/playerDead.mp3");
+	eDeadSound = LoadSoundMem("data/se/enemyDead.mp3");
 
 	pShotFlag = false;
 	eShotFlag = false;
@@ -240,22 +240,22 @@ void Game::SoundAll()
 {
 	if (pShotFlag)
 	{
-		PlaySoundMem(soundPShot, DX_PLAYTYPE_BACK);
+		PlaySoundMem(pShotSound, DX_PLAYTYPE_BACK);
 	}
 
 	if (eShotFlag)
 	{
-		PlaySoundMem(soundEShot, DX_PLAYTYPE_BACK);
+		PlaySoundMem(eShotSound, DX_PLAYTYPE_BACK);
 	}
 
 	if (pDeadFlag)
 	{
-		PlaySoundMem(soundPDead, DX_PLAYTYPE_BACK);
+		PlaySoundMem(pDeadSound, DX_PLAYTYPE_BACK);
 	}
 
 	if (eDeadFlag)
 	{
-		PlaySoundMem(soundEDead, DX_PLAYTYPE_BACK);
+		PlaySoundMem(eDeadSound, DX_PLAYTYPE_BACK);
 	}
 }
 

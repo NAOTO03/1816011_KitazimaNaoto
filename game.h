@@ -31,10 +31,10 @@ class Game
 	BOSS *boss;
 
 	// サウンドハンドル
-	int soundPShot;
-	int soundEShot;
-	int soundPDead;
-	int soundEDead;
+	int pShotSound;
+	int eShotSound;
+	int pDeadSound;
+	int eDeadSound;
 
 	// サウンドを鳴らすかどうかのフラグ
 	bool pShotFlag;
