@@ -39,6 +39,7 @@ BOSS::BOSS()
 	waitCount = 0;
 	wait = false;
 	state = 0;
+	shotCount = 0;
 	damageFlag = false;
 	flag = false;
 	shotFlag = false;
@@ -193,9 +194,10 @@ void  BOSS::Shot()
 			trad = atan2(py - y, px - x);
 		}
 
-		// サウンドフラグを戻す
-		// shotSound = false;
+		//サウンドフラグを戻す
+		shotSound = false;
 
+		// 弾のセット
 		switch (shotPattern)
 		{
 		case 0:
@@ -208,29 +210,83 @@ void  BOSS::Shot()
 					shot[index].speed = 6;
 
 					// 5方向にショットを打つ
-					switch (num)
+					if (num == 0)
 					{
-					case 0:
 						shot[index].rad = trad - (10 * DX_PI / 180); // 一番左
-						break;
-					case 1:
+					}
+					else if (num == 1)
+					{
 						shot[index].rad = trad - (5 * DX_PI / 180);  // 左から2番目
-						break;
-					case 2:
+					}
+					else if (num == 2)
+					{
 						shot[index].rad = trad;	// 真ん中
-						break;
-					case 3:
+					}
+					else if (num == 3)
+					{
 						shot[index].rad = trad + (5 * DX_PI / 180);  // 右から2番目
-						break;
-					case 4:
+					}
+					else if (num == 4)
+					{
 						shot[index].rad = trad + (10 * DX_PI / 180); // 一番右
-						break;
 					}
 
 					++num;
+					shotSound = true;
+
+					if (num == 5)
+					{
+						break;
+					}
 
 				}
 			}
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		}
+
+		// 弾の移動処理
+		for (int i = 0; i < BOSS_SHOTNUM; ++i)
+		{
+			if (shot[i].flag)
+			{
+				switch (shot[i].pattern)
+				{
+				case 0:
+					shot[i].x += shot[i].speed * cos(shot[i].rad);
+					shot[i].y += shot[i].speed * sin(shot[i].rad);
+
+					if (shotCountFlag == false && shotCount == 40)
+					{
+						shotCountFlag = true;
+					}
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				}
+
+				// 弾がはみ出てたらフラグを戻す
+				if (ShotOutCheck(i))
+				{
+					shot[i].flag = false;
+				}
+			}
+		}
+
+		++shotCount;
+
+		if (shotCountFlag)
+		{
+			shotCount = 0;
 		}
 	}
 }
@@ -278,8 +334,35 @@ int BOSS::ShotSearch()
 	return i;
 }
 
+bool BOSS::ShotOutCheck(int i)
+{
+	// 弾が画面にはみ出たらフラグを戻す
+	if (shot[i].x < -40 || shot[i].x > 640 || shot[i].y < -40 || shot[i].y > 480)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool BOSS::GetShotSound()
+{
+	return shotSound;
+}
+
 void BOSS::Draw()
 {
+	// 弾から最初に描画
+	for (int i = 0; i < BOSS_SHOTNUM; ++i)
+	{
+		if (shot[i].flag)
+		{
+			DrawRotaGraph(shot[i].x, shot[i].y, 1.0, shot[i].rad + 90 * DX_PI / 180, shot[i].graph, TRUE);
+		}
+	}
+
 	// 弾が当たった時にはダメージ用の画像を描画
 	if (damageFlag)
 	{
@@ -297,6 +380,12 @@ void BOSS::Draw()
 void BOSS::All()
 {
 	Updata();
+
+	if (shotFlag)
+	{
+		Shot();
+	}
+
 	Draw();
 }
 

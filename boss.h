@@ -51,12 +51,14 @@ private:
 	void MoveInit(double bx, double by, int state);
 	void Shot();
 	int ShotSearch();
+	bool ShotOutCheck(int i);
 	void Draw();
 public:
 	BOSS();
 	void SetDamageFlag();
 	void SetFlag(bool f);
 	bool GetFlag();
+	bool GetShotSound();
 	void All();
 };
 
