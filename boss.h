@@ -42,6 +42,8 @@ private:
 
 	// 弾を発射するためのフラグ
 	bool shotFlag;
+	// ショット音が鳴ったかどうかを示すフラグ
+	bool soundShot;
 private:
 	void Updata();
 	void Appear();

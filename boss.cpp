@@ -42,6 +42,7 @@ BOSS::BOSS()
 	damageFlag = false;
 	flag = false;
 	shotFlag = false;
+	shotSound = false;
 }
 
 void BOSS::Updata()
@@ -205,6 +206,29 @@ void  BOSS::Shot()
 					shot[index].graph = shotGraph[1];
 					shot[index].pattern = 0;
 					shot[index].speed = 6;
+
+					// 5方向にショットを打つ
+					switch (num)
+					{
+					case 0:
+						shot[index].rad = trad - (10 * DX_PI / 180); // 一番左
+						break;
+					case 1:
+						shot[index].rad = trad - (5 * DX_PI / 180);  // 左から2番目
+						break;
+					case 2:
+						shot[index].rad = trad;	// 真ん中
+						break;
+					case 3:
+						shot[index].rad = trad + (5 * DX_PI / 180);  // 右から2番目
+						break;
+					case 4:
+						shot[index].rad = trad + (10 * DX_PI / 180); // 一番右
+						break;
+					}
+
+					++num;
+
 				}
 			}
 		}
