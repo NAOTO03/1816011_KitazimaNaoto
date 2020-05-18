@@ -28,7 +28,7 @@ class Game
 	//アイテムクラス
 	ITEM *item[ITEM_NUM];
 	// ボスクラス
-	BOSS *boss;
+	BOSS boss;
 
 	// サウンドハンドル
 	int pShotSound;
@@ -58,6 +58,8 @@ private:
 	~Game();
 	bool CircleCollision(double c1, double c2, double cx1, double cx2, double cy1, double cy2);
 	void CollisionAll();
+	void EnemyCollisionAll();
+	void BossCollisionAll();
 	void SoundAll();
 	void EnemyDeadEffect(double x, double y, int index);
 };

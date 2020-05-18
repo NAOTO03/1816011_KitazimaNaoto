@@ -20,7 +20,6 @@ BOSS::BOSS()
 	for (int i = 0; i < BOSS_SHOTNUM; ++i)
 	{
 		shot[i].flag = false;
-		shot[i].gFlag = false;
 		shot[i].graph = 0;
 		shot[i].pattern = 0;
 		shot[i].rad = 0;
@@ -42,7 +41,7 @@ BOSS::BOSS()
 	shotCount = 0;
 	tempShotCount = 0;
 	damageFlag = false;
-	flag = false;
+	flag = true;
 	shotFlag = false;
 	shotSound = false;
 }
@@ -445,6 +444,28 @@ bool BOSS::ShotOutCheck(int i)
 bool BOSS::GetShotSound()
 {
 	return shotSound;
+}
+
+bool BOSS::GetShotPosition(int index, double *x, double *y, int *type)
+{
+	if (shot[index].flag)
+	{
+		*x = shot[index].x;
+		*y = shot[index].y;
+		*type = shot[index].type;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+
+}
+
+void BOSS::SetShotFlag(int index, bool flag)
+{
+	shot[index].flag = flag;
 }
 
 void BOSS::Draw()

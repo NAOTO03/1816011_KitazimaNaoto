@@ -60,6 +60,8 @@ public:
 	void SetFlag(bool f);
 	bool GetFlag();
 	bool GetShotSound();
+	bool GetShotPosition(int index, double *x, double *y, int *type);
+	void SetShotFlag(int index, bool flag);
 	void All();
 };
 

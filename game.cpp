@@ -30,9 +30,6 @@ Game::Game()
 		item[i] = new ITEM;
 	}
 
-	// ボスクラス
-	boss = new BOSS;
-
 	FILE *fp = NULL;
 	ENEMYDATA data[ENEMY_NUM];
 	char buf[100];
@@ -149,8 +146,6 @@ Game::~Game()
 	{
 		delete(item[i]);
 	}
-
-	delete(boss);
 }
 
 void Game::All()
@@ -172,32 +167,41 @@ void Game::All()
 		pShotFlag = true;
 	}
 
-	for (int i = 0; i < ENEMY_NUM; ++i) 
+	if (!boss.GetFlag())
 	{
-		// インスタンスがまだ生成されているときだけ
-		if (enemy[i] != NULL)
+		for (int i = 0; i < ENEMY_NUM; ++i)
 		{
-			// エネミーショットサウンドフラグをチェック
-			if (enemy[i]->GetShotSound())
+			// インスタンスがまだ生成されているときだけ
+			if (enemy[i] != NULL)
 			{
-				eShotFlag = true;
-			}
+				// エネミーショットサウンドフラグをチェック
+				if (enemy[i]->GetShotSound())
+				{
+					eShotFlag = true;
+				}
 
-			if (enemy[i]->All())
-			{
-				delete(enemy[i]);
-				enemy[i] = NULL;
+				if (enemy[i]->All())
+				{
+					delete(enemy[i]);
+					enemy[i] = NULL;
+				}
 			}
 		}
+		// 敵との当たり判定
+		EnemyCollisionAll();
 	}
-
-	boss->All();
-	// プレイヤーショットサウンドフラグチェック
-	if (boss->GetShotSound())
+	else
 	{
-		eShotFlag = true;
+		boss.All();
+		// ボスショットサウンドフラグチェック
+		if (boss.GetShotSound())
+		{
+			eShotFlag = true;
+		}
+		// ボスとの当たり判定
+		BossCollisionAll();
 	}
-
+	
 	// 当たり判定
 	CollisionAll();
 
@@ -285,19 +289,53 @@ bool Game::CircleCollision(double c1, double c2, double cx1, double cx2, double 
 
 void Game::CollisionAll()
 {
-	double px, py, ex, ey, ix, iy;
+	double px, py, ix, iy;
 
-	int playerColor = 0;
-	int	enemyType = 0;
+	//アイテムとプレイヤーの当たり判定
+	if (!player->GetDamageFlag())
+	{
+		player->GetPosition(&px, &py);
+		for (int i = 0; i < ITEM_NUM; ++i)
+		{
+			if (item[i]->GetFlag())
+			{
+				item[i]->GetPosition(&ix, &iy);
+				if (CircleCollision(PLAYER_COLLISION, ITEM_COLLISION, px, ix, py, iy))
+				{
+					switch (item[i]->GetType())
+					{
+					case 0:
+						score->SetScore(CURRENT_SCORE, 300);
+						break;
+					case 1:
+						player->SetPower(1);
+						break;
+					}
+					item[i]->Delete();
+				}
+			}
+		}
+	}
+
+	// ライフは毎回取得
+	score->SetScore(LIFE_SCORE, player->GetLife());
+	// パワーは毎回取得
+	score->SetScore(POWER_SCORE, player->GetPower());
+}
+
+void Game::EnemyCollisionAll()
+{
+	double px, py, ex, ey;
+
 	int itemW, itemH;
 
-	bool tempFlag = false;
+	bool hitFlag = false;
 
 	// プレイヤーの弾とエネミーとの当たり判定
 	for (int i = 0; i < PSHOT_NUM; ++i)
 	{
 		if (player->GetShotPosition(i, &px, &py))
-		{		
+		{
 			for (int j = 0; j < ENEMY_NUM; ++j)
 			{
 				// エネミークラスのポインタがNULLじゃない、かつdeadFlagがfalseの時(死んでない&帰還してない)
@@ -311,7 +349,7 @@ void Game::CollisionAll()
 						if (player->GetPlayerColor() == enemy[j]->GetEnemyType())
 						{
 							// 当たった弾のフラグを戻す
-          					player->SetShotFlag(i, false);
+							player->SetShotFlag(i, false);
 						}
 						else
 						{
@@ -362,30 +400,30 @@ void Game::CollisionAll()
 							// 当たっていれば
 							if (CircleCollision(PLAYER_COLLISION, ESHOT0_COLLISION, px, ex, py, ey))
 							{
-								tempFlag = true;
+								hitFlag = true;
 							}
 							break;
 						case 1:
 							if (CircleCollision(PLAYER_COLLISION, ESHOT1_COLLISION, px, ex, py, ey))
 							{
-								tempFlag = true;
+								hitFlag = true;
 							}
 							break;
 						case 2:
 							if (CircleCollision(PLAYER_COLLISION, ESHOT2_COLLISION, px, ex, py, ey))
 							{
-								tempFlag = true;
+								hitFlag = true;
 							}
 							break;
 						}
-						if (tempFlag)
+						if (hitFlag)
 						{
 							if (player->GetPlayerColor() == enemy[i]->GetEnemyType())
 							{
 								// 弾を消す
 								enemy[i]->SetShotFlag(j, false);
 								// 一時フラグを戻す
-								tempFlag = false;
+								hitFlag = false;
 							}
 							else
 							{
@@ -398,7 +436,7 @@ void Game::CollisionAll()
 								// プレイヤーのパワーを減らす
 								player->SetPower(-2);
 								// 一時フラグを戻す
-								tempFlag = false;
+								hitFlag = false;
 							}
 						}
 					}
@@ -445,38 +483,65 @@ void Game::CollisionAll()
 			}
 		}
 	}
+}
 
+void Game::BossCollisionAll()
+{
+	double px, py, bx, by;
 
-	//アイテムとプレイヤーの当たり判定
+	bool hitFlag = false;
+
+	// ボスの弾の種類
+	int type;
+
+	// ボスのショットとプレイヤーとの当たり判定
 	if (!player->GetDamageFlag())
 	{
 		player->GetPosition(&px, &py);
-		for (int i = 0; i < ITEM_NUM; ++i)
+		for (int i = 0; i < BOSS_SHOTNUM; ++i)
 		{
-			if (item[i]->GetFlag())
+			if (boss.GetShotPosition(i, &bx, &by, &type))
 			{
-				item[i]->GetPosition(&ix, &iy);
-				if (CircleCollision(PLAYER_COLLISION, ITEM_COLLISION, px, ix, py, iy))
+				switch (type)
 				{
-					switch (item[i]->GetType())
+				case 0:
+					// 当たっていれば
+					if (CircleCollision(PLAYER_COLLISION, ESHOT0_COLLISION, px, bx, py, by))
 					{
-					case 0:
-						score->SetScore(CURRENT_SCORE, 300);
-						break;
-					case 1:
-						player->SetPower(1);
-						break;
+						hitFlag = true;
 					}
-					item[i]->Delete();
+					break;
+				case 1:
+					if (CircleCollision(PLAYER_COLLISION, ESHOT1_COLLISION, px, bx, py, by))
+					{
+						hitFlag = true;
+					}
+					break;
+				case 2:
+					if (CircleCollision(PLAYER_COLLISION, ESHOT2_COLLISION, px, bx, py, by))
+					{
+						hitFlag = true;
+					}
+					break;
 				}
+			}
+
+			if (hitFlag)
+			{
+				// 操作キャラのdamageFlagを立てる
+				player->SetDamageFlag();
+				// 弾を消す
+				boss.SetShotFlag(i, false);
+				// プレイヤー消滅音フラグ
+				pDeadFlag = true;
+				// 一時フラグを元に戻す
+				hitFlag = false;
+				// 一つでも当たっていたらプレイヤーは消滅するので
+				// 他の弾をチェックする必要ないのでループを抜ける
+				break;
 			}
 		}
 	}
-
-	// ライフは毎回取得
-	score->SetScore(LIFE_SCORE, player->GetLife());
-	// パワーは毎回取得
-	score->SetScore(POWER_SCORE, player->GetPower());
 }
 
 void Game::EnemyDeadEffect(double x, double y, int index)
