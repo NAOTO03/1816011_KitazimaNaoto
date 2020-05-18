@@ -72,12 +72,13 @@ struct ENEMYDATA
 
 struct ESHOT
 {
-	bool flag;	// 弾が発射中かどうか
+	bool flag;	 // 弾が発射中かどうか
 	double x;
 	double y;
-	double rad;	// 角度(ラジアン)
+	double rad;	 // 角度(ラジアン)
 	int graph;
 	int width, height;
-	int pattern;	// ショットパターン
+	int pattern; // ショットパターン
 	int speed;
+	int type;
 };
