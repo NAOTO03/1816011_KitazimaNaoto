@@ -48,6 +48,7 @@ public:
 	void All();
 	void GetPlayerPosition(double *x, double *y);
 	void GetEnemyPosiition(int index, double *x, double *y);
+	void GetBossPosition(double *x, double *y);
 	static Game& GetInstance()
 	{
 		static Game game;

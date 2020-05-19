@@ -40,6 +40,8 @@ BOSS::BOSS()
 	state = 0;
 	shotCount = 0;
 	tempShotCount = 0;
+	hp = BOSS_HP;
+	prevHp = 0;
 	damageFlag = false;
 	flag = true;
 	shotFlag = false;
@@ -390,9 +392,9 @@ void BOSS::SetDamageFlag()
 
 }
 
-void BOSS::SetFlag(bool f)
+void BOSS::SetFlag(bool bFlag)
 {
-
+	flag = bFlag;
 }
 
 bool BOSS::GetFlag()
@@ -446,6 +448,12 @@ bool BOSS::GetShotSound()
 	return shotSound;
 }
 
+void BOSS::GetPosition(double *x, double *y)
+{
+	*x = this->x;
+	*y = this->y;
+}
+
 bool BOSS::GetShotPosition(int index, double *x, double *y, int *type)
 {
 	if (shot[index].flag)
@@ -459,13 +467,18 @@ bool BOSS::GetShotPosition(int index, double *x, double *y, int *type)
 	{
 		return false;
 	}
-
-
 }
 
 void BOSS::SetShotFlag(int index, bool flag)
 {
 	shot[index].flag = flag;
+}
+
+int BOSS::SetHp(int damage)
+{
+	hp -= damage;
+
+	return hp;
 }
 
 void BOSS::Draw()

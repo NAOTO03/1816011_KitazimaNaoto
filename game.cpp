@@ -248,6 +248,16 @@ void Game::GetEnemyPosiition(int index, double *x, double *y)
 	*y = tempY;
 }
 
+void Game::GetBossPosition(double *x, double *y)
+{
+	double tempX, tempY;
+	// 指定した添字のプレイヤーの座標を取得
+	boss.GetPosition(&tempX, &tempY);
+	// 代入
+	*x = tempX;
+	*y = tempY;
+}
+
 void Game::SoundAll()
 {
 	if (pShotFlag)
@@ -329,6 +339,7 @@ void Game::EnemyCollisionAll()
 
 	int itemW, itemH;
 
+	//　当たった時のフラグ
 	bool hitFlag = false;
 
 	// プレイヤーの弾とエネミーとの当たり判定
@@ -487,12 +498,66 @@ void Game::EnemyCollisionAll()
 
 void Game::BossCollisionAll()
 {
-	double px, py, bx, by;
-
-	bool hitFlag = false;
+	double px, py, bx, by, ix, iy;
 
 	// ボスの弾の種類
 	int type;
+	// 出すアイテムの数
+	int itemNum = 0;
+	// ボスのHP
+	int bHp = 0;
+	//　当たった時のフラグ
+	bool hitFlag = false;
+
+	//プレイヤーのショットとボスとの当たり判定
+	for (int i = 0; i < PSHOT_NUM; ++i) 
+	{
+		if (player->GetShotPosition(i, &px, &py)) 
+		{
+			boss.GetPosition(&bx, &by);
+			//当たり判定
+			if (CircleCollision(PSHOT_COLLISION, BOSS_COLLISION, px, bx, py, by))
+			{
+				//当たっていれば、hpを減らす
+				bHp = boss.SetHp(1);
+				//当たった弾のフラグを戻す
+				player->SetShotFlag(i, false);
+				//得点を加える
+				score->SetScore(CURRENT_SCORE, 100);
+
+				//もしボスのHPが0以下なら
+				if (bHp <= 0) 
+				{
+					//フラグを戻す
+					boss.SetFlag(false);
+					//消滅エフェクトを出す
+					EnemyDeadEffect(bx, by, 0);
+					//消滅音を鳴らす
+					eDeadFlag = true;
+					//さらに得点を加える
+					score->SetScore(CURRENT_SCORE, 10000);
+					//アイテムを出す。
+					for (int j = 0; j < ITEM_NUM; ++j)
+					{
+						if (!item[j]->GetFlag()) 
+						{
+							//アイテムの初期座標をばらけさせる。
+							ix = (rand() % 100 - 51) + bx;
+							iy = (rand() % 100 - 51) + by;
+							item[j]->SetFlag(ix, iy, rand() % 2);
+							++itemNum;
+							//10個出したらループを抜ける
+							if (itemNum == 10) 
+							{
+								break;
+							}
+						}
+					}
+
+				}
+			}
+		}
+	}
 
 	// ボスのショットとプレイヤーとの当たり判定
 	if (!player->GetDamageFlag())
@@ -529,7 +594,7 @@ void Game::BossCollisionAll()
 			if (hitFlag)
 			{
 				// 操作キャラのdamageFlagを立てる
-				player->SetDamageFlag();
+				// player->SetDamageFlag();
 				// プレイヤーのパワーを減らす
 				player->SetPower(-2);
 				// 弾を消す

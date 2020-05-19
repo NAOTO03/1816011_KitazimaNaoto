@@ -12,6 +12,8 @@ extern int gameCount;
 #define ESHOT1_COLLISION 4
 #define ESHOT2_COLLISION 3
 
+#define BOSS_COLLISION 60
+
 
 //プレイヤーの初期位置
 #define PLAYER_INITX 305

@@ -35,6 +35,11 @@ private:
 	int shotCount;
 	int tempShotCount;
 
+	//HP
+	int hp;
+	//前回HP
+	int prevHp;
+
 	//ダメージを負ったかどうかのフラグ
 	bool damageFlag;
 	//生きてるかどうかのフラグ
@@ -57,11 +62,13 @@ private:
 public:
 	BOSS();
 	void SetDamageFlag();
-	void SetFlag(bool f);
+	void SetFlag(bool bFlag);
 	bool GetFlag();
 	bool GetShotSound();
+	void GetPosition(double *x, double *y);
 	bool GetShotPosition(int index, double *x, double *y, int *type);
 	void SetShotFlag(int index, bool flag);
+	int SetHp(int damage);
 	void All();
 };
 
