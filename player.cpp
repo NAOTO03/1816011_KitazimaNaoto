@@ -326,7 +326,14 @@ void PLAYER::SetDamageFlag()
 {
 	damageFlag = true;
 	// ライフを減らす
-	--life;
+	if (life > 0)
+	{
+		--life;
+	}
+	else
+	{
+		life = 0;
+	}
 	// 消滅エフェクトのフラグを立てる
 	effectPDead.SetFlag(playerX, playerY, color);
 }
@@ -353,6 +360,11 @@ void PLAYER::SetPower(int p)
 	{
 		// パワーの最大値を10にしておく
 		power = 10;
+	}
+
+	if (power < 0)
+	{
+		power = 0;
 	}
 }
 

@@ -530,6 +530,8 @@ void Game::BossCollisionAll()
 			{
 				// 操作キャラのdamageFlagを立てる
 				player->SetDamageFlag();
+				// プレイヤーのパワーを減らす
+				player->SetPower(-2);
 				// 弾を消す
 				boss.SetShotFlag(i, false);
 				// プレイヤー消滅音フラグ
