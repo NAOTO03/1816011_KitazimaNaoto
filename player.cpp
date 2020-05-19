@@ -130,7 +130,7 @@ void PLAYER::Shot()
 	if (!damageFlag)
 	{
 		// キーが押されててかつ、6ループに一回発射
-		if (CheckHitKey(KEY_INPUT_SPACE) == 1 && shotCount % 6 == 0) 
+		if (CheckHitKey(KEY_INPUT_Z) == 1 && shotCount % 6 == 0) 
 		{
 			for (int i = 0; i < PSHOT_NUM; ++i)
 			{
