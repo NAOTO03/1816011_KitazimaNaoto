@@ -32,7 +32,7 @@ BOSS::BOSS()
 	raise2 = 2;
 	angle = 0;
 	movePattern = 0;
-	shotPattern = 3;
+	shotPattern = 0;
 	moveX = 0;
 	moveY = 270;
 	waitCount = 0;
@@ -43,7 +43,8 @@ BOSS::BOSS()
 	hp = BOSS_HP;
 	prevHp = 0;
 	damageFlag = false;
-	flag = true;
+	noDamageFlag = false;
+	flag = false;
 	shotFlag = false;
 	shotSound = false;
 }
@@ -63,6 +64,9 @@ void BOSS::Updata()
 		break;
 	case 3:
 		MovePattern3();
+		break;
+	case 4:
+		MoveToDefault();
 		break;
 	}
 }
@@ -176,6 +180,52 @@ void BOSS::MoveInit(double bx, double by, int bState)
 	state = bState;
 }
 
+void BOSS::MoveToDefault()
+{
+
+	double temp;
+
+	angle += 2;
+
+	temp = sin(angle * DX_PI / 180);
+
+	x = prevX + temp * moveX;
+	y = prevY + temp * moveY;
+
+	// 指定した位置まで移動したら
+	if (angle == 90) 
+	{
+		// 次の移動＆ショットパターンに変更
+		SetMovePattern(prevMovePattern + 1);
+		SetShotPattern(prevShotPattern + 1);
+		//無敵フラグを戻す
+		noDamageFlag = false;
+
+		// 移動パターンが３なら
+		if (movePattern == 3)
+		{
+			MoveInit(320, 270, 2);
+		}
+	}
+
+}
+
+void BOSS::SetMovePattern(int pattern)
+{
+	// 前回の移動パターンに現在の移動パターンを入れる
+	prevMovePattern = movePattern;
+	// 次の移動パターンに変更
+	movePattern = pattern;
+}
+
+void BOSS::SetShotPattern(int pattern)
+{
+	// 前回のショットパターンに現在のショットパタンを入れる
+	prevShotPattern = shotPattern;
+	// 次のショットパターンに変更
+	shotPattern = pattern;
+}
+
 void  BOSS::Shot()
 {
 	// 何発発射したか
@@ -250,7 +300,7 @@ void  BOSS::Shot()
 		case 1:
 			if (shotCount % 5 == 0)
 			{
-				if ((index = ShotSearch()) != 1)
+				if ((index = ShotSearch()) != -1)
 				{
 					shot[index].graph = shotGraph[2];
 					shot[index].speed = 4;
@@ -338,6 +388,9 @@ void  BOSS::Shot()
 				}
 			}
 			break;
+		default:
+			//　何もしない
+			break;
 		}
 
 		// 弾の移動処理
@@ -387,9 +440,20 @@ void  BOSS::Shot()
 	}
 }
 
-void BOSS::SetDamageFlag()
+void BOSS::SetDamageSetting()
 {
+	prevX = x;
+	prevY = y;
 
+	moveX = 320 - x;
+	moveY = 170 - y;
+
+	angle = 0;
+
+	noDamageFlag = true;
+
+	SetMovePattern(4);
+	SetShotPattern(4);
 }
 
 void BOSS::SetFlag(bool bFlag)
@@ -476,9 +540,20 @@ void BOSS::SetShotFlag(int index, bool flag)
 
 int BOSS::SetHp(int damage)
 {
+	prevHp = hp;
 	hp -= damage;
 
 	return hp;
+}
+
+int BOSS::GetPrevHp()
+{
+	return prevHp;
+}
+
+bool BOSS::GetNoDamageFlag()
+{
+	return noDamageFlag;
 }
 
 void BOSS::Draw()
@@ -488,7 +563,14 @@ void BOSS::Draw()
 	{
 		if (shot[i].flag)
 		{
-			DrawRotaGraph(shot[i].x, shot[i].y, 1.0, shot[i].rad + 90 * DX_PI / 180, shot[i].graph, TRUE);
+			if (shot[i].graph == shotGraph[0] || shot[i].graph == shotGraph[2])
+			{
+				DrawGraph(shot[i].x, shot[i].y, shot[i].graph, TRUE);
+			}
+			else
+			{
+				DrawRotaGraph(shot[i].x, shot[i].y, 1.0, shot[i].rad + 90 * DX_PI / 180, shot[i].graph, TRUE);
+			}
 		}
 	}
 

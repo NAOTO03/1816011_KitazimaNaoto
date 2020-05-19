@@ -15,6 +15,10 @@ private:
 	int movePattern;
 	// 現在のショットパターン
 	int shotPattern;
+	// 前回の移動パターン
+	int prevMovePattern;
+	// 前回のショットパターン
+	int prevShotPattern;
 
 	//弾構造体
 	ESHOT shot[BOSS_SHOTNUM];
@@ -42,6 +46,8 @@ private:
 
 	//ダメージを負ったかどうかのフラグ
 	bool damageFlag;
+	// ダメージを負わないフラグ
+	bool noDamageFlag;
 	//生きてるかどうかのフラグ
 	bool flag;
 	// 弾を発射するためのフラグ
@@ -58,10 +64,13 @@ private:
 	void Shot();
 	int ShotSearch();
 	bool ShotOutCheck(int i);
+	void MoveToDefault();
+	void SetMovePattern(int pattern);
+	void SetShotPattern(int pattern);
 	void Draw();
 public:
 	BOSS();
-	void SetDamageFlag();
+	void SetDamageSetting();
 	void SetFlag(bool bFlag);
 	bool GetFlag();
 	bool GetShotSound();
@@ -69,6 +78,8 @@ public:
 	bool GetShotPosition(int index, double *x, double *y, int *type);
 	void SetShotFlag(int index, bool flag);
 	int SetHp(int damage);
+	int GetPrevHp();
+	bool GetNoDamageFlag();
 	void All();
 };
 

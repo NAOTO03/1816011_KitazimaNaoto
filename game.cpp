@@ -509,51 +509,112 @@ void Game::BossCollisionAll()
 	//　当たった時のフラグ
 	bool hitFlag = false;
 
-	//プレイヤーのショットとボスとの当たり判定
-	for (int i = 0; i < PSHOT_NUM; ++i) 
-	{
-		if (player->GetShotPosition(i, &px, &py)) 
+	//まず無敵フラグがたってないかをチェック。
+	if (!boss.GetNoDamageFlag()) {
+		//プレイヤーのショットとボスとの当たり判定
+		for (int i = 0; i < PSHOT_NUM; ++i)
 		{
-			boss.GetPosition(&bx, &by);
-			//当たり判定
-			if (CircleCollision(PSHOT_COLLISION, BOSS_COLLISION, px, bx, py, by))
+			if (player->GetShotPosition(i, &px, &py))
 			{
-				//当たっていれば、hpを減らす
-				bHp = boss.SetHp(1);
-				//当たった弾のフラグを戻す
-				player->SetShotFlag(i, false);
-				//得点を加える
-				score->SetScore(CURRENT_SCORE, 100);
-
-				//もしボスのHPが0以下なら
-				if (bHp <= 0) 
+				boss.GetPosition(&bx, &by);
+				//当たり判定
+				if (CircleCollision(PSHOT_COLLISION, BOSS_COLLISION, px, bx, py, by))
 				{
-					//フラグを戻す
-					boss.SetFlag(false);
-					//消滅エフェクトを出す
-					EnemyDeadEffect(bx, by, 0);
-					//消滅音を鳴らす
-					eDeadFlag = true;
-					//さらに得点を加える
-					score->SetScore(CURRENT_SCORE, 10000);
-					//アイテムを出す。
-					for (int j = 0; j < ITEM_NUM; ++j)
+					//当たっていれば、hpを減らす
+					bHp = boss.SetHp(1);
+					//当たった弾のフラグを戻す
+					player->SetShotFlag(i, false);
+					//得点を加える
+					score->SetScore(CURRENT_SCORE, 100);
+
+					// デバック用(HP表示)
+					char buf[100];
+					snprintf(buf, sizeof(buf), "%d", bHp);
+					SetMainWindowText(buf);
+
+					//ボスの前回HPがHPの2/3以上で、現HPが2/3以下なら
+   					if (BOSS_HP * 2 / 3 >= bHp && boss.GetPrevHp() > BOSS_HP * 2 / 3)
 					{
-						if (!item[j]->GetFlag()) 
+						//消滅エフェクトを出す
+						EnemyDeadEffect(bx, by, 0);
+						//消滅音を鳴らす
+						// eDeadFlag = true;
+						//さらに得点を加える
+						score->SetScore(CURRENT_SCORE, 1000);
+						//アイテムを出す。
+						for (int j = 0; j < ITEM_NUM; ++j)
 						{
-							//アイテムの初期座標をばらけさせる。
-							ix = (rand() % 100 - 51) + bx;
-							iy = (rand() % 100 - 51) + by;
-							item[j]->SetFlag(ix, iy, rand() % 2);
-							++itemNum;
-							//10個出したらループを抜ける
-							if (itemNum == 10) 
+							if (!item[j]->GetFlag())
 							{
-								break;
+								//アイテムの初期座標をばらけさせる。
+								ix = (rand() % 100 - 51) + bx;
+								iy = (rand() % 100 - 51) + by;
+								item[j]->SetFlag(ix, iy, rand() % 2);
+								++itemNum;
+								//5個出したらループを抜ける
+								if (itemNum == 5)
+								{
+									break;
+								}
+							}
+						}
+						boss.SetDamageSetting();
+					}
+					else if (BOSS_HP / 3 >= bHp && boss.GetPrevHp() > BOSS_HP / 3)  // ボスの前回HPがHPの1/3以上で、現HPが1/3以下なら
+					{
+						//消滅エフェクトを出す
+						EnemyDeadEffect(bx, by, 0);
+						//消滅音を鳴らす
+						// eDeadFlag = true;
+						//さらに得点を加える
+						score->SetScore(CURRENT_SCORE, 10000);
+						//アイテムを出す。
+						for (int j = 0; j < ITEM_NUM; ++j)
+						{
+							if (!item[j]->GetFlag())
+							{
+								//アイテムの初期座標をばらけさせる。
+								ix = (rand() % 100 - 51) + bx;
+								iy = (rand() % 100 - 51) + by;
+								item[j]->SetFlag(ix, iy, rand() % 2);
+								++itemNum;
+								//5個出したらループを抜ける
+								if (itemNum == 5)
+								{
+									break;
+								}
+							}
+						}
+						boss.SetDamageSetting();
+					}
+					else if(bHp <= 0)  //もしボスのHPが0以下なら
+					{
+						//フラグを戻す
+						boss.SetFlag(false);
+						//消滅エフェクトを出す
+						EnemyDeadEffect(bx, by, 0);
+						//消滅音を鳴らす
+						eDeadFlag = true;
+						//さらに得点を加える
+						score->SetScore(CURRENT_SCORE, 100000);
+						//アイテムを出す。
+						for (int j = 0; j < ITEM_NUM; ++j)
+						{
+							if (!item[j]->GetFlag())
+							{
+								//アイテムの初期座標をばらけさせる。
+								ix = (rand() % 100 - 51) + bx;
+								iy = (rand() % 100 - 51) + by;
+								item[j]->SetFlag(ix, iy, rand() % 2);
+								++itemNum;
+								//10個出したらループを抜ける
+								if (itemNum == 10)
+								{
+									break;
+								}
 							}
 						}
 					}
-
 				}
 			}
 		}
@@ -596,7 +657,7 @@ void Game::BossCollisionAll()
 				// 操作キャラのdamageFlagを立てる
 				// player->SetDamageFlag();
 				// プレイヤーのパワーを減らす
-				player->SetPower(-2);
+				// player->SetPower(-2);
 				// 弾を消す
 				boss.SetShotFlag(i, false);
 				// プレイヤー消滅音フラグ
