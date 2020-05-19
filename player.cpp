@@ -142,7 +142,7 @@ void PLAYER::Shot()
 					    shot[i].flag = true;
 						// 弾の位置をセット、位置はプレイヤーの中心にする
 						shot[i].x = playerX + width / 2;
-						shot[i].y = playerY - height / 2;
+						shot[i].y = playerY - height / 4;
 						shot[i].rad = -1.57;
 						break;
 					}
@@ -153,21 +153,21 @@ void PLAYER::Shot()
 						{
 							shot[i].flag = true;
 							shot[i].x = playerX + width / 2;
-							shot[i].y = playerY - height / 2;
+							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.57;
 						}
 						else if (num == 1)	// 1の時が左斜め上
 						{
 							shot[i].flag = true;
 							shot[i].x = playerX + width / 2;
-							shot[i].y = playerY - height / 2;
+							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.69;
 						}
 						else if (num == 2)	// 2の時が右斜め上
 						{
 							shot[i].flag = true;
 							shot[i].x = playerX + width / 2;
-							shot[i].y = playerY - height / 2;
+							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.45;
 						}
 
