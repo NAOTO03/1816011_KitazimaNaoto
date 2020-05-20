@@ -4,13 +4,11 @@
 
 EFFECT_PDEAD::EFFECT_PDEAD()
 {
-
 	graph[0] = LoadGraph("data/png/PEffect/effect1.png");
 	graph[1] = LoadGraph("data/png/PEffect/effect2.png");
-	graph[2] = LoadGraph("data/png/PEffect/effect3.png");
 
-	width = 12;
-	height = 12;
+	width = 5;
+	height = 5;
 	index = 0;
 	count = 0;
 	flag = false;

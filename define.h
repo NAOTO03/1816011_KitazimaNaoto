@@ -4,10 +4,10 @@
 extern int gameCount;
 
 //当たり判定用半径定義
-#define PLAYER_COLLISION 10
+#define PLAYER_COLLISION 4
 #define ENEMY_COLLISION 14
 
-#define PSHOT_COLLISION 3
+#define PSHOT_COLLISION 4
 #define ESHOT0_COLLISION 6
 #define ESHOT1_COLLISION 4
 #define ESHOT2_COLLISION 3
@@ -23,7 +23,7 @@ extern int gameCount;
 #define PLAYER_SPEED 4
 
 //プレイヤーの弾の数
-#define PSHOT_NUM 100
+#define PSHOT_NUM 200
 //弾スピード
 
 #define PSHOT_SPEED 8
@@ -38,7 +38,7 @@ extern int gameCount;
 #define EFFECT_EDEADNUM 20
 
 // プレイヤーのエフェクトの数
-#define EFFECT_PDEADNUM 60
+#define EFFECT_PDEADNUM 80
 
 // スコアの文字描画の基準となるX座標
 #define SCORE_X 660
