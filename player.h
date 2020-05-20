@@ -5,19 +5,19 @@
 #include "define.h"
 #include "effectPData.h"
 
-struct PSHOT {
+struct PSHOT 
+{
 	bool flag;         //弾が発射中かどうか
 	double x;
 	double y; 
-	int graph[3];
+	int graph[2];
 	int width, height; //画像の幅と高さ
 	double rad;		   // 角度
 };
 
 enum COLOR {
-	RED,
-	BLUE,
-	GREEN,
+	BLACK,
+	WHITE,
 	COLOR_MAX
 };
 
@@ -44,7 +44,10 @@ private:
 private:
 	double playerX, playerY;	//x座標,y座標
 	int width, height;	//画像幅
-	int graph[3];	//グラフィックハンドル格納用配列
+	int graph[2];	//グラフィックハンドル格納用配列
+	int rGraph[2];
+	double rad;		//回転角度
+	int count;
 	float move;		// 移動係数	
 	int life;		// プレイヤーのライフ
 	int power;		// プレイヤーのパワー

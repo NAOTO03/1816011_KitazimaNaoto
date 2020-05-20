@@ -12,9 +12,11 @@ PLAYER::PLAYER()
 	//---------------------------------
 	playerX = PLAYER_INITX;
 	playerY = PLAYER_INITY;
-	width = 24;
-	height = 24;
-	color = RED;
+	width = 8;
+	height = 8;
+	rad = 0;
+	count = 0;
+	color = BLACK;
 	move = 1.0f;
 	life = 5;
 	power = 5;
@@ -25,7 +27,7 @@ PLAYER::PLAYER()
 	memset(shot, 0, sizeof(shot));
 
 	//弾画像読み込み
-	int temp = LoadGraph("data/png/PShot/RedShot.png");
+	int temp = LoadGraph("data/png/PShot/BlackShot.png");
 	int w, h;
 	GetGraphSize(temp, &w, &h);
 
@@ -35,20 +37,21 @@ PLAYER::PLAYER()
 
 	//フラグを全部falseにしとく
 	//グラフィックハンドルと画像のサイズを代入しとく
-	for (int i = 0; i<PSHOT_NUM; ++i)
+	for (int i = 0; i < PSHOT_NUM; ++i)
 	{
 		shot[i].flag = false;
-		shot[i].graph[0] = LoadGraph("data/png/PShot/RedShot.png");
-		shot[i].graph[1] = LoadGraph("data/png/PShot/BlueShot.png");
-		shot[i].graph[2] = LoadGraph("data/png/PShot/GreenShot.png");
+		shot[i].graph[0] = LoadGraph("data/png/PShot/BlackShot.png");
+		shot[i].graph[1] = LoadGraph("data/png/PShot/WhiteShot.png");
 		shot[i].width = w;
 		shot[i].height = h;
 	}
 
-	// プレイヤーのグラフィックをメモリにロード＆表示座標を初期化
-	graph[0] = LoadGraph("data/png/Player/RedPlayer.png");
-	graph[1] = LoadGraph("data/png/Player/BluePlayer.png");
-	graph[2] = LoadGraph("data/png/Player/GreenPlayer.png");
+	// プレイヤー
+	graph[0] = LoadGraph("data/png/Player/BlackPlayer.png");
+	graph[1] = LoadGraph("data/png/Player/WhitePlayer.png");
+	// 回転する枠
+	rGraph[0] = LoadGraph("data/png/Player/RotateBlack.png");
+	rGraph[1] = LoadGraph("data/png/Player/RotateWhite.png");
 }
 
 // プレイヤーの更新
@@ -107,17 +110,18 @@ void PLAYER::Update()
 		playerY = 600 - 24;
 	}
 
+	//0.04ラジアン(約2度)ずつ回転させる。
+	rad = 0.04 * count;
+
+	++count;
+
 	if (CheckHitKey(KEY_INPUT_A))
 	{
-		color = RED;
+		color = BLACK;
 	}
 	if (CheckHitKey(KEY_INPUT_S))
 	{
-		color = BLUE;
-	}
-	if (CheckHitKey(KEY_INPUT_D))
-	{
-		color = GREEN;
+		color = WHITE;
 	}
 
 }
@@ -139,31 +143,57 @@ void PLAYER::Shot()
 					// パワーが5より小さいとき前方にショットを撃つ
 					if (power < 5)
 					{
-					    shot[i].flag = true;
-						// 弾の位置をセット、位置はプレイヤーの中心にする
-						shot[i].x = playerX + width / 2;
-						shot[i].y = playerY - height / 4;
-						shot[i].rad = -1.57;
-						break;
-					}
-					else if (power >= 5)	// 3方向にショットを打つ
-					{
-						// 0の時が前方にショット
 						if (num == 0)
 						{
 							shot[i].flag = true;
-							shot[i].x = playerX + width / 2;
+							// 弾の位置をセット、位置はプレイヤーの左
+							shot[i].x = playerX - width / 4;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.57;
 						}
-						else if (num == 1)	// 1の時が左斜め上
+						else if(num == 1)
+						{
+							shot[i].flag = true;
+							// 弾の位置をセット、位置はプレイヤーの右
+							shot[i].x = playerX + width;
+							shot[i].y = playerY - height / 4;
+							shot[i].rad = -1.57;
+						}
+
+						++num;
+
+						// 二つ撃ったらループから抜ける
+						if (num == 2)
+						{
+							break;
+						}
+					}
+					else if (power >= 5)	// 3方向にショットを打つ
+					{
+						if (num == 0)		// 前方にショット
+						{
+							shot[i].flag = true;
+							// 弾の位置をセット、位置はプレイヤーの左
+							shot[i].x = playerX - width / 4;
+							shot[i].y = playerY - height / 4;
+							shot[i].rad = -1.57;
+						}
+						else if (num == 1)	// 前方にショット
+						{
+							shot[i].flag = true;
+							// 弾の位置をセット、位置はプレイヤーの右
+							shot[i].x = playerX + width;
+							shot[i].y = playerY - height / 4;
+							shot[i].rad = -1.57;
+						}
+						else if (num == 2)	// 2の時が左斜め上
 						{
 							shot[i].flag = true;
 							shot[i].x = playerX + width / 2;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.69;
 						}
-						else if (num == 2)	// 2の時が右斜め上
+						else if (num == 3) // 3の時が右斜め上
 						{
 							shot[i].flag = true;
 							shot[i].x = playerX + width / 2;
@@ -173,8 +203,8 @@ void PLAYER::Shot()
 
 						++num;
 
-						// 3方向に打ったらループから抜ける
-						if (num == 3)
+						// 3方向に撃ったらループから抜ける
+						if (num == 4)
 						{
 							break;
 						}
@@ -212,14 +242,11 @@ void PLAYER::Draw()
 		{
 			switch (color)
 			{
-			case RED:
+			case BLACK:
 				DrawRotaGraph(shot[i].x, shot[i].y, 1.0, shot[i].rad + (90 * DX_PI / 180), shot[i].graph[0], TRUE);
 				break;
-			case BLUE:
+			case WHITE:
 				DrawRotaGraph(shot[i].x, shot[i].y, 1.0, shot[i].rad + (90 * DX_PI / 180), shot[i].graph[1], TRUE);
-				break;
-			case GREEN:
-				DrawRotaGraph(shot[i].x, shot[i].y, 1.0, shot[i].rad + (90 * DX_PI / 180), shot[i].graph[2], TRUE);
 				break;
 			}
 		}
@@ -235,14 +262,11 @@ void PLAYER::Draw()
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);	// 透過モード
 				switch (color)
 				{
-				case RED:
-					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[0], FALSE);
+				case BLACK:
+					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[0], TRUE);
 					break;
-				case BLUE:
-					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[1], FALSE);
-					break;
-				case GREEN:
-					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[2], FALSE);
+				case WHITE:
+					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[1], TRUE);
 					break;
 				}
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -251,14 +275,11 @@ void PLAYER::Draw()
 			{
 				switch (color)
 				{
-				case RED:
-					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[0], FALSE);
+				case BLACK:
+					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[0], TRUE);
 					break;
-				case BLUE:
-					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[1], FALSE);
-					break;
-				case GREEN:
-					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[2], FALSE);
+				case WHITE:
+					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[1], TRUE);
 					break;
 				}
 			}
@@ -278,18 +299,19 @@ void PLAYER::Draw()
 		// 通常描画
 		switch (color)
 		{
-		case RED:
-			DrawGraph(playerX, playerY, graph[0], FALSE);
+		case BLACK:
+			DrawGraph(playerX, playerY, graph[0], TRUE);
+			DrawRotaGraph(playerX + width / 2, playerY + height / 2, 1.0, rad, rGraph[0], TRUE);
+			DrawRotaGraph(playerX + width / 2, playerY + height / 2, 1.0, -rad, rGraph[0], TRUE);
 			break;
-		case BLUE:
-			DrawGraph(playerX, playerY, graph[1], FALSE);
-			break;
-		case GREEN:
-			DrawGraph(playerX , playerY, graph[2], FALSE);
+		case WHITE:
+			DrawGraph(playerX, playerY, graph[1], TRUE);
+			DrawRotaGraph(playerX + width / 2, playerY + height / 2, 1.0, rad, rGraph[1], TRUE);
+			DrawRotaGraph(playerX + width / 2, playerY + height / 2, 1.0, -rad, rGraph[1], TRUE);
 			break;
 		}
 	}
-	//  DrawCircle(playerX + width / 2, playerY + height / 2, 10, 0x000000, true);
+	// DrawCircle(playerX + width / 2, playerY + height / 2, 4, 0x000000, true);
 }
 
 void PLAYER::GetPosition(double *x, double *y)

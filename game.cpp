@@ -356,32 +356,23 @@ void Game::EnemyCollisionAll()
 					// 当たり判定
 					if (CircleCollision(PSHOT_COLLISION, ENEMY_COLLISION, px, ex, py, ey))
 					{
-						// プレイヤーの色とエネミーの色が同じときダメージがなし
-						if (player->GetPlayerColor() == enemy[j]->GetEnemyType())
+						// 当たっていれば、deadFlagを立てる
+						enemy[j]->SetDeadFlag();
+						// エネミー消滅音フラグセット
+						eDeadFlag = true;
+						//敵消滅エフェクトセット
+						EnemyDeadEffect(ex, ey, enemy[j]->GetEnemyType());
+						// 当たった弾のフラグを戻す
+						player->SetShotFlag(i, false);
+						// 得点を加える
+						score->SetScore(CURRENT_SCORE, 100);
+						for (int k = 0; k < ITEM_NUM; ++k)
 						{
-							// 当たった弾のフラグを戻す
-							player->SetShotFlag(i, false);
-						}
-						else
-						{
-							// 当たっていれば、deadFlagを立てる
-							enemy[j]->SetDeadFlag();
-							// エネミー消滅音フラグセット
-							eDeadFlag = true;
-							//敵消滅エフェクトセット
-							EnemyDeadEffect(ex, ey, enemy[j]->GetEnemyType());
-							// 当たった弾のフラグを戻す
-							player->SetShotFlag(i, false);
-							// 得点を加える
-							score->SetScore(CURRENT_SCORE, 100);
-							for (int k = 0; k < ITEM_NUM; ++k)
+							item[k]->GetSize(&itemW, &itemH);
+							if (!item[k]->GetFlag())
 							{
-								item[k]->GetSize(&itemW, &itemH);
-								if (!item[k]->GetFlag())
-								{
-									item[k]->SetFlag(ex - itemW / 4, ey + itemH / 6, enemy[j]->GetItem());
-									break;
-								}
+								item[k]->SetFlag(ex - itemW / 4, ey + itemH / 6, enemy[j]->GetItem());
+								break;
 							}
 						}
 					}
