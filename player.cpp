@@ -370,7 +370,7 @@ void PLAYER::Draw()
 			break;
 		}
 	}
-	// DrawCircle(playerX + width / 2, playerY + height / 2, 4, 0x000000, true);
+	// DrawCircle(playerX + width / 2, playerY + height / 2, 4, 0xff0000, true);
 }
 
 void PLAYER::GetPosition(double *x, double *y)
