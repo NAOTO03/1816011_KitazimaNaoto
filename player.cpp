@@ -140,14 +140,14 @@ void PLAYER::Shot()
 			{
 				if (shot[i].flag == false)
 				{
-					// パワーが5より小さいとき前方にショットを撃つ
+					// パワーが5より小さいとき前方に二つショットを撃つ
 					if (power < 5)
 					{
 						if (num == 0)
 						{
 							shot[i].flag = true;
 							// 弾の位置をセット、位置はプレイヤーの左
-							shot[i].x = playerX - width / 4;
+							shot[i].x = playerX - width / 6;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.57;
 						}
@@ -168,35 +168,94 @@ void PLAYER::Shot()
 							break;
 						}
 					}
-					else if (power >= 5)	// 3方向にショットを打つ
+					else if (power >= 5 && power < 10)	// 前方に４つショットを撃つ
 					{
-						if (num == 0)		// 前方にショット
+						if (num == 0)		
 						{
 							shot[i].flag = true;
 							// 弾の位置をセット、位置はプレイヤーの左
-							shot[i].x = playerX - width / 4;
+							shot[i].x = playerX - width * 2;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.57;
 						}
-						else if (num == 1)	// 前方にショット
+						else if (num == 1)	
 						{
 							shot[i].flag = true;
-							// 弾の位置をセット、位置はプレイヤーの右
+							// 弾の位置をセット、位置はプレイヤーの左から２番目
+							shot[i].x = playerX - width / 6;
+							shot[i].y = playerY - height / 4;
+							shot[i].rad = -1.57;
+						}
+						else if (num == 2)	
+						{
+							shot[i].flag = true;
+							// 弾の位置をセット、位置はプレイヤーの右から２番目
 							shot[i].x = playerX + width;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.57;
 						}
-						else if (num == 2)	// 2の時が左斜め上
+						else if (num == 3) 
 						{
 							shot[i].flag = true;
-							shot[i].x = playerX + width / 2;
+							// 弾の位置をセット、位置はプレイヤーの右
+							shot[i].x = playerX + width * 3;
+							shot[i].y = playerY - height / 4;
+							shot[i].rad = -1.57;
+						}
+
+						++num;
+
+						//四つ撃ったらループから抜ける
+						if (num == 4)
+						{
+							break;
+						}
+					}
+					else if (power >= 10)	// 3方向にショットを打つ
+					{
+						if (num == 0)
+						{
+							shot[i].flag = true;
+							// 弾の位置をセット、位置はプレイヤーの左
+							shot[i].x = playerX - width * 2;
+							shot[i].y = playerY - height / 4;
+							shot[i].rad = -1.57;
+						}
+						else if (num == 1)
+						{
+							shot[i].flag = true;
+							// 弾の位置をセット、位置はプレイヤーの左から２番目
+							shot[i].x = playerX - width / 6;
+							shot[i].y = playerY - height / 4;
+							shot[i].rad = -1.57;
+						}
+						else if (num == 2)
+						{
+							shot[i].flag = true;
+							// 弾の位置をセット、位置はプレイヤーの右から2番目z
+							shot[i].x = playerX + width;
+							shot[i].y = playerY - height / 4;
+							shot[i].rad = -1.57;
+						}
+						else if (num == 3)
+						{
+							shot[i].flag = true;
+							// 弾の位置をセット、位置はプレイヤーの右
+							shot[i].x = playerX + width * 3;
+							shot[i].y = playerY - height / 4;
+							shot[i].rad = -1.57;
+						}
+						else if (num == 4)	// 4の時が左斜め上
+						{
+							shot[i].flag = true;
+							shot[i].x = playerX - width * 3;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.69;
 						}
-						else if (num == 3) // 3の時が右斜め上
+						else if (num == 5) // 5の時が右斜め上
 						{
 							shot[i].flag = true;
-							shot[i].x = playerX + width / 2;
+							shot[i].x = playerX + width * 4;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.45;
 						}
@@ -204,7 +263,7 @@ void PLAYER::Shot()
 						++num;
 
 						// 3方向に撃ったらループから抜ける
-						if (num == 4)
+						if (num == 6)
 						{
 							break;
 						}
@@ -378,10 +437,10 @@ int PLAYER::GetLife()
 void PLAYER::SetPower(int p)
 {
 	power += p;
-	if (power > 10)
+	if (power > 15)
 	{
 		// パワーの最大値を10にしておく
-		power = 10;
+		power = 15;
 	}
 
 	if (power < 0)
