@@ -44,7 +44,7 @@ void ITEM::Updata()
 		y += 1.0;
 	}
 
-	if (y > 520)
+	if (y > 620)
 	{
 		Delete();
 	}
