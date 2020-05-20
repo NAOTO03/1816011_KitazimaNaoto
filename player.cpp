@@ -93,17 +93,17 @@ void PLAYER::Update()
 	}
 
 	// プレイヤーが画面左端からはみ出そうになっていたら画面内の座標に戻してあげる
-	if (playerX < 0)
+	if (playerX < 24)
 	{
-		playerX = 0;
+		playerX = 24;
 	}
 	if (playerX > 640 - 24)
 	{
 		playerX = 640 - 24;
 	}
-	if (playerY < 0)
+	if (playerY < 24)
 	{
-		playerY = 0;
+		playerY = 24;
 	}
 	if (playerY > 600 - 24)
 	{
