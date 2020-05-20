@@ -17,9 +17,9 @@ extern int gameCount;
 
 //プレイヤーの初期位置
 #define PLAYER_INITX 305
-#define PLAYER_INITY 430
+#define PLAYER_INITY 550
 
-//プレイヤーの歩くスピード
+//プレイヤーの移動スピード
 #define PLAYER_SPEED 4
 
 //プレイヤーの弾の数

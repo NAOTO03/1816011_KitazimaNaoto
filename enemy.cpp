@@ -423,7 +423,7 @@ void ENEMY::Draw()
 bool ENEMY::OutCheck()
 {
 	// エネミーが画面から出たらフラグをtrueにする
-	if (enemyX < -50 || enemyX > 680 || enemyY < -50 || enemyY > 520)
+	if (enemyX < -50 || enemyX > 680 || enemyY < -50 || enemyY > 640)
 	{
 		return true;
 	}
@@ -436,7 +436,7 @@ bool ENEMY::OutCheck()
 bool ENEMY::ShotOutCheck(int i)
 {
 	// 弾が画面にはみ出たらフラグを戻す
-	if (shot[i].x < -40 || shot[i].x > 640 || shot[i].y < -40 || shot[i].y > 480)
+	if (shot[i].x < -40 || shot[i].x > 640 || shot[i].y < -40 || shot[i].y > 600)
 	{
 		return true;
 	}

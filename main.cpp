@@ -15,7 +15,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ChangeWindowMode(TRUE);
 
 	// 画面モードの設定
-	SetGraphMode(900, 480, 16);		// 解像度を900*480、colorを16bitに設定.
+	SetGraphMode(900, 600, 16);		// 解像度を900*600、colorを16bitに設定.
 	ChangeWindowMode(TRUE);			// ウインドウモードに.
 	// SetBackgroundColor(255, 255, 255);
 	SetBackgroundColor(220, 220, 220);

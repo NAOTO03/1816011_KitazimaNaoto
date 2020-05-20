@@ -102,9 +102,9 @@ void PLAYER::Update()
 	{
 		playerY = 0;
 	}
-	if (playerY > 480 - 24)
+	if (playerY > 600 - 24)
 	{
-		playerY = 480 - 24;
+		playerY = 600 - 24;
 	}
 
 	if (CheckHitKey(KEY_INPUT_A))
