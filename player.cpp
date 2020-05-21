@@ -32,6 +32,7 @@ PLAYER::PLAYER()
 	GetGraphSize(temp, &w, &h);
 
 	damageFlag = false;
+	moveFlag = false;
 	endFlag = false;
 	shotSound = false; // ショット音が鳴ったかどうかを示すフラグ 
 
@@ -314,43 +315,41 @@ void PLAYER::Draw()
 	// 生きていれば描画
 	if (damageFlag)
 	{
-		if (damageCount > 40)	// エネミーの弾が当たったら40まで描画をしない
+		if (damageCount % 2 == 0)	// 2で割って余りが0になったときに少し透過させて描画
 		{
-			if (damageCount % 2 == 0)	// 2で割って余りが0になったときに少し透過させて描画
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);	// 透過モード
+			switch (color)
 			{
-				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);	// 透過モード
-				switch (color)
-				{
-				case BLACK:
-					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[0], TRUE);
-					break;
-				case WHITE:
-					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[1], TRUE);
-					break;
-				}
-				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			case BLACK:
+				DrawGraph(playerX, playerY, graph[0], TRUE);
+				break;
+			case WHITE:
+				DrawGraph(playerX, playerY, graph[1], TRUE);
+				break;
 			}
-			else
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		}
+		else
+		{
+			switch (color)
 			{
-				switch (color)
-				{
-				case BLACK:
-					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[0], TRUE);
-					break;
-				case WHITE:
-					DrawGraph(PLAYER_INITX, PLAYER_INITY + 60 - (damageCount - 40), graph[1], TRUE);
-					break;
-				}
+			case BLACK:
+				DrawGraph(playerX, playerY, graph[0], TRUE);
+				break;
+			case WHITE:
+				DrawGraph(playerX, playerY, graph[1], TRUE);
+				break;
 			}
 		}
 		++damageCount;
-		if (damageCount == 100)
+		moveFlag = true;
+		if (damageCount == 140)
 		{
 			damageFlag = false;
 			damageCount = 0;
 			// 座標を初期地に戻す
-			playerX = PLAYER_INITX;
-			playerY = PLAYER_INITY;
+			playerX = playerX;
+			playerY = playerY;
 		}
 	}
 	else
@@ -457,7 +456,7 @@ int PLAYER::GetPower()
 void PLAYER::All()
 {
 	// 消滅していないときだけ実行
-	if (!damageFlag)
+	if (!damageFlag || moveFlag)
 	{
 		Update();
 	}

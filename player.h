@@ -15,10 +15,10 @@ struct PSHOT
 	double rad;		   // 角度
 };
 
-enum COLOR {
+enum PLAYER_COLOR
+{
 	BLACK,
-	WHITE,
-	COLOR_MAX
+	WHITE
 };
 
 // プレイヤー構造体
@@ -52,12 +52,13 @@ private:
 	int life;		// プレイヤーのライフ
 	int power;		// プレイヤーのパワー
 	bool damageFlag;
+	bool moveFlag;
 	bool endFlag;
 	int damageCount;// ダメージ中のカウント
 	PSHOT shot[PSHOT_NUM];
 	int shotCount;
 	bool shotSound; // ショット音が鳴ったかどうかを示すフラグ
-	COLOR color;
+	PLAYER_COLOR color;
 	//プレイヤー消滅エフェクトクラス
 	EFFECT_PDEAD effectPDead;
 };
