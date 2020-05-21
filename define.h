@@ -20,7 +20,7 @@ extern int gameCount;
 #define PLAYER_INITY 550
 
 //プレイヤーの移動スピード
-#define PLAYER_SPEED 4
+#define PLAYER_SPEED 3
 
 //プレイヤーの弾の数
 #define PSHOT_NUM 200
