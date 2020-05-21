@@ -50,6 +50,7 @@ private:
 	bool noDamageFlag;
 	//生きてるかどうかのフラグ
 	bool flag;
+	bool bossFlag;
 	// 弾を発射するためのフラグ
 	bool shotFlag;
 	// ショット音が鳴ったかどうかを示すフラグ
@@ -72,7 +73,9 @@ public:
 	BOSS();
 	void SetDamageSetting();
 	void SetFlag(bool bFlag);
+	void SetBossFlag(bool flag);
 	bool GetFlag();
+	bool GetBossFlag();
 	bool GetShotSound();
 	void GetPosition(double *x, double *y);
 	bool GetShotPosition(int index, double *x, double *y, int *type);

@@ -18,19 +18,16 @@ ENEMY::ENEMY(int type, int shotType, int movePattern, int shotPattern, int inTim
 	switch (type)
 	{
 	case 0:
-		graph = LoadGraph("data/png/Enemy/RedEnemy.png");
+		graph = LoadGraph("data/png/Enemy/BlackEnemy.png");
 		break;
 	case 1:
-		graph = LoadGraph("data/png/Enemy/BlueEnemy.png");
-		break;
-	case 2:
-		graph = LoadGraph("data/png/Enemy/GreenEnemy.png");
+		graph = LoadGraph("data/png/Enemy/WhiteEnemy.png");
 		break;
 	}
 
 	// サイズ
-	width = 32;
-	height = 32;
+	width = 24;
+	height = 24;
 
 	this->type = type;	       // エネミーの種類
 	this->shotType = shotType; // 弾の種類
@@ -68,44 +65,31 @@ ENEMY::ENEMY(int type, int shotType, int movePattern, int shotPattern, int inTim
 	case 0:
 		if (type == 0)
 		{
-			shotGraph = LoadGraph("data/png/EShot/RedShot.png");
+			shotGraph = LoadGraph("data/png/EShot/BlackShot1.png");
 		}
 		else if(type == 1)
 		{
-			shotGraph = LoadGraph("data/png/Eshot/BlueShot.png");
-		}
-		else if (type == 2)
-		{
-			shotGraph = LoadGraph("data/png/Eshot/GreenShot.png");
+			shotGraph = LoadGraph("data/png/Eshot/WhiteShot1.png");
 		}
 		break;
 	case 1:
 		if (type == 0)
 		{
-			shotGraph = LoadGraph("data/png/EShot/RedShot2.png");
+			shotGraph = LoadGraph("data/png/EShot/BlackShot2.png");
 		}
 		else if (type == 1)
 		{
-			shotGraph = LoadGraph("data/png/Eshot/BlueShot2.png");
-		}
-		else if (type == 2)
-		{
-			shotGraph = LoadGraph("data/png/Eshot/GreenShot2.png");
+			shotGraph = LoadGraph("data/png/Eshot/WhiteShot2.png");
 		}
 		break;
 	case 2:
 		if (type == 0)
 		{
-			shotGraph = LoadGraph("data/png/EShot/RedShot3.png");
+			shotGraph = LoadGraph("data/png/EShot/BlackShot3.png");
 		}
 		else if (type == 1)
 		{
-			shotGraph = LoadGraph("data/png/Eshot/BlueShot3.png");
-		}
-		else if (type == 2)
-		{
-			shotGraph = LoadGraph("data/png/Eshot/GreenShot3.png");
-
+			shotGraph = LoadGraph("data/png/Eshot/WhiteShot3.png");
 		}
 		break;
 	}
@@ -220,7 +204,7 @@ void ENEMY::Shot()
 			// 初回だけ実行
 			if (shotCount == 0)
 			{
-				rad = atan2(py - enemyY, px - enemyX);
+				rad = atan2(py - (enemyY + height / 2), px - (enemyX + width / 2));
 			}
 
 
@@ -238,7 +222,7 @@ void ENEMY::Shot()
 						{
 							shot[i].flag = true;
 							shot[i].x = enemyX + shot[i].width / 2;
-							shot[i].y = enemyY + shot[i].height * 2;
+							shot[i].y = enemyY + shot[i].height / 2;
 							shot[i].rad = rad;
 							break;
 						}
@@ -258,8 +242,8 @@ void ENEMY::Shot()
 						if (shot[i].flag == false)
 						{
 							shot[i].flag = true;
-							shot[i].x = enemyX + shot[i].width * 2;
-							shot[i].y = enemyY + shot[i].height * 2;
+							shot[i].x = enemyX + shot[i].width + shot[i].width * 2 / 3;
+							shot[i].y = enemyY + shot[i].height / 2;
 							shot[i].rad = rad;
 							break;
 						}
@@ -279,8 +263,8 @@ void ENEMY::Shot()
 						if (shot[i].flag == false)
 						{
 							shot[i].flag = true;
-							shot[i].x = enemyX + shot[i].width * 2;
-							shot[i].y = enemyY + shot[i].height * 2;
+							shot[i].x = enemyX + shot[i].width + shot[i].width * 2 / 3;
+							shot[i].y = enemyY + shot[i].height / 2;
 							// 0の時は左より
 							if (shotNum == 0)
 							{
@@ -313,8 +297,8 @@ void ENEMY::Shot()
 				break;
 				// 乱射ショット
 			case 3:
-				//3ループに一回発射。42までなので20発発射。
-				if (shotCount % 3 == 0 && shotCount <= 57)
+				//3ループに一回発射。100までなので50発発射。
+				if (shotCount % 2 == 0 && shotCount <= 100)
 				{
 					for (int i = 0; i < ESHOT_NUM; ++i)
 					{
@@ -403,12 +387,12 @@ void ENEMY::Draw()
 			if (shotType == 0 || shotType == 2)
 			{
 				DrawGraph(shot[i].x, shot[i].y, shot[i].graph, TRUE);
-				// DrawCircle(shot[i].x + shot[i].width / 2, shot[i].y + shot[i].height / 2, 6, 0x000000, true);
+				// DrawCircle(shot[i].x + shot[i].width / 2, shot[i].y + shot[i].height / 2, 3, 0xff0000, true);
 			}
 			else
 			{
 				DrawRotaGraph(shot[i].x, shot[i].y, 1.0, shot[i].rad + (90 * DX_PI / 180), shot[i].graph, TRUE);
-				// DrawCircle(shot[i].x, shot[i].y, 4, 0x000000, true);
+				// DrawCircle(shot[i].x, shot[i].y, 4, 0xff0000, true);
 			}
 		}
 	}
@@ -416,7 +400,7 @@ void ENEMY::Draw()
 	if (!deadFlag)
 	{
 		DrawGraph(enemyX, enemyY, graph, TRUE);
-		// DrawCircle(enemyX + width / 2, enemyY + height / 3, 14, 0x000000, true);
+		// DrawCircle(enemyX + width / 2, enemyY + height / 2, 12, 0xff0000, true);
 	}
 }
 
@@ -449,7 +433,7 @@ bool ENEMY::ShotOutCheck(int i)
 void ENEMY::GetPosition(double *x, double *y)
 {
 	*x = this->enemyX + width / 2;
-	*y = this->enemyY + height / 3;
+	*y = this->enemyY + height / 2;
 }
 
 bool ENEMY::GetShotPosition(int index, double *x, double *y)

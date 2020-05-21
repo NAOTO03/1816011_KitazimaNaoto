@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "effectEData.h"
 
-int EFFECT_EDEAD::graph[3];
+int EFFECT_EDEAD::graph[2];
 
 
 EFFECT_EDEAD::EFFECT_EDEAD()
@@ -13,7 +13,6 @@ EFFECT_EDEAD::EFFECT_EDEAD()
 	{
 		graph[0] = LoadGraph("data/png/EEffect/effect1.png");
 		graph[1] = LoadGraph("data/png/EEffect/effect2.png");
-		graph[2] = LoadGraph("data/png/EEffect/effect3.png");
 	}
 
 	srand((unsigned int)time(NULL));	// —”‚ğ‰Šú‰» 

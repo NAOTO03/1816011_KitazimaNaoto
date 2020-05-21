@@ -6,7 +6,7 @@ private:
 	//座標
 	double x, y;
 	//グラフィックハンドル
-	static int graph[3];
+	static int graph[2];
 	//エフェクト画像の角度
 	double rad;
 	//拡大率

@@ -5,12 +5,12 @@ extern int gameCount;
 
 //当たり判定用半径定義
 #define PLAYER_COLLISION 4
-#define ENEMY_COLLISION 14
+#define ENEMY_COLLISION 12
 
 #define PSHOT_COLLISION 4
 #define ESHOT0_COLLISION 6
 #define ESHOT1_COLLISION 4
-#define ESHOT2_COLLISION 3
+#define ESHOT2_COLLISION 4
 
 #define BOSS_COLLISION 60
 
@@ -29,7 +29,7 @@ extern int gameCount;
 #define PSHOT_SPEED 8
 
 // エネミーの数
-#define ENEMY_NUM 15
+#define ENEMY_NUM 19
 
 // エネミーの弾の数
 #define ESHOT_NUM 100

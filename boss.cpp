@@ -45,6 +45,7 @@ BOSS::BOSS()
 	damageFlag = false;
 	noDamageFlag = false;
 	flag = false;
+	bossFlag = true;
 	shotFlag = false;
 	shotSound = false;
 }
@@ -461,9 +462,19 @@ void BOSS::SetFlag(bool bFlag)
 	flag = bFlag;
 }
 
+void BOSS::SetBossFlag(bool flag)
+{
+	bossFlag = flag;
+}
+
 bool BOSS::GetFlag()
 {
 	return flag;
+}
+
+bool BOSS::GetBossFlag()
+{
+	return bossFlag;
 }
 
 int BOSS::ShotSearch()
@@ -590,6 +601,7 @@ void BOSS::Draw()
 
 void BOSS::All()
 {
+
 	Updata();
 
 	if (shotFlag)

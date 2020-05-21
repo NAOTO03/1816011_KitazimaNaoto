@@ -186,20 +186,27 @@ void Game::All()
 					enemy[i] = NULL;
 				}
 			}
+			else if (i >= ENEMY_NUM - 1)
+			{
+				if(gameCount >= 2400) boss.SetFlag(true);
+			}
 		}
 		// 敵との当たり判定
 		EnemyCollisionAll();
 	}
 	else
 	{
-		boss.All();
-		// ボスショットサウンドフラグチェック
-		if (boss.GetShotSound())
+		if (boss.GetBossFlag())
 		{
-			eShotFlag = true;
+			boss.All();
+			// ボスショットサウンドフラグチェック
+			if (boss.GetShotSound())
+			{
+				eShotFlag = true;
+			}
+			// ボスとの当たり判定
+			BossCollisionAll();
 		}
-		// ボスとの当たり判定
-		BossCollisionAll();
 	}
 	
 	// 当たり判定
@@ -470,6 +477,8 @@ void Game::EnemyCollisionAll()
 						EnemyDeadEffect(ex, ey, enemy[i]->GetEnemyType());
 						// 得点を加える
 						score->SetScore(CURRENT_SCORE, 500);
+						// プレイヤーのパワーを増やす
+						player->SetPower(2);
 					}
 					else
 					{
@@ -582,6 +591,7 @@ void Game::BossCollisionAll()
 					{
 						//フラグを戻す
 						boss.SetFlag(false);
+						boss.SetBossFlag(false);
 						//消滅エフェクトを出す
 						EnemyDeadEffect(bx, by, 0);
 						//消滅音を鳴らす
