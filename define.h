@@ -49,7 +49,7 @@ extern int gameCount;
 #define ITEM_NUM 30
 
 // ボスの弾の数
-#define BOSS_SHOTNUM 200
+#define BOSS_SHOTNUM 300
 // ボスの揺れ幅
 #define BOSS_SHAKE 20
 // ボスのHP

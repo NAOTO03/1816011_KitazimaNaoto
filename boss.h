@@ -2,6 +2,12 @@
 
 #include "define.h"
 
+enum BOSS_COLOR
+{
+	BOSS_BLACK,
+	BOSS_WHITE
+};
+
 class BOSS
 {
 private:
@@ -9,8 +15,10 @@ private:
 	double x, y;
 	double prevX, prevY;
 	// グラフィックハンドル
-	int bGraph[3];
-	int shotGraph[3];
+	int graph;
+	int blackShot[3];
+	int whiteShot[3];
+	BOSS_COLOR color;
 	// 現在の移動パターン
 	int movePattern;
 	// 現在のショットパターン

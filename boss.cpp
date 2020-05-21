@@ -12,10 +12,15 @@ BOSS::BOSS()
 	prevX = 320;
 	prevY = -100;
 
-	bGraph[0] = LoadGraph("data/png/Boss/RedBoss.png");
-	shotGraph[0] = LoadGraph("data/png/EShot/RedShot.png");
-	shotGraph[1] = LoadGraph("data/png/Eshot/RedShot2.png");
-	shotGraph[2] = LoadGraph("data/png/Eshot/RedShot3.png");
+	graph = LoadGraph("data/png/Boss/boss.png");
+	blackShot[0] = LoadGraph("data/png/EShot/BlackShot1.png");
+	blackShot[1] = LoadGraph("data/png/EShot/BlackShot2.png");
+	blackShot[2] = LoadGraph("data/png/EShot/BlackShot3.png");
+	whiteShot[0] = LoadGraph("data/png/EShot/WhiteShot1.png");
+	whiteShot[1] = LoadGraph("data/png/EShot/WhiteShot2.png");
+	whiteShot[2] = LoadGraph("data/png/EShot/WhtieShot3.png");
+
+	color = BOSS_BLACK;
 
 	for (int i = 0; i < BOSS_SHOTNUM; ++i)
 	{
@@ -34,7 +39,7 @@ BOSS::BOSS()
 	movePattern = 0;
 	shotPattern = 0;
 	moveX = 0;
-	moveY = 270;
+	moveY = 220;
 	waitCount = 0;
 	wait = false;
 	state = 0;
@@ -95,7 +100,7 @@ void BOSS::MovePattern1()
 {
 	angle += raise;
 
-	y = 170 + sin(angle * DX_PI / 180) * BOSS_SHAKE;
+	y = 120 + sin(angle * DX_PI / 180) * BOSS_SHAKE;
 
 	if (angle == 90)
 	{
@@ -116,12 +121,12 @@ void BOSS::MovePattern2()
 	{
 		x += raise2;
 
-		if (x == 160)
+		if (x == 80)
 		{
 			raise2 = 2;
 			wait = true;
 		}
-		else if (x == 480)
+		else if (x == 540)
 		{
 			raise2 = -2;
 			wait = true;
@@ -144,7 +149,7 @@ void BOSS::MovePattern3()
 {
 	double temp;
 
-	angle += 2;
+	angle += 1;
 
 	temp = sin(angle * DX_PI / 180);
 
@@ -155,15 +160,15 @@ void BOSS::MovePattern3()
 	{
 		if (state == 0)
 		{
-			MoveInit(160, 170, 1);
+			MoveInit(80, 120, 1);
 		}
 		else if (state == 1)
 		{
-			MoveInit(320, 270, 2);
+			MoveInit(320, 240, 2);
 		}
 		else if (state == 2)
 		{
-			MoveInit(480, 170, 0);
+			MoveInit(540, 120, 0);
 		}
 	}
 }
@@ -205,7 +210,7 @@ void BOSS::MoveToDefault()
 		// 移動パターンが３なら
 		if (movePattern == 3)
 		{
-			MoveInit(320, 270, 2);
+			MoveInit(320, 240, 2);
 		}
 	}
 
@@ -257,22 +262,21 @@ void  BOSS::Shot()
 		switch (shotPattern)
 		{
 		case 0:
-			if (shotCount % 5 == 0 && shotCount <= 15)
+			if (shotCount % 7 == 0 && shotCount <= 28)
 			{
 				while ((index = ShotSearch()) != -1)
 				{
-					shot[index].graph = shotGraph[1];
 					shot[index].pattern = 0;
 					shot[index].speed = 6;
 
 					// 5方向にショットを打つ
 					if (num == 0)
 					{
-						shot[index].rad = trad - (10 * DX_PI / 180); // 一番左
+						shot[index].rad = trad - (20 * DX_PI / 180); // 一番左
 					}
 					else if (num == 1)
 					{
-						shot[index].rad = trad - (5 * DX_PI / 180);  // 左から2番目
+						shot[index].rad = trad - (10 * DX_PI / 180);  // 左から2番目
 					}
 					else if (num == 2)
 					{
@@ -280,11 +284,20 @@ void  BOSS::Shot()
 					}
 					else if (num == 3)
 					{
-						shot[index].rad = trad + (5 * DX_PI / 180);  // 右から2番目
+						shot[index].rad = trad + (10 * DX_PI / 180);  // 右から2番目
 					}
 					else if (num == 4)
 					{
-						shot[index].rad = trad + (10 * DX_PI / 180); // 一番右
+						shot[index].rad = trad + (20 * DX_PI / 180); // 一番右
+					}
+
+					if (num == 0 || num == 2 || num == 4)
+					{
+						shot[index].graph = blackShot[1];  // 黒
+					}
+					else
+					{
+						shot[index].graph = whiteShot[1];  // 白
 					}
 
 					++num;
@@ -303,11 +316,44 @@ void  BOSS::Shot()
 			{
 				if ((index = ShotSearch()) != -1)
 				{
-					shot[index].graph = shotGraph[2];
+					shot[index].graph = blackShot[2];  // 黒
 					shot[index].speed = 4;
+					shot[index].pattern = 1;
 					shot[index].rad = atan2(py - y, px - x) + (rand() % 41 - 20) * DX_PI / 180;	// プレイヤーの両側20度までの範囲内でランダム
+					shotSound = true;
+				}
+			}
+
+			if (shotCount % 5 == 0 && tempShotCount <= shotCount)
+			{
+				while ((index = ShotSearch()) != -1)
+				{
+					shot[index].graph = whiteShot[0];
+					shot[index].speed = 6;
 					shot[index].pattern = 1;
 
+					if (num == 0)
+					{
+						shot[index].x = x - 50;
+						shot[index].rad = atan2(py - y, px - (x - 50));
+					}
+					else if (num == 1)
+					{
+						shot[index].x = x + 50;
+						shot[index].rad = atan2(py - y, px - (x + 50));
+					}
+
+					++num;
+
+					if (num == 2)
+					{
+						// 5発分撃ち終わったら 60ループ(一秒間)停止
+						if (tempShotCount + 20 == shotCount)
+						{
+							tempShotCount += 80;
+						}
+						break;
+					}
 					shotSound = true;
 				}
 			}
@@ -318,9 +364,16 @@ void  BOSS::Shot()
 				trad = atan2(py - y, px - x);
 				while ((index = ShotSearch()) != -1)
 				{
-					shot[index].graph = shotGraph[0];
-					shot[index].speed = 5;
-					shot[index].rad = trad + num * ((360 - 20) * DX_PI / 180);
+					if (num % 2 == 0)
+					{
+						shot[index].graph = blackShot[0];  // 黒
+					}
+					else if (num % 2 == 1)
+					{
+						shot[index].graph = whiteShot[0];  // 白
+					}
+					shot[index].speed = 3;
+					shot[index].rad = trad + num * ((360 / 20) * DX_PI / 180);
 					shot[index].pattern = 2;
 					
 					++num;
@@ -329,6 +382,7 @@ void  BOSS::Shot()
 					{
 						break;
 					}
+
 					shotSound = true;
 				}
 			}
@@ -338,7 +392,7 @@ void  BOSS::Shot()
 			{
 				while ((index = ShotSearch()) != -1)
 				{
-					shot[index].graph = shotGraph[0];
+					shot[index].graph = blackShot[0];
 					shot[index].speed = 3;
 					shot[index].pattern = 3;
 					shot[index].rad = ((360 / 20) * DX_PI / 180) * num + ((shotCount / 15) * 0.08);
@@ -359,7 +413,7 @@ void  BOSS::Shot()
 			{
 				while ((index = ShotSearch()) != -1)
 				{
-					shot[index].graph = shotGraph[1];
+					shot[index].graph = whiteShot[1];
 					shot[index].speed = 6;
 					shot[index].pattern = 3;
 
@@ -508,7 +562,7 @@ int BOSS::ShotSearch()
 bool BOSS::ShotOutCheck(int i)
 {
 	// 弾が画面にはみ出たらフラグを戻す
-	if (shot[i].x < -40 || shot[i].x > 640 || shot[i].y < -40 || shot[i].y > 480)
+	if (shot[i].x < -40 || shot[i].x > 640 || shot[i].y < -40 || shot[i].y > 600)
 	{
 		return true;
 	}
@@ -574,7 +628,7 @@ void BOSS::Draw()
 	{
 		if (shot[i].flag)
 		{
-			if (shot[i].graph == shotGraph[0] || shot[i].graph == shotGraph[2])
+			if (shot[i].graph != blackShot[1] || shot[i].graph != whiteShot[1])
 			{
 				DrawGraph(shot[i].x, shot[i].y, shot[i].graph, TRUE);
 			}
@@ -588,12 +642,12 @@ void BOSS::Draw()
 	// 弾が当たった時にはダメージ用の画像を描画
 	if (damageFlag)
 	{
-		DrawRotaGraph(x, y, 1.0, 0, bGraph[0], TRUE);
+		DrawRotaGraph(x, y, 1.0, 0, graph, TRUE);
 	}	
 	else
 	{
 		// 何もないときは通常描画
-		DrawRotaGraph(x, y, 1.0, 0, bGraph[0], TRUE);
+		DrawRotaGraph(x, y, 1.0, 0, graph, TRUE);
 	}
 
 	damageFlag = false;

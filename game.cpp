@@ -193,6 +193,7 @@ void Game::All()
 		}
 		// “G‚Æ‚Ì“–‚½‚è”»’è
 		EnemyCollisionAll();
+		boss.SetFlag(true);
 	}
 	else
 	{

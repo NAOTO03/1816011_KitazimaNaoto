@@ -69,7 +69,7 @@ ENEMY::ENEMY(int type, int shotType, int movePattern, int shotPattern, int inTim
 		}
 		else if(type == 1)
 		{
-			shotGraph = LoadGraph("data/png/Eshot/WhiteShot1.png");
+			shotGraph = LoadGraph("data/png/EShot/WhiteShot1.png");
 		}
 		break;
 	case 1:
@@ -79,7 +79,7 @@ ENEMY::ENEMY(int type, int shotType, int movePattern, int shotPattern, int inTim
 		}
 		else if (type == 1)
 		{
-			shotGraph = LoadGraph("data/png/Eshot/WhiteShot2.png");
+			shotGraph = LoadGraph("data/png/EShot/WhiteShot2.png");
 		}
 		break;
 	case 2:
@@ -89,7 +89,7 @@ ENEMY::ENEMY(int type, int shotType, int movePattern, int shotPattern, int inTim
 		}
 		else if (type == 1)
 		{
-			shotGraph = LoadGraph("data/png/Eshot/WhiteShot3.png");
+			shotGraph = LoadGraph("data/png/EShot/WhiteShot3.png");
 		}
 		break;
 	}
