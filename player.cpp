@@ -115,11 +115,11 @@ void PLAYER::Update()
 
 	++count;
 
-	if (CheckHitKey(KEY_INPUT_A))
+	if (CheckHitKey(KEY_INPUT_X))
 	{
 		color = BLACK;
 	}
-	if (CheckHitKey(KEY_INPUT_S))
+	if (CheckHitKey(KEY_INPUT_C))
 	{
 		color = WHITE;
 	}
