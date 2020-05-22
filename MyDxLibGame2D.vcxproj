@@ -167,10 +167,14 @@
     <ClCompile Include="effectPData.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameClear.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="score.cpp" />
+    <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="back.h" />
@@ -180,9 +184,13 @@
     <ClInclude Include="effectPData.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameClear.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="score.h" />
+    <ClInclude Include="Title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
