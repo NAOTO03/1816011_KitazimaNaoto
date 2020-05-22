@@ -3,7 +3,6 @@
 #include "define.h"
 
 
-
 SCORE::SCORE()
 {
 	graph[0] = LoadGraph("data/png/Score/HighScore.png");
