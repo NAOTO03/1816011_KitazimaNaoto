@@ -656,19 +656,29 @@ void Game::BossCollisionAll()
 
 			if (hitFlag)
 			{
-				// 操作キャラのdamageFlagを立てる
-				player->SetDamageFlag();
-				// プレイヤーのパワーを減らす
-				player->SetPower(-2);
-				// 弾を消す
-				boss.SetShotFlag(i, false);
-				// プレイヤー消滅音フラグ
-				pDeadFlag = true;
-				// 一時フラグを元に戻す
-				hitFlag = false;
-				// 一つでも当たっていたらプレイヤーは消滅するので
-				// 他の弾をチェックする必要ないのでループを抜ける
-				break;
+				if (player->GetPlayerColor() == boss.GetShotColor(i))
+				{
+					// 弾を消す
+					boss.SetShotFlag(i, false);
+					// 一時フラグを元に戻す
+					hitFlag = false;
+				}
+				else
+				{
+					// 操作キャラのdamageFlagを立てる
+					player->SetDamageFlag();
+					// プレイヤーのパワーを減らす
+					player->SetPower(-2);
+					// 弾を消す
+					boss.SetShotFlag(i, false);
+					// プレイヤー消滅音フラグ
+					pDeadFlag = true;
+					// 一時フラグを元に戻す
+					hitFlag = false;
+					// 一つでも当たっていたらプレイヤーは消滅するので
+					// 他の弾をチェックする必要ないのでループを抜ける
+					break;
+				}
 			}
 		}
 	}

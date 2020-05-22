@@ -20,8 +20,6 @@ BOSS::BOSS()
 	whiteShot[1] = LoadGraph("data/png/EShot/WhiteShot2.png");
 	whiteShot[2] = LoadGraph("data/png/EShot/WhtieShot3.png");
 
-	color = BOSS_BLACK;
-
 	for (int i = 0; i < BOSS_SHOTNUM; ++i)
 	{
 		shot[i].flag = false;
@@ -31,6 +29,7 @@ BOSS::BOSS()
 		shot[i].speed = 0;
 		shot[i].x = 0;
 		shot[i].y = 0;
+		shot[i].type = 0;
 	}
 
 	raise = 2;
@@ -294,10 +293,12 @@ void  BOSS::Shot()
 					if (num == 0 || num == 2 || num == 4)
 					{
 						shot[index].graph = blackShot[1];  // 黒
+						shot[index].type = 0;
 					}
 					else
 					{
 						shot[index].graph = whiteShot[1];  // 白
+						shot[index].type = 1;
 					}
 
 					++num;
@@ -317,6 +318,7 @@ void  BOSS::Shot()
 				if ((index = ShotSearch()) != -1)
 				{
 					shot[index].graph = blackShot[2];  // 黒
+					shot[index].type = 0;
 					shot[index].speed = 4;
 					shot[index].pattern = 1;
 					shot[index].rad = atan2(py - y, px - x) + (rand() % 41 - 20) * DX_PI / 180;	// プレイヤーの両側20度までの範囲内でランダム
@@ -329,6 +331,7 @@ void  BOSS::Shot()
 				while ((index = ShotSearch()) != -1)
 				{
 					shot[index].graph = whiteShot[0];
+					shot[index].type = 1;
 					shot[index].speed = 6;
 					shot[index].pattern = 1;
 
@@ -367,10 +370,12 @@ void  BOSS::Shot()
 					if (num % 2 == 0)
 					{
 						shot[index].graph = blackShot[0];  // 黒
+						shot[index].type = 0;
 					}
 					else if (num % 2 == 1)
 					{
 						shot[index].graph = whiteShot[0];  // 白
+						shot[index].type = 1;
 					}
 					shot[index].speed = 3;
 					shot[index].rad = trad + num * ((360 / 20) * DX_PI / 180);
@@ -393,6 +398,7 @@ void  BOSS::Shot()
 				while ((index = ShotSearch()) != -1)
 				{
 					shot[index].graph = blackShot[0];
+					shot[index].type = 0;
 					shot[index].speed = 3;
 					shot[index].pattern = 3;
 					shot[index].rad = ((360 / 20) * DX_PI / 180) * num + ((shotCount / 15) * 0.08);
@@ -414,6 +420,7 @@ void  BOSS::Shot()
 				while ((index = ShotSearch()) != -1)
 				{
 					shot[index].graph = whiteShot[1];
+					shot[index].type = 1;
 					shot[index].speed = 6;
 					shot[index].pattern = 3;
 
@@ -619,6 +626,11 @@ int BOSS::GetPrevHp()
 bool BOSS::GetNoDamageFlag()
 {
 	return noDamageFlag;
+}
+
+int BOSS::GetShotColor(int index)
+{
+	return shot[index].type;
 }
 
 void BOSS::Draw()

@@ -2,12 +2,6 @@
 
 #include "define.h"
 
-enum BOSS_COLOR
-{
-	BOSS_BLACK,
-	BOSS_WHITE
-};
-
 class BOSS
 {
 private:
@@ -18,7 +12,6 @@ private:
 	int graph;
 	int blackShot[3];
 	int whiteShot[3];
-	BOSS_COLOR color;
 	// 現在の移動パターン
 	int movePattern;
 	// 現在のショットパターン
@@ -91,6 +84,7 @@ public:
 	int SetHp(int damage);
 	int GetPrevHp();
 	bool GetNoDamageFlag();
+	int GetShotColor(int index);
 	void All();
 };
 
