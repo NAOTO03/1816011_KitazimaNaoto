@@ -8,6 +8,7 @@ private:
 	// 座標
 	double x, y;
 	double prevX, prevY;
+	int width, height;
 	// グラフィックハンドル
 	int graph;
 	int blackShot[3];

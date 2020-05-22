@@ -83,4 +83,5 @@ struct ESHOT
 	int pattern; // ショットパターン
 	int speed;
 	int type;
+	int color;
 };

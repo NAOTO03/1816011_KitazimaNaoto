@@ -18,7 +18,9 @@ BOSS::BOSS()
 	blackShot[2] = LoadGraph("data/png/EShot/BlackShot3.png");
 	whiteShot[0] = LoadGraph("data/png/EShot/WhiteShot1.png");
 	whiteShot[1] = LoadGraph("data/png/EShot/WhiteShot2.png");
-	whiteShot[2] = LoadGraph("data/png/EShot/WhtieShot3.png");
+	whiteShot[2] = LoadGraph("data/png/EShot/WhiteShot3.png");
+
+	GetGraphSize(graph, &width, &height);
 
 	for (int i = 0; i < BOSS_SHOTNUM; ++i)
 	{
@@ -29,7 +31,7 @@ BOSS::BOSS()
 		shot[i].speed = 0;
 		shot[i].x = 0;
 		shot[i].y = 0;
-		shot[i].type = 0;
+		shot[i].color = 0;
 	}
 
 	raise = 2;
@@ -237,6 +239,10 @@ void  BOSS::Shot()
 	int num = 0;
 	// 空いてる弾の添え字
 	int index;
+	// ランダムで色を決定
+	srand((unsigned)time(NULL));
+	int rnd;
+	rnd = rand() % 2;	// 0か1を返す
 	// shotCountを戻すかどうかのフラグ
 	bool shotCountFlag = false;
 
@@ -265,6 +271,7 @@ void  BOSS::Shot()
 			{
 				while ((index = ShotSearch()) != -1)
 				{
+					shot[index].type = 1;
 					shot[index].pattern = 0;
 					shot[index].speed = 6;
 
@@ -290,15 +297,15 @@ void  BOSS::Shot()
 						shot[index].rad = trad + (20 * DX_PI / 180); // 一番右
 					}
 
-					if (num == 0 || num == 2 || num == 4)
+					if (rnd == 0)
 					{
 						shot[index].graph = blackShot[1];  // 黒
-						shot[index].type = 0;
+						shot[index].color = 0;
 					}
-					else
+					else if(rnd == 1)
 					{
 						shot[index].graph = whiteShot[1];  // 白
-						shot[index].type = 1;
+						shot[index].color = 1;
 					}
 
 					++num;
@@ -313,50 +320,24 @@ void  BOSS::Shot()
 			}
 			break;
 		case 1:
-			if (shotCount % 5 == 0)
+			if (shotCount % 3 == 0)
 			{
 				if ((index = ShotSearch()) != -1)
-				{
-					shot[index].graph = blackShot[2];  // 黒
-					shot[index].type = 0;
+				{				
+					if (rnd == 0)
+					{
+						shot[index].graph = blackShot[2];  // 黒
+						shot[index].color = 0;
+					}
+					else if (rnd == 1)
+					{
+						shot[index].graph = whiteShot[2];  // 白
+						shot[index].color = 1;
+					}
+					shot[index].type = 2;
 					shot[index].speed = 4;
 					shot[index].pattern = 1;
 					shot[index].rad = atan2(py - y, px - x) + (rand() % 41 - 20) * DX_PI / 180;	// プレイヤーの両側20度までの範囲内でランダム
-					shotSound = true;
-				}
-			}
-
-			if (shotCount % 5 == 0 && tempShotCount <= shotCount)
-			{
-				while ((index = ShotSearch()) != -1)
-				{
-					shot[index].graph = whiteShot[0];
-					shot[index].type = 1;
-					shot[index].speed = 6;
-					shot[index].pattern = 1;
-
-					if (num == 0)
-					{
-						shot[index].x = x - 50;
-						shot[index].rad = atan2(py - y, px - (x - 50));
-					}
-					else if (num == 1)
-					{
-						shot[index].x = x + 50;
-						shot[index].rad = atan2(py - y, px - (x + 50));
-					}
-
-					++num;
-
-					if (num == 2)
-					{
-						// 5発分撃ち終わったら 60ループ(一秒間)停止
-						if (tempShotCount + 20 == shotCount)
-						{
-							tempShotCount += 80;
-						}
-						break;
-					}
 					shotSound = true;
 				}
 			}
@@ -367,16 +348,17 @@ void  BOSS::Shot()
 				trad = atan2(py - y, px - x);
 				while ((index = ShotSearch()) != -1)
 				{
-					if (num % 2 == 0)
+					if (rnd == 0)
 					{
 						shot[index].graph = blackShot[0];  // 黒
-						shot[index].type = 0;
+						shot[index].color = 0;
 					}
-					else if (num % 2 == 1)
+					else if (rnd == 1)
 					{
 						shot[index].graph = whiteShot[0];  // 白
-						shot[index].type = 1;
+						shot[index].color = 1;
 					}
+					shot[index].type = 0;
 					shot[index].speed = 3;
 					shot[index].rad = trad + num * ((360 / 20) * DX_PI / 180);
 					shot[index].pattern = 2;
@@ -397,7 +379,16 @@ void  BOSS::Shot()
 			{
 				while ((index = ShotSearch()) != -1)
 				{
-					shot[index].graph = blackShot[0];
+					if (rnd == 0)
+					{
+						shot[index].graph = blackShot[0];  // 黒
+						shot[index].color = 0;
+					}
+					else if (rnd == 1)
+					{
+						shot[index].graph = whiteShot[0];  // 白
+						shot[index].color = 1;
+					}
 					shot[index].type = 0;
 					shot[index].speed = 3;
 					shot[index].pattern = 3;
@@ -419,7 +410,16 @@ void  BOSS::Shot()
 			{
 				while ((index = ShotSearch()) != -1)
 				{
-					shot[index].graph = whiteShot[1];
+					if (rnd == 0)
+					{
+						shot[index].graph = blackShot[1];  // 黒
+						shot[index].color = 0;
+					}
+					else if (rnd == 1)
+					{
+						shot[index].graph = whiteShot[1];  // 白
+						shot[index].color = 1;
+					}
 					shot[index].type = 1;
 					shot[index].speed = 6;
 					shot[index].pattern = 3;
@@ -630,7 +630,7 @@ bool BOSS::GetNoDamageFlag()
 
 int BOSS::GetShotColor(int index)
 {
-	return shot[index].type;
+	return shot[index].color;
 }
 
 void BOSS::Draw()
