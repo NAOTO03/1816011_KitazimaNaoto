@@ -108,12 +108,14 @@ out:
 	bShotSound = eShotSound;
 	pDeadSound = LoadSoundMem("data/se/playerDead.mp3");
 	eDeadSound = LoadSoundMem("data/se/enemyDead.mp3");
+	itemSound = LoadSoundMem("data/se/item.mp3");
 
 	pShotFlag = false;
 	eShotFlag = false;
 	bShotFlag = false;
 	pDeadFlag = false;
 	eDeadFlag = false;
+	itemFlag = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -156,6 +158,7 @@ void Game::All()
 	bShotFlag = false;
 	pDeadFlag = false;
 	eDeadFlag = false;
+	itemFlag = false;
 
 	back->All();
 
@@ -287,6 +290,11 @@ void Game::SoundAll()
 	{
 		PlaySoundMem(eDeadSound, DX_PLAYTYPE_BACK);
 	}
+
+	if (itemFlag)
+	{
+		PlaySoundMem(itemSound, DX_PLAYTYPE_BACK);
+	}
 }
 
 bool Game::CircleCollision(double c1, double c2, double cx1, double cx2, double cy1, double cy2)
@@ -330,6 +338,7 @@ void Game::CollisionAll()
 						break;
 					}
 					item[i]->Delete();
+					itemFlag = true;	// アイテム取得音フラグを立てる
 				}
 			}
 		}

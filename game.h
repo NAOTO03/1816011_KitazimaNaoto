@@ -36,6 +36,7 @@ class Game
 	int bShotSound;
 	int pDeadSound;
 	int eDeadSound;
+	int itemSound;
 
 	// サウンドを鳴らすかどうかのフラグ
 	bool pShotFlag;
@@ -43,6 +44,7 @@ class Game
 	bool bShotFlag;
 	bool pDeadFlag;
 	bool eDeadFlag;
+	bool itemFlag;
 
 public:
 	void All();
