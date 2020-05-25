@@ -1,5 +1,4 @@
-#ifndef _EFFECT_PDEAD
-#define _EFFECT_PDEAD
+#pragma once
 
 struct PLAYER_EFFECT 
 {
@@ -18,7 +17,7 @@ private:
 	int width;
 	int height;
 	//グラフィックハンドル
-	int graph[3];
+	int graph[2];
 	//カウント
 	int count;
 	//実行中かどうかのフラグ
@@ -36,5 +35,3 @@ public:
 	bool GetFlag();
 	void All();
 };
-
-#endif

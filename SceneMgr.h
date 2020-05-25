@@ -31,5 +31,13 @@ private:
 	Game* game;
 	GameClear* gameClear;
 	GameOver* gameOver;
+	bool FadeInScreen(int fadeStep);
+	bool FadeOutScreen(int fadeStep);
+	// Ìª°ÄŞˆ——p
+	int bright;
+	int fadeCnt;
+	bool fadeIn;
+	bool fadeOut;
+
 };
 

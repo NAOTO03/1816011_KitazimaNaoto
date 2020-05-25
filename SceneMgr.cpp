@@ -27,12 +27,27 @@ void SceneMgr::All()
 	// ゲームオーバークラス生成
 	GameOver &gameOver = GameOver::GetInstance();
 
+	if (fadeIn)
+	{
+		if (!FadeInScreen(5)) fadeIn = false;
+	}
+	else if (fadeOut)
+	{
+		if (!FadeOutScreen(5))
+		{
+			FinalizeModule(scene);		//現在のシーンの終了処理を実行
+			scene = nextScene;			//次のシーンを現在のシーンセット
+			nextScene = SCENE_NONE;     //次のシーン情報をクリア
+			fadeOut = false;
+			fadeIn = true;
+		}
+	}
+
 	if (nextScene != SCENE_NONE)	     //次のシーンがセットされていたら
 	{
-		// FinalizeModule(scene);		//現在のシーンの終了処理を実行
-		scene = nextScene;			//次のシーンを現在のシーンセット
-		nextScene = SCENE_NONE;     //次のシーン情報をクリア
+		fadeOut = true;
 	}
+		
 
 	//シーンによって処理を分岐
 	switch (scene)
@@ -85,5 +100,39 @@ static void FinalizeModule(SCENE scene)
 	case SCENE_GAMEOVER:
 		gameOver.Finalize();
 		break;
+	}
+}
+
+// ﾌｪｰﾄﾞｲﾝ処理
+bool SceneMgr::FadeInScreen(int fadeStep)
+{
+	fadeCnt += fadeStep;
+	if (fadeCnt <= 255) 
+	{
+		SetDrawBright(fadeCnt, fadeCnt, fadeCnt);
+		return true;
+	}
+	else 
+	{
+		fadeCnt = 0;
+		SetDrawBright(255, 255, 255);
+		return false;
+	}
+}
+
+// ﾌｪｰﾄﾞｱｳﾄ処理
+bool SceneMgr::FadeOutScreen(int fadeStep)
+{
+	fadeCnt += fadeStep;
+	if (fadeCnt <= 255)
+	{
+		SetDrawBright(255 - fadeCnt, 255 - fadeCnt, 255 - fadeCnt);
+		return true;
+	}
+	else
+	{
+		fadeCnt = 0;
+		SetDrawBright(0, 0, 0);
+		return false;
 	}
 }

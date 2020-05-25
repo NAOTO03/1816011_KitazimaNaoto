@@ -461,8 +461,8 @@ void PLAYER::All()
 		Update();
 	}
 	Shot();
-	Draw();
 	effectPDead.All();
+	Draw();
 	++shotCount;
 }
 

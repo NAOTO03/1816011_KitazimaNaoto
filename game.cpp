@@ -136,7 +136,7 @@ Game::~Game()
 
 	for (int i = 0; i < ENEMY_NUM; ++i)
 	{
-		// if (enemy[i] != NULL)
+		if (enemy[i] != NULL)
 		{
 			delete(enemy[i]);
 		}
@@ -196,7 +196,7 @@ void Game::All()
 
 				if (enemy[i]->All())
 				{
-					// delete(enemy[i]);
+					delete(enemy[i]);
 					enemy[i] = NULL;
 				}
 			}
@@ -625,6 +625,8 @@ void Game::BossCollisionAll()
 						eDeadFlag = true;
 						//さらに得点を加える
 						score->SetScore(CURRENT_SCORE, 100000);
+						SceneMgr &sceneMgr = SceneMgr::GetInstance();
+						sceneMgr.ChangeScene(SCENE_CLEAR);
 						//アイテムを出す。
 						for (int j = 0; j < ITEM_NUM; ++j)
 						{
