@@ -1,5 +1,6 @@
 #include "Title.h"
 #include "DxLib.h"
+#include "SceneMgr.h"
 
 
 void Title::Initialize()
@@ -17,22 +18,23 @@ void Title::Finalize()
 
 void Title::Update()
 {
+	SceneMgr &sceneMgr = SceneMgr::GetInstance();
+
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
-
+		sceneMgr.ChangeScene(SCENE_GAME);
 	}
 }
 
 void Title::Draw()
 {
-	DrawGraph(0, 0, graph[0], TRUE);
-	DrawGraph(0, 300, graph[1], TRUE);
+	DrawGraph(100, 120, graph[0], TRUE);
+	DrawGraph(200, 350, graph[1], TRUE);
 }
 
 void Title::All()
 {
 	Initialize();
-	Finalize();
 	Update();
 	Draw();
 }
