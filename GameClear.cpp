@@ -25,7 +25,7 @@ void GameClear::Update()
 
 void GameClear::Draw()
 {
-	DrawGraph(100, 200, graph, TRUE);
+	DrawGraph(50, 200, graph, TRUE);
 }
 
 void GameClear::All()
