@@ -28,8 +28,8 @@ void Title::Update()
 
 void Title::Draw()
 {
-	DrawGraph(100, 120, graph[0], TRUE);
-	DrawGraph(200, 350, graph[1], TRUE);
+	DrawGraph(100, 200, graph[0], TRUE);
+	DrawGraph(180, 400, graph[1], TRUE);
 }
 
 void Title::All()
