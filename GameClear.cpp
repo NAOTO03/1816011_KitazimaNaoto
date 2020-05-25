@@ -1,5 +1,6 @@
 #include "GameClear.h"
 #include "DxLib.h"
+#include "sceneMgr.h"
 
 
 void GameClear::Initialize()
@@ -14,21 +15,22 @@ void GameClear::Finalize()
 
 void GameClear::Update()
 {
-	if (CheckHitKey(KEY_INPUT_SPACE))
-	{
+	SceneMgr &sceneMgr = SceneMgr::GetInstance();
 
+	if (CheckHitKey(KEY_INPUT_RETURN) || CheckHitKey(KEY_INPUT_SPACE))
+	{
+		sceneMgr.ChangeScene(SCENE_TITLE);
 	}
 }
 
 void GameClear::Draw()
 {
-	DrawGraph(0, 0, graph, TRUE);
+	DrawGraph(100, 200, graph, TRUE);
 }
 
 void GameClear::All()
 {
 	Initialize();
-	Finalize();
 	Update();
 	Draw();
 }

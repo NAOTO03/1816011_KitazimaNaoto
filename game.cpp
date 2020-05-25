@@ -3,6 +3,7 @@
 //-----------------------------------------------------------------------------
 #include "Game.h"
 #include "define.h"
+#include "sceneMgr.h"
 
 //-----------------------------------------------------------------------------
 // コンストラクタ
@@ -16,9 +17,14 @@ Game::Game()
 	player = new PLAYER;
 
 	//エフェクトクラスのインスタンス生成
-	for (int i = 0; i<EFFECT_EDEADNUM; ++i) 
+	for (int i = 0; i < EFFECT_EDEADNUM; ++i) 
 	{
 		 effectEData[i] = new EFFECT_EDEAD;
+	}
+
+	for (int i = 0; i < EFFECT_PDEADNUM; ++i)
+	{
+		effectPData[i] = new EFFECT_PDEAD;
 	}
 
 	// スコアクラス
@@ -130,7 +136,7 @@ Game::~Game()
 
 	for (int i = 0; i < ENEMY_NUM; ++i)
 	{
-		if (enemy[i] != NULL)
+		// if (enemy[i] != NULL)
 		{
 			delete(enemy[i]);
 		}
@@ -140,6 +146,11 @@ Game::~Game()
 	for (int i = 0; i < EFFECT_EDEADNUM; ++i) 
 	{
 		delete(effectEData[i]);
+	}
+
+	for (int i = 0; i < EFFECT_PDEADNUM; ++i)
+	{
+		delete(effectPData[i]);
 	}
 
 	delete(score);
@@ -185,7 +196,7 @@ void Game::All()
 
 				if (enemy[i]->All())
 				{
-					delete(enemy[i]);
+					// delete(enemy[i]);
 					enemy[i] = NULL;
 				}
 			}
@@ -196,7 +207,7 @@ void Game::All()
 		}
 		// 敵との当たり判定
 		EnemyCollisionAll();
-		boss.SetFlag(true);
+		// boss.SetFlag(true);
 	}
 	else
 	{
@@ -217,7 +228,7 @@ void Game::All()
 	CollisionAll();
 
 	//敵消滅エフェクト
-	for (int i = 0; i<EFFECT_EDEADNUM; ++i)
+	for (int i = 0; i < EFFECT_EDEADNUM; ++i)
 	{
 		if (effectEData[i]->GetFlag()) 
 		{
@@ -236,6 +247,12 @@ void Game::All()
 	SoundAll();
 
 	score->All();
+
+	if (player->GetLife() == 0)
+	{
+		SceneMgr &sceneMgr = SceneMgr::GetInstance();
+		sceneMgr.ChangeScene(SCENE_GAMEOVER);
+	}
 
 	++gameCount;
 }

@@ -17,7 +17,7 @@ void GameOver::Update()
 {
 	SceneMgr &sceneMgr = SceneMgr::GetInstance();
 
-	if (CheckHitKey(KEY_INPUT_SPACE))
+	if (CheckHitKey(KEY_INPUT_RETURN) || CheckHitKey(KEY_INPUT_SPACE))
 	{
 		sceneMgr.ChangeScene(SCENE_TITLE);
 	}
