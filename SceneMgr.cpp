@@ -5,35 +5,85 @@
 #include "GameClear.h"
 #include "GameOver.h"
 
-void SceneMgr::Initialize()
-{
-	
-}
+static SCENE scene = SCENE_TITLE;    //シーン管理変数
+static SCENE nextScene = SCENE_NONE;    //次のシーン管理変数
 
-void SceneMgr::Finalize()
-{
-	
-}
+static void FinalizeModule(SCENE scene);//指定モジュールの終了処理を行う
 
-void SceneMgr::Update()
+//終了処理
+void SceneMgr::Finalize() 
 {
-
-}
-
-void SceneMgr::Draw()
-{
-	
+	FinalizeModule(scene);
 }
 
 void SceneMgr::All()
 {
-	Initialize();
-	Finalize();
-	Update();
-	Draw();
+	// タイトルクラス作成
+	Title &title = Title::GetInstance();
+	// ゲームクラス生成
+	Game &game = Game::GetInstance();
+	// ゲームクリアクラス生成
+	GameClear &gameClear = GameClear::GetInstance();
+	// ゲームオーバークラス生成
+	GameOver &gameOver = GameOver::GetInstance();
+
+	if (nextScene != SCENE_NONE)	     //次のシーンがセットされていたら
+	{
+		// FinalizeModule(scene);		//現在のシーンの終了処理を実行
+		scene = nextScene;			//次のシーンを現在のシーンセット
+		nextScene = SCENE_NONE;     //次のシーン情報をクリア
+	}
+
+	//シーンによって処理を分岐
+	switch (scene)
+	{       
+	case SCENE_TITLE:   
+		title.All();
+		break;
+	case SCENE_GAME:
+		game.All();
+		break;
+	case SCENE_CLEAR:
+		gameClear.All();
+		break;
+	case SCENE_GAMEOVER:
+		gameOver.All();
+		break;
+	}
 }
 
-void SceneMgr::ChangeScene(SCENE nextScene)
+// 引数 nextScene にシーンを変更する
+void SceneMgr::ChangeScene(SCENE NextScene)
 {
+	nextScene = NextScene;    //次のシーンをセットする
+}
 
+// 引数sceneモジュールの終了処理を行う
+static void FinalizeModule(SCENE scene) 
+{
+	// タイトルクラス作成
+	Title &title = Title::GetInstance();
+	// ゲームクラス生成
+	Game &game = Game::GetInstance();
+	// ゲームクリアクラス生成
+	GameClear &gameClear = GameClear::GetInstance();
+	// ゲームオーバークラス生成
+	GameOver &gameOver = GameOver::GetInstance();
+
+	//シーンによって処理を分岐
+	switch (scene)
+	{
+	case SCENE_TITLE:
+		title.Finalize();
+		break;
+	case SCENE_GAME:
+		game.~Game();
+		break;
+	case SCENE_CLEAR:
+		gameClear.Finalize();
+		break;
+	case SCENE_GAMEOVER:
+		gameOver.Finalize();
+		break;
+	}
 }

@@ -1,5 +1,11 @@
 #pragma once
 
+// プロトタイプ宣言
+class Title;
+class Game;
+class GameClear;
+class GameOver;
+
 typedef enum
 {
 	SCENE_TITLE,	// タイトル画面
@@ -12,13 +18,18 @@ typedef enum
 class SceneMgr
 {
 public:
-public:
 	void All();
-private:
-	void Initialize();
 	void Finalize();
-	void Update();
-	void Draw();
 	void ChangeScene(SCENE nextScene);	// 引数　nextScene にシーンを変更する
+	static SceneMgr& GetInstance()
+	{
+		static SceneMgr sceneMgr;
+		return sceneMgr;
+	}
+private:
+	Title* title;
+	Game* game;
+	GameClear* gameClear;
+	GameOver* gameOver;
 };
 
