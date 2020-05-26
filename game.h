@@ -52,6 +52,7 @@ class Game
 public:
 	~Game();
 	void All();
+	void Initialize();
 	void GetPlayerPosition(double *x, double *y);
 	void GetEnemyPosiition(int index, double *x, double *y);
 	void GetBossPosition(double *x, double *y);
