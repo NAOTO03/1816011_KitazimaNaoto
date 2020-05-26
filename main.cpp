@@ -2,7 +2,6 @@
 //  メイン処理.
 //-----------------------------------------------------------------------------
 #include "DxLib.h"
-#include "Game.h" 
 #include "SceneMgr.h"
 
 //-----------------------------------------------------------------------------
@@ -31,6 +30,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ゲームクラス生成
 	// Game &game = Game::GetInstance();
 	SceneMgr &sceneMgr = SceneMgr::GetInstance();
+
+	sceneMgr.Initialize();
 
 	// ゲームループ.
 	while (1)
