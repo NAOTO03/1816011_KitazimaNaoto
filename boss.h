@@ -73,6 +73,8 @@ private:
 	void Draw();
 public:
 	BOSS();
+	void Initialize();
+	void Finalize();
 	void SetDamageSetting();
 	void SetFlag(bool bFlag);
 	void SetBossFlag(bool flag);
