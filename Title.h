@@ -4,6 +4,7 @@ class Title
 {
 public:
 	void All();
+	void Initialize();
 	void Finalize();
 	static Title& GetInstance()
 	{
@@ -11,7 +12,6 @@ public:
 		return title;
 	}
 private:
-	void Initialize();
 	void Update();
 	void Draw();
 private:

@@ -4,6 +4,7 @@ class GameOver
 {
 public:
 	void All();
+	void Initialize();
 	void Finalize();
 	static GameOver& GetInstance()
 	{
@@ -11,7 +12,6 @@ public:
 		return gameOver;
 	}
 private:
-	void Initialize();
 	void Update();
 	void Draw();
 private:

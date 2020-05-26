@@ -30,7 +30,6 @@ void GameClear::Draw()
 
 void GameClear::All()
 {
-	Initialize();
 	Update();
 	Draw();
 }

@@ -34,7 +34,6 @@ void Title::Draw()
 
 void Title::All()
 {
-	Initialize();
 	Update();
 	Draw();
 }

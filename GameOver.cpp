@@ -30,7 +30,6 @@ void GameOver::Draw()
 
 void GameOver::All()
 {
-	Initialize();
 	Update();
 	Draw();
 }

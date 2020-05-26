@@ -4,6 +4,7 @@ class GameClear
 {
 public:
 	void All();
+	void Initialize();
 	void Finalize();
 	static GameClear& GetInstance()
 	{
@@ -11,7 +12,6 @@ public:
 		return gameClear;
 	}
 private:
-	void Initialize();
 	void Update();
 	void Draw();
 private:
