@@ -18,7 +18,7 @@ PLAYER::PLAYER()
 	count = 0;
 	color = BLACK;
 	move = 1.0f;
-	life = 1;
+	life = 5;
 	power = 5;
 	shotCount = 0;
 	damageCount = 0;
