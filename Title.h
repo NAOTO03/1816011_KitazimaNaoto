@@ -14,7 +14,10 @@ public:
 private:
 	void Update();
 	void Draw();
+	void KeySound(bool flag);
 private:
 	int graph[2];
+	int keySound;
+	bool keyFlag;
 };
 
