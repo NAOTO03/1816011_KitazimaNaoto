@@ -48,7 +48,6 @@ class Game
 	bool pDeadFlag;
 	bool eDeadFlag;
 	bool itemFlag;
-	bool bossBgmFlag;
 
 public:
 	~Game();
