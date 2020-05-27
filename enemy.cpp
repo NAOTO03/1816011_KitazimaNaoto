@@ -134,9 +134,13 @@ void ENEMY::Update()
 			}
 			break;
 		
-		// そのまま止まらずに下に行くパターン
+		// 途中で止まって、下に行くパターン
 		case 1:
-			if (inTime <= gameCount)
+			if (inTime < gameCount && gameCount < stopTime)
+			{
+				enemyY += 2;
+			}
+			else if (gameCount > outTime)
 			{
 				enemyY += 2;
 			}

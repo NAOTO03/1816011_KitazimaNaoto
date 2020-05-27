@@ -327,7 +327,7 @@ void Game::All()
 			}
 			else if (i >= ENEMY_NUM - 1)
 			{
-				if (gameCount >= 2400)
+				if (gameCount >= 2800)
 				{
 					StopMusic();	// ’ÊíŽž‚ÌBGM‚ðŽ~‚ß‚é
 					BossBgm(true);	// BOSSí‚ÌBGM‚Ìƒtƒ‰ƒO‚ð—§‚Ä‚é
