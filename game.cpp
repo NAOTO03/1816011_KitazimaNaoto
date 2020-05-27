@@ -122,6 +122,7 @@ out:
 	pDeadFlag = false;
 	eDeadFlag = false;
 	itemFlag = false;
+	bossBgmFlag = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -166,6 +167,9 @@ Game::~Game()
 void Game::Initialize()
 {
 	gameCount = 0;
+
+	PlayMusic("data/bgm/NormalBgm.mp3", DX_PLAYTYPE_BACK);
+	SetVolumeMusic(255 * 50 / 100);		// BGMの音量調整
 
 	// 背景クラス
 	back = new BACK;
@@ -281,6 +285,7 @@ out:
 	pDeadFlag = false;
 	eDeadFlag = false;
 	itemFlag = false;
+	bossBgmFlag = false;
 }
 
 void Game::All()
@@ -292,6 +297,7 @@ void Game::All()
 	pDeadFlag = false;
 	eDeadFlag = false;
 	itemFlag = false;
+	bossBgmFlag = false;
 
 	back->All();
 
@@ -324,7 +330,12 @@ void Game::All()
 			}
 			else if (i >= ENEMY_NUM - 1)
 			{
-				if(gameCount >= 2400) boss.SetFlag(true);
+				if (gameCount >= 2400)
+				{
+					StopMusic();	// 通常時のBGMを止める
+					boss.SetFlag(true);
+					BossBgm(true);	// BOSS戦のBGMのフラグを立てる
+				}
 			}
 		}
 		// 敵との当たり判定
@@ -433,6 +444,21 @@ void Game::SoundAll()
 	if (itemFlag)
 	{
 		PlaySoundMem(itemSound, DX_PLAYTYPE_BACK);
+	}
+
+}
+
+void Game::BossBgm(bool flag)
+{
+	bossBgmFlag = flag;
+	if (bossBgmFlag)
+	{
+		PlayMusic("data/bgm/BossBgm.mp3", DX_PLAYTYPE_LOOP);
+		SetVolumeMusic(255 * 60 / 100);		// BGMの音量調整
+	}
+	else
+	{
+		StopMusic();	// 通常時のBGMを止める
 	}
 }
 
@@ -749,6 +775,7 @@ void Game::BossCollisionAll()
 						score->SetScore(CURRENT_SCORE, 100000);
 						SceneMgr &sceneMgr = SceneMgr::GetInstance();
 						sceneMgr.ChangeScene(SCENE_CLEAR);
+						BossBgm(false);
 						//アイテムを出す。
 						for (int j = 0; j < ITEM_NUM; ++j)
 						{

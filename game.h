@@ -48,6 +48,7 @@ class Game
 	bool pDeadFlag;
 	bool eDeadFlag;
 	bool itemFlag;
+	bool bossBgmFlag;
 
 public:
 	~Game();
@@ -68,6 +69,7 @@ private:
 	void EnemyCollisionAll();
 	void BossCollisionAll();
 	void SoundAll();
+	void BossBgm(bool flag);
 	void EnemyDeadEffect(double x, double y, int index);
 };
 
