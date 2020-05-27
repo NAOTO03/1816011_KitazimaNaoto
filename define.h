@@ -53,7 +53,7 @@ extern int gameCount;
 // ボスの揺れ幅
 #define BOSS_SHAKE 20
 // ボスのHP
-#define BOSS_HP 500
+#define BOSS_HP 1500
 
 struct ENEMYDATA
 {
