@@ -326,6 +326,28 @@ void ENEMY::Shot()
 					shotSound = true;
 				}
 				break;
+				// うずまき弾
+			case 4:
+				if (shotCount % 3 == 0 && shotCount <= 57)
+				{
+					for (int i = 0; i < ESHOT_NUM; ++i)
+					{
+						// フラグが立っていない弾を探して、座標等をセット
+						if (shot[i].flag == false) 
+						{
+							shot[i].flag = true;
+							shot[i].x = enemyX + shot[i].width / 2;
+							shot[i].y = enemyY + shot[i].height / 2;
+							shot[i].rad = ((360 / 20) * DX_PI / 180) * shotNum + ((shotCount / 15) * 0.08);
+
+							++shotNum;
+							break;
+						}
+					}
+					// ショットサウンドフラグを立てる
+					shotSound = true;
+				}
+				break;
 			}
 		}
 
@@ -353,6 +375,10 @@ void ENEMY::Shot()
 					shot[i].y += shot[i].speed * sin(shot[i].rad);
 					break;
 				case 3:
+					shot[i].x += shot[i].speed * cos(shot[i].rad);
+					shot[i].y += shot[i].speed * sin(shot[i].rad);
+					break;
+				case 4:
 					shot[i].x += shot[i].speed * cos(shot[i].rad);
 					shot[i].y += shot[i].speed * sin(shot[i].rad);
 					break;
