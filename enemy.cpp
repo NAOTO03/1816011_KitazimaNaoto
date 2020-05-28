@@ -301,8 +301,8 @@ void ENEMY::Shot()
 				break;
 				// 乱射ショット
 			case 3:
-				//3ループに一回発射。100までなので50発発射。
-				if (shotCount % 2 == 0 && shotCount <= 100)
+				//2ループに一回発射。98までなので50発発射。
+				if (shotCount % 2 == 0 && shotCount <= 98)
 				{
 					for (int i = 0; i < ESHOT_NUM; ++i)
 					{
@@ -354,7 +354,8 @@ void ENEMY::Shot()
 				break;
 				// うずまき弾
 			case 5:
-				if (shotCount % 3 == 0 && shotCount <= 87)
+				// shotCountが60以下までなので60発発射
+				if (shotCount <= 60)
 				{
 					for (int i = 0; i < ESHOT_NUM; ++i)
 					{
@@ -364,10 +365,54 @@ void ENEMY::Shot()
 							shot[i].flag = true;
 							shot[i].x = enemyX + shot[i].width / 2;
 							shot[i].y = enemyY + shot[i].height / 2;
-							shot[i].rad = ((360 / 30) * DX_PI / 180) * shotNum + ((shotCount / 15) * 0.08);
+							shot[i].rad = ((360 / 60) * DX_PI / 180) * shotNum + ((shotCount / 15) * 0.08);
 
 							++shotNum;
 							break;
+						}
+					}
+					// ショットサウンドフラグを立てる
+					shotSound = true;
+				}
+				break;
+				// ワインダー(3方向の弾幕の檻)
+			case 6:
+				if (shotCount % 3 == 0)
+				{
+					for (int i = 0; i < ESHOT_NUM; ++i)
+					{
+						// フラグが立っていない弾を探して、座標等をセット
+						if (shot[i].flag == false)
+						{
+							shot[i].flag = true;
+							shot[i].x = enemyX + shot[i].width + shot[i].width * 2 / 3;
+							shot[i].y = enemyY + shot[i].height / 2;
+							rad = rad + (rand() % 61 - 30) * DX_PI / 180;	// プレイヤーの両側30度までの範囲内でランダム
+
+							// 0の時は左より
+							if (shotNum == 0)
+							{
+								// エネミーとプレイヤーとの逆正接から10度引いたラジアンを代入
+								shot[i].rad = rad + shotNum * 30 + 15;	// DX_PI 3.14
+							}
+							else if (shotNum == 1)	// 1の時はプレイヤーに一直線
+							{
+								// エネミーとプレイヤーとの逆正接を代入
+								shot[i].rad = rad + shotNum * 30 + 15;
+							}
+							else if (shotNum == 2)	// 2の時は右より
+							{
+								// エネミープレイヤーとの逆正接から10度足したラジアンを代入
+								shot[i].rad = rad + shotNum * 30 + 15;
+							}
+							++shotNum;
+
+							// 3発発射したら shotNumを0にループして抜ける
+							if (shotNum == 3)
+							{
+								shotNum = 0;
+								break;
+							}
 						}
 					}
 					// ショットサウンドフラグを立てる
@@ -391,22 +436,11 @@ void ENEMY::Shot()
 					shot[i].y += shot[i].speed;
 					break;
 				case 1:
-					shot[i].x += shot[i].speed * cos(shot[i].rad);
-					shot[i].y += shot[i].speed * sin(shot[i].rad);
-					break;
 				case 2:
-					shot[i].x += shot[i].speed * cos(shot[i].rad);
-					shot[i].y += shot[i].speed * sin(shot[i].rad);
-					break;
 				case 3:
-					shot[i].x += shot[i].speed * cos(shot[i].rad);
-					shot[i].y += shot[i].speed * sin(shot[i].rad);
-					break;
 				case 4:
-					shot[i].x += shot[i].speed * cos(shot[i].rad);
-					shot[i].y += shot[i].speed * sin(shot[i].rad);
-					break;
 				case 5:
+				case 6:
 					shot[i].x += shot[i].speed * cos(shot[i].rad);
 					shot[i].y += shot[i].speed * sin(shot[i].rad);
 					break;
