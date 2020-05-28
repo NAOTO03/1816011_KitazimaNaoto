@@ -29,13 +29,13 @@ extern int gameCount;
 #define PSHOT_SPEED 8
 
 // エネミーの数
-#define ENEMY_NUM 29
+#define ENEMY_NUM 32
 
 // エネミーの弾の数
-#define ESHOT_NUM 200
+#define ESHOT_NUM 300
 
 // エネミーのエフェクトの数
-#define EFFECT_EDEADNUM 30
+#define EFFECT_EDEADNUM 50
 
 // プレイヤーのエフェクトの数
 #define EFFECT_PDEADNUM 80
