@@ -403,6 +403,35 @@ void  BOSS::Shot()
 					shotSound = true;
 				}
 			}
+
+			if (shotCount % 45 == 0)
+			{
+				while ((index = ShotSearch()) != -1)
+				{
+					if (rnd == 0)
+					{
+						shot[index].graph = blackShot[0];  // çï
+						shot[index].color = 0;
+					}
+					else if (rnd == 1)
+					{
+						shot[index].graph = whiteShot[0];  // îí
+						shot[index].color = 1;
+					}
+					shot[index].type = 0;
+					shot[index].speed = 3;
+					shot[index].pattern = 3;
+					shot[index].rad = ((360 / 40) * DX_PI / 180) * num + ((shotCount / 15) * 0.08);
+
+					++num;
+
+					if (num == 40)
+					{
+						break;
+					}
+					shotSound = true;
+				}
+			}
 			break;
 		case 2:
 			if (shotCount % 10 == 0)
