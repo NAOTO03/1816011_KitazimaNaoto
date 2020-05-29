@@ -4,13 +4,6 @@
 
 #include "define.h"
 
-enum ENEMY_COLOR {
-	RED_ENEMY,
-	BLUE_ENEMY,
-	GREEN_ENEMY,
-	COLOR_ENEMY_MAX
-};
-
 // エネミー構造体
 class ENEMY
 {
@@ -56,7 +49,6 @@ private:
 	double rad;		 // 発射直後のラジアン
 	bool deadFlag;	 // エネミー消滅フラグ
 	bool endFlag;	 // エネミークラス消滅フラグ
-	ENEMY_COLOR eColor;	 // エネミーの色
 
 	// 弾構造体
 	ESHOT shot[ESHOT_NUM];
