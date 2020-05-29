@@ -355,8 +355,8 @@ void ENEMY::Shot()
 				break;
 				// うずまき弾
 			case 5:
-				// shotCountが60以下までなので60発発射
-				if (shotCount <= 60)
+				// 1ループに一回発射。59までなので60発発射。
+				if (shotCount % 1 == 0 && shotCount <= 59)
 				{
 					for (int i = 0; i < ESHOT_NUM; ++i)
 					{
@@ -369,11 +369,11 @@ void ENEMY::Shot()
 							shot[i].rad = ((360 / 60) * DX_PI / 180) * shotNum + ((shotCount / 15) * 0.08);
 
 							++shotNum;
-							// ショットサウンドフラグを立てる
-							shotSound = true;
 							break;
 						}
 					}
+					// ショットサウンドフラグを立てる
+					shotSound = true;
 				}
 				break;
 				// ワインダー(3方向の弾幕の檻)
