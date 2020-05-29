@@ -56,7 +56,7 @@ class Game
 	// ボスを倒してからのカウント
 	int defeatCount;
 	// スコア保存用
-	int saveScore;
+	FILE_DATA fileData;
 
 public:
 	~Game();

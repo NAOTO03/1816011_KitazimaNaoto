@@ -131,7 +131,9 @@ out:
 	defeatCount = 0;
 
 	LoadData();
-	score->SetScore(HIGH_SCORE, saveScore);
+	score->SetScore(HIGH_SCORE, fileData.highScore);
+	fileData.score = 0;	// 初期化
+	SaveData();
 }
 
 //-----------------------------------------------------------------------------
@@ -303,7 +305,9 @@ out:
 	defeatCount = 0;
 
 	LoadData();
-	score->SetScore(HIGH_SCORE, saveScore);
+	score->SetScore(HIGH_SCORE, fileData.highScore);
+	fileData.score = 0;	// 初期化
+	SaveData();
 }
 
 void Game::All()
@@ -357,7 +361,7 @@ void Game::All()
 		}
 		// 敵との当たり判定
 		EnemyCollisionAll();
-		// boss.SetFlag(true);
+		// boss.SetFlag(true);	//	デバック用
 	}
 	else
 	{
@@ -404,13 +408,16 @@ void Game::All()
 		if (!scoreFlag)
 		{
 			// ハイスコアの更新
-			if (saveScore <= score->GetScore(CURRENT_SCORE))
+			if (fileData.highScore <= score->GetScore(CURRENT_SCORE))
 			{
-				score->SetScore(HIGH_SCORE, -saveScore);
+				score->SetScore(HIGH_SCORE, -fileData.highScore);
 				score->SetScore(HIGH_SCORE, score->GetScore(CURRENT_SCORE));
-				saveScore = score->GetScore(HIGH_SCORE);
+				fileData.highScore = score->GetScore(HIGH_SCORE);
 				SaveData();
 			}
+			// スコアの保存
+			fileData.score = score->GetScore(CURRENT_SCORE);
+			SaveData();
 			scoreFlag = true;
 			SceneMgr &sceneMgr = SceneMgr::GetInstance();
 			sceneMgr.ChangeScene(SCENE_GAMEOVER);
@@ -426,13 +433,16 @@ void Game::All()
 			if (!scoreFlag)
 			{
 				// ハイスコアの更新
-				if (saveScore <= score->GetScore(CURRENT_SCORE))
+				if (fileData.highScore <= score->GetScore(CURRENT_SCORE))
 				{
-					score->SetScore(HIGH_SCORE, -saveScore);
+					score->SetScore(HIGH_SCORE, -fileData.highScore);
 					score->SetScore(HIGH_SCORE, score->GetScore(CURRENT_SCORE));
-					saveScore = score->GetScore(HIGH_SCORE);
+					fileData.highScore = score->GetScore(HIGH_SCORE);
 					SaveData();
 				}
+				// スコアの保存
+				fileData.score = score->GetScore(CURRENT_SCORE);
+				SaveData();
 				SceneMgr &sceneMgr = SceneMgr::GetInstance();
 				sceneMgr.ChangeScene(SCENE_CLEAR);
 				scoreFlag = true;
@@ -760,9 +770,9 @@ void Game::BossCollisionAll()
 					score->SetScore(CURRENT_SCORE, 100);
 
 					// デバック用(HP表示)
-					char buf[100];
+					/*char buf[100];
 					snprintf(buf, sizeof(buf), "%d", bHp);
-					SetMainWindowText(buf);
+					SetMainWindowText(buf);*/
 
 					//ボスの前回HPがHPの2/3以上で、現HPが2/3以下なら
    					if (BOSS_HP * 2 / 3 >= bHp && boss.GetPrevHp() > BOSS_HP * 2 / 3)
@@ -770,7 +780,7 @@ void Game::BossCollisionAll()
 						//消滅エフェクトを出す
 						EnemyDeadEffect(bx, by, 0);
 						//消滅音を鳴らす
-						// eDeadFlag = true;
+						eDeadFlag = true;
 						//さらに得点を加える
 						score->SetScore(CURRENT_SCORE, 1000);
 						//アイテムを出す。
@@ -797,7 +807,7 @@ void Game::BossCollisionAll()
 						//消滅エフェクトを出す
 						EnemyDeadEffect(bx, by, 0);
 						//消滅音を鳴らす
-						// eDeadFlag = true;
+						eDeadFlag = true;
 						//さらに得点を加える
 						score->SetScore(CURRENT_SCORE, 10000);
 						//アイテムを出す。
@@ -934,7 +944,7 @@ bool Game::SaveData()
 {
 	FILE *fp;
 
-	fopen_s(&fp, "saveData/saveData.dat", "wb");
+	fopen_s(&fp, "SaveData/saveData.dat", "wb");
 	if (fp == NULL)
 	{
 		return false;
@@ -942,12 +952,11 @@ bool Game::SaveData()
 	else
 	{
 
-		fwrite(&saveScore, sizeof(saveScore), 1, fp);		// 書き込む
+		fwrite(&fileData, sizeof(fileData), 1, fp);		// 書き込む
 		fclose(fp);
 
 		return true;
 	}
-
 }
 
 
@@ -956,17 +965,16 @@ bool Game::LoadData()
 {
 	FILE *fp;
 
-	fopen_s(&fp, "saveData/saveData.dat", "rb");
+	fopen_s(&fp, "SaveData/saveData.dat", "rb");
 	if (fp == NULL)
 	{
 		return false;
 	}
 	else
 	{
-		fread(&saveScore, sizeof(saveScore), 1, fp);
+		fread(&fileData, sizeof(fileData), 1, fp);
 		fclose(fp);
 
 		return true;
 	}
-
 }
