@@ -47,6 +47,7 @@ ENEMY::ENEMY(int type, int shotType, int movePattern, int shotPattern, int inTim
 	this->outTime = outTime;
 
 	this->item = item;
+	this->hp = hp;
 
 	rad = 0;
 	shotNum = 0;
@@ -584,6 +585,20 @@ bool ENEMY::GetShotSound()
 int ENEMY::GetItem()
 {
 	return item;
+}
+
+int ENEMY::GetHp()
+{
+	return hp;
+}
+
+void ENEMY::SetHp(int eHp)
+{
+	hp -= eHp;
+	if (hp <= 0)
+	{
+		hp = 0;
+	}
 }
 
 bool ENEMY::All()

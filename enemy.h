@@ -26,6 +26,8 @@ public:
 	bool GetDeadFlag();
 	bool GetShotSound();
 	int GetItem();
+	int GetHp();
+	void SetHp(int eHp);
 	bool All();
 	
 private:
@@ -49,6 +51,7 @@ private:
 	int shotPattern; // ショットパターン
 	int count;		 // エネミーが出現してからのカウント
 	int item;		 // アイテム
+	int hp;		     // HP
 	int shotNum;	 // 発射した球数
 	double rad;		 // 発射直後のラジアン
 	bool deadFlag;	 // エネミー消滅フラグ

@@ -327,7 +327,7 @@ void Game::All()
 			}
 			else if (i >= ENEMY_NUM - 1)
 			{
-				if (gameCount >= 4500)
+				if (gameCount >= 4800)
 				{
 					StopMusic();	// 通常時のBGMを止める
 					BossBgm(true);	// BOSS戦のBGMのフラグを立てる
@@ -535,23 +535,28 @@ void Game::EnemyCollisionAll()
 					// 当たり判定
 					if (CircleCollision(PSHOT_COLLISION, ENEMY_COLLISION, px, ex, py, ey))
 					{
-						// 当たっていれば、deadFlagを立てる
-						enemy[j]->SetDeadFlag();
-						// エネミー消滅音フラグセット
-						eDeadFlag = true;
-						//敵消滅エフェクトセット
-						EnemyDeadEffect(ex, ey, enemy[j]->GetEnemyType());
 						// 当たった弾のフラグを戻す
 						player->SetShotFlag(i, false);
-						// 得点を加える
-						score->SetScore(CURRENT_SCORE, 100);
-						for (int k = 0; k < ITEM_NUM; ++k)
+						enemy[j]->SetHp(1);
+
+						if (enemy[j]->GetHp() == 0)
 						{
-							item[k]->GetSize(&itemW, &itemH);
-							if (!item[k]->GetFlag())
+							// 当たっていれば、deadFlagを立てる
+							enemy[j]->SetDeadFlag();
+							// エネミー消滅音フラグセット
+							eDeadFlag = true;
+							//敵消滅エフェクトセット
+							EnemyDeadEffect(ex, ey, enemy[j]->GetEnemyType());
+							// 得点を加える
+							score->SetScore(CURRENT_SCORE, 100);
+							for (int k = 0; k < ITEM_NUM; ++k)
 							{
-								item[k]->SetFlag(ex - itemW / 4, ey + itemH / 6, enemy[j]->GetItem());
-								break;
+								item[k]->GetSize(&itemW, &itemH);
+								if (!item[k]->GetFlag())
+								{
+									item[k]->SetFlag(ex - itemW / 4, ey + itemH / 6, enemy[j]->GetItem());
+									break;
+								}
 							}
 						}
 					}
