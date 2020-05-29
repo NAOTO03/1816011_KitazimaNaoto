@@ -327,7 +327,7 @@ void Game::All()
 			}
 			else if (i >= ENEMY_NUM - 1)
 			{
-				if (gameCount >= 4800)
+				if (gameCount >= 5100)
 				{
 					StopMusic();	// 通常時のBGMを止める
 					BossBgm(true);	// BOSS戦のBGMのフラグを立てる
@@ -493,7 +493,7 @@ void Game::CollisionAll()
 					switch (item[i]->GetType())
 					{
 					case 0:
-						score->SetScore(CURRENT_SCORE, 300);
+						score->SetScore(CURRENT_SCORE, 5000);
 						break;
 					case 1:
 						player->SetPower(1);
@@ -548,7 +548,7 @@ void Game::EnemyCollisionAll()
 							//敵消滅エフェクトセット
 							EnemyDeadEffect(ex, ey, enemy[j]->GetEnemyType());
 							// 得点を加える
-							score->SetScore(CURRENT_SCORE, 100);
+							score->SetScore(CURRENT_SCORE, 1000);
 							for (int k = 0; k < ITEM_NUM; ++k)
 							{
 								item[k]->GetSize(&itemW, &itemH);
@@ -655,7 +655,7 @@ void Game::EnemyCollisionAll()
 						// 得点を加える
 						score->SetScore(CURRENT_SCORE, 500);
 						// プレイヤーのパワーを増やす
-						player->SetPower(2);
+						player->SetPower(1);
 					}
 					else
 					{
