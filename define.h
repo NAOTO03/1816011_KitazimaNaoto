@@ -85,3 +85,9 @@ struct ESHOT
 	int type;
 	int color;
 };
+
+struct FILE_DATA
+{
+	int score;
+	int highScore;
+};
