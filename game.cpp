@@ -129,6 +129,9 @@ out:
 	defeatFlag = false;
 	// ボスを倒してからのカウント
 	defeatCount = 0;
+
+	LoadData();
+	score->SetScore(HIGH_SCORE, saveScore);
 }
 
 //-----------------------------------------------------------------------------
@@ -298,6 +301,9 @@ out:
 	defeatFlag = false;
 	// ボスを倒してからのカウント
 	defeatCount = 0;
+
+	LoadData();
+	score->SetScore(HIGH_SCORE, saveScore);
 }
 
 void Game::All()
@@ -351,7 +357,7 @@ void Game::All()
 		}
 		// 敵との当たり判定
 		EnemyCollisionAll();
-		boss.SetFlag(true);
+		// boss.SetFlag(true);
 	}
 	else
 	{
@@ -398,7 +404,13 @@ void Game::All()
 		if (!scoreFlag)
 		{
 			// ハイスコアの更新
-			score->SetScore(HIGH_SCORE, score->GetScore(CURRENT_SCORE));
+			if (saveScore <= score->GetScore(CURRENT_SCORE))
+			{
+				score->SetScore(HIGH_SCORE, -saveScore);
+				score->SetScore(HIGH_SCORE, score->GetScore(CURRENT_SCORE));
+				saveScore = score->GetScore(HIGH_SCORE);
+				SaveData();
+			}
 			scoreFlag = true;
 			SceneMgr &sceneMgr = SceneMgr::GetInstance();
 			sceneMgr.ChangeScene(SCENE_GAMEOVER);
@@ -414,7 +426,13 @@ void Game::All()
 			if (!scoreFlag)
 			{
 				// ハイスコアの更新
-				score->SetScore(HIGH_SCORE, score->GetScore(CURRENT_SCORE));
+				if (saveScore <= score->GetScore(CURRENT_SCORE))
+				{
+					score->SetScore(HIGH_SCORE, -saveScore);
+					score->SetScore(HIGH_SCORE, score->GetScore(CURRENT_SCORE));
+					saveScore = score->GetScore(HIGH_SCORE);
+					SaveData();
+				}
 				SceneMgr &sceneMgr = SceneMgr::GetInstance();
 				sceneMgr.ChangeScene(SCENE_CLEAR);
 				scoreFlag = true;
@@ -909,4 +927,46 @@ void Game::EnemyDeadEffect(double x, double y, int index)
 			break;
 		}
 	}
+}
+
+// ---------- データのセーブ ----------
+bool Game::SaveData()
+{
+	FILE *fp;
+
+	fopen_s(&fp, "saveData/saveData.dat", "wb");
+	if (fp == NULL)
+	{
+		return false;
+	}
+	else
+	{
+
+		fwrite(&saveScore, sizeof(saveScore), 1, fp);		// 書き込む
+		fclose(fp);
+
+		return true;
+	}
+
+}
+
+
+// ----------- データのロード ----------
+bool Game::LoadData()
+{
+	FILE *fp;
+
+	fopen_s(&fp, "saveData/saveData.dat", "rb");
+	if (fp == NULL)
+	{
+		return false;
+	}
+	else
+	{
+		fread(&saveScore, sizeof(saveScore), 1, fp);
+		fclose(fp);
+
+		return true;
+	}
+
 }

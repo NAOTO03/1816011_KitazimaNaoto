@@ -55,6 +55,8 @@ class Game
 	bool defeatFlag;
 	// ボスを倒してからのカウント
 	int defeatCount;
+	// スコア保存用
+	int saveScore;
 
 public:
 	~Game();
@@ -77,5 +79,7 @@ private:
 	void SoundAll();
 	void BossBgm(bool flag);
 	void EnemyDeadEffect(double x, double y, int index);
+	bool SaveData();
+	bool LoadData();
 };
 
