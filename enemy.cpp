@@ -387,23 +387,23 @@ void ENEMY::Shot()
 							shot[i].flag = true;
 							shot[i].x = enemyX + shot[i].width + shot[i].width * 2 / 3;
 							shot[i].y = enemyY + shot[i].height / 2;
-							rad = rad + (rand() % 61 - 30) * DX_PI / 180;	// プレイヤーの両側30度までの範囲内でランダム
+							rad = atan2(py - (enemyY + height / 2), px - (enemyX + width / 2));	// プレイヤーの両側30度までの範囲内でランダム
 
 							// 0の時は左より
 							if (shotNum == 0)
 							{
 								// エネミーとプレイヤーとの逆正接から10度引いたラジアンを代入
-								shot[i].rad = rad + shotNum * 30 + 15;	// DX_PI 3.14
+								shot[i].rad = rad - (30 * DX_PI / 180);	// DX_PI 3.14
 							}
 							else if (shotNum == 1)	// 1の時はプレイヤーに一直線
 							{
 								// エネミーとプレイヤーとの逆正接を代入
-								shot[i].rad = rad + shotNum * 30 + 15;
+								shot[i].rad = rad;
 							}
 							else if (shotNum == 2)	// 2の時は右より
 							{
 								// エネミープレイヤーとの逆正接から10度足したラジアンを代入
-								shot[i].rad = rad + shotNum * 30 + 15;
+								shot[i].rad = rad + (30 * DX_PI / 180);
 							}
 							++shotNum;
 
