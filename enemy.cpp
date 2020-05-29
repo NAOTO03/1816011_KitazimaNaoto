@@ -368,11 +368,11 @@ void ENEMY::Shot()
 							shot[i].rad = ((360 / 60) * DX_PI / 180) * shotNum + ((shotCount / 15) * 0.08);
 
 							++shotNum;
+							// ショットサウンドフラグを立てる
+							shotSound = true;
 							break;
 						}
 					}
-					// ショットサウンドフラグを立てる
-					shotSound = true;
 				}
 				break;
 				// ワインダー(3方向の弾幕の檻)
