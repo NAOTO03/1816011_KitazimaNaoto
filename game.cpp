@@ -122,6 +122,13 @@ out:
 	pDeadFlag = false;
 	eDeadFlag = false;
 	itemFlag = false;
+
+	// スコア用のフラグ
+	scoreFlag = false;
+	// ボスを倒したかどうかのフラグ
+	defeatFlag = false;
+	// ボスを倒してからのカウント
+	defeatCount = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -284,6 +291,13 @@ out:
 	pDeadFlag = false;
 	eDeadFlag = false;
 	itemFlag = false;
+
+	// スコア用のフラグ
+	scoreFlag = false;
+	// ボスを倒したかどうかのフラグ
+	defeatFlag = false;
+	// ボスを倒してからのカウント
+	defeatCount = 0;
 }
 
 void Game::All()
@@ -337,7 +351,7 @@ void Game::All()
 		}
 		// 敵との当たり判定
 		EnemyCollisionAll();
-		// boss.SetFlag(true);
+		boss.SetFlag(true);
 	}
 	else
 	{
@@ -381,8 +395,31 @@ void Game::All()
 	if (player->GetLife() == 0)
 	{
 		StopMusic();	// 通常時のBGMを止める
-		SceneMgr &sceneMgr = SceneMgr::GetInstance();
-		sceneMgr.ChangeScene(SCENE_GAMEOVER);
+		if (!scoreFlag)
+		{
+			// ハイスコアの更新
+			score->SetScore(HIGH_SCORE, score->GetScore(CURRENT_SCORE));
+			scoreFlag = true;
+			SceneMgr &sceneMgr = SceneMgr::GetInstance();
+			sceneMgr.ChangeScene(SCENE_GAMEOVER);
+		}
+	}
+
+	if (defeatFlag)
+	{
+		defeatCount++;
+		// 10秒たったら
+		if (defeatCount >= 600)
+		{
+			if (!scoreFlag)
+			{
+				// ハイスコアの更新
+				score->SetScore(HIGH_SCORE, score->GetScore(CURRENT_SCORE));
+				SceneMgr &sceneMgr = SceneMgr::GetInstance();
+				sceneMgr.ChangeScene(SCENE_CLEAR);
+				scoreFlag = true;
+			}
+		}
 	}
 
 	++gameCount;
@@ -766,6 +803,7 @@ void Game::BossCollisionAll()
 					}
 					else if(bHp <= 0)  //もしボスのHPが0以下なら
 					{
+						defeatFlag = true;
 						//フラグを戻す
 						boss.SetBossFlag(false);
 						//消滅エフェクトを出す
@@ -775,25 +813,23 @@ void Game::BossCollisionAll()
 						BossBgm(false);
 						//さらに得点を加える
 						score->SetScore(CURRENT_SCORE, 100000);
-						SceneMgr &sceneMgr = SceneMgr::GetInstance();
-						sceneMgr.ChangeScene(SCENE_CLEAR);
-						//アイテムを出す。
-						//for (int j = 0; j < ITEM_NUM; ++j)
-						//{
-						//	if (!item[j]->GetFlag())
-						//	{
-						//		//アイテムの初期座標をばらけさせる。
-						//		ix = (rand() % 100 - 51) + bx;
-						//		iy = (rand() % 100 - 51) + by;
-						//		item[j]->SetFlag(ix, iy, rand() % 2);
-						//		++itemNum;
-						//		//10個出したらループを抜ける
-						//		if (itemNum == 10)
-						//		{
-						//			break;
-						//		}
-						//	}
-						//}
+						// アイテムを出す。
+						for (int j = 0; j < ITEM_NUM; ++j)
+						{
+							if (!item[j]->GetFlag())
+							{
+								//アイテムの初期座標をばらけさせる。
+								ix = (rand() % 100 - 51) + bx;
+								iy = (rand() % 100 - 51) + by;
+								item[j]->SetFlag(ix, iy, rand() % 2);
+								++itemNum;
+								//10個出したらループを抜ける
+								if (itemNum == 10)
+								{
+									break;
+								}
+							}
+						}
 					}
 				}
 			}

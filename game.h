@@ -49,6 +49,13 @@ class Game
 	bool eDeadFlag;
 	bool itemFlag;
 
+	// スコア用のフラグ
+	bool scoreFlag;
+	// ボスを倒したかどうかのフラグ
+	bool defeatFlag;
+	// ボスを倒してからのカウント
+	int defeatCount;
+
 public:
 	~Game();
 	void All();
