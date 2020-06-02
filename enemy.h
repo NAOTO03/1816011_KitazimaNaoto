@@ -29,6 +29,12 @@ private:
 	void Draw();
 	bool OutCheck();
 	bool ShotOutCheck(int i);
+	void EnemyPattern0();
+	void EnemyPattern1();
+	void EnemyPattern2();
+	void EnemyPattern3();
+	void EnemyPattern4();
+	void EnemyPattern5();
 private:
 	double enemyX, enemyY;
 	int width, height;
