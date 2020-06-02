@@ -122,51 +122,30 @@ void ENEMY::Update()
 	{
 		switch (movePattern)
 		{
-			// 途中で止まって、そのまま後ろに帰るパターン
+		// 途中で止まって、そのまま後ろに帰るパターン
 		case 0:
-			// 出てきてから止まる時間までの間なら下に移動
-			if (inTime < gameCount && gameCount < stopTime)
-			{
-				enemyY += 2;
-			}
-			else if (gameCount > outTime)	//帰還時間を過ぎたら戻る。
-			{
-				enemyY -= 2;
-			}
+			EnemyPattern0();
 			break;
 		
 		// 途中で止まって、下に行くパターン
 		case 1:
-			if (inTime < gameCount && gameCount < stopTime)
-			{
-				enemyY += 2;
-			}
-			else if (gameCount > outTime)
-			{
-				enemyY += 2;
-			}
+			EnemyPattern1();
 			break;
 		// ちょっとずつ左に移動しながら消えていく
 		case 2:
-			if (inTime <= gameCount)
-			{
-				enemyY += 1;
-				if (count % 10 == 0)
-				{ 
-					enemyX -= 2;
-				}
-			}
+			EnemyPattern2();
 			break;
 		// ちょっとずつ右に移動しながら消えていく
 		case 3:
-			if (inTime <= gameCount)
-			{
-				enemyY += 1;
-				if (count % 10 == 0)
-				{
-					enemyX += 2;
-				}
-			}
+			EnemyPattern3();
+			break;
+		// すばやく降りてきて左へ
+		case 4:
+			EnemyPattern4();
+			break;
+		// すばやく降りてきて右へ
+		case 5:
+			EnemyPattern5();
 			break;
 		}
 		// 画面からはみ出したら、deadFlag(はみ出すか死ぬかのフラグ)をtrueにする
@@ -180,6 +159,91 @@ void ENEMY::Update()
 		++count;
 	}
 }
+
+void ENEMY::EnemyPattern0()
+{
+	// 出てきてから止まる時間までの間なら下に移動
+	if (inTime < gameCount && gameCount < stopTime)
+	{
+		enemyY += 2;
+	}
+	else if (gameCount > outTime)	//帰還時間を過ぎたら戻る。
+	{
+		enemyY -= 2;
+	}
+}
+
+void ENEMY::EnemyPattern1()
+{
+	if (inTime < gameCount && gameCount < stopTime)
+	{
+		enemyY += 2;
+	}
+	else if (gameCount > outTime)
+	{
+		enemyY += 2;
+	}
+}
+
+void ENEMY::EnemyPattern2()
+{
+	// 出てきた瞬間に斜め移動をする
+	if (inTime <= gameCount)
+	{
+		enemyY += 1;
+		if (count % 10 == 0)
+		{
+			enemyX -= 2 * 0.71f;
+		}
+	}
+}
+
+void ENEMY::EnemyPattern3()
+{
+	if (inTime <= gameCount)
+	{
+		enemyY += 1;
+		if (count % 10 == 0)
+		{
+			enemyX += 2 * 0.71f;
+		}
+	}
+}
+
+void ENEMY::EnemyPattern4()
+{
+	if (inTime < gameCount && gameCount < stopTime)
+	{
+		enemyY += 5;
+	}
+	else if (gameCount > outTime)
+	{
+		// 左に移動する
+		enemyY += 1;
+		if (count % 10 == 0)
+		{
+			enemyX -= 2 * 0.71f;
+		}
+	}
+}
+
+void ENEMY::EnemyPattern5()
+{
+	if (inTime < gameCount && gameCount < stopTime)
+	{
+		enemyY += 5;
+	}
+	else if (gameCount > outTime)
+	{
+		// 右に移動する
+		enemyY += 1;
+		if (count % 10 == 0)
+		{
+			enemyX += 2 * 0.71f;
+		}
+	}
+}
+
 
 void ENEMY::Shot()
 {
@@ -513,7 +577,7 @@ bool ENEMY::OutCheck()
 bool ENEMY::ShotOutCheck(int i)
 {
 	// 弾が画面にはみ出たらフラグを戻す
-	if (shot[i].x < -40 || shot[i].x > 640 || shot[i].y < -40 || shot[i].y > 600)
+	if (shot[i].x < -40 || shot[i].x > 635 || shot[i].y < -40 || shot[i].y > 600)
 	{
 		return true;
 	}
