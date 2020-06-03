@@ -9,7 +9,7 @@ SCORE::SCORE()
 	graph[1] = LoadGraph("data/png/Score/score.png");
 	graph[2] = LoadGraph("data/png/Score/life.png");
 	graph[3] = LoadGraph("data/png/Score/power.png");
-	LoadDivGraph("data/png/Score/number.png", 10, 10, 1, 19, 27, graphNumber);
+	LoadDivGraph("data/png/Score/number02.png", 10, 10, 1, 19, 28, graphNumber);
 
 	highScore = 0;
 	score = 0;
