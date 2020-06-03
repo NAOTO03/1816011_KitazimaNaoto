@@ -337,26 +337,30 @@ void  BOSS::Shot()
 					shot[index].pattern = 0;
 					shot[index].speed = 6;
 
-					// 5方向にショットを打つ
-					if (num == 0)
+					// 7方向にショットを打つ
+					switch (num)
 					{
-						shot[index].rad = trad - (20 * DX_PI / 180); // 一番左
-					}
-					else if (num == 1)
-					{
-						shot[index].rad = trad - (10 * DX_PI / 180);  // 左から2番目
-					}
-					else if (num == 2)
-					{
+					case 0:
+						shot[index].rad = trad - (24 * DX_PI / 180); // 一番左
+						break;
+					case 1:
+						shot[index].rad = trad - (16 * DX_PI / 180); // 左から二番目
+						break;
+					case 2:
+						shot[index].rad = trad - (8 * DX_PI / 180); // 左から三番目
+						break;
+					case 3:
 						shot[index].rad = trad;	// 真ん中
-					}
-					else if (num == 3)
-					{
-						shot[index].rad = trad + (10 * DX_PI / 180);  // 右から2番目
-					}
-					else if (num == 4)
-					{
-						shot[index].rad = trad + (20 * DX_PI / 180); // 一番右
+						break;
+					case 4:
+						shot[index].rad = trad + (8 * DX_PI / 180);  // 右から3番目
+						break;
+					case 5:
+						shot[index].rad = trad + (16 * DX_PI / 180);  // 右から2番目
+						break;
+					case 6:
+						shot[index].rad = trad + (24 * DX_PI / 180);  // 一番右
+						break;
 					}
 
 					if (rnd == 0)
@@ -373,7 +377,7 @@ void  BOSS::Shot()
 					++num;
 					shotSound = true;
 
-					if (num == 5)
+					if (num == 7)
 					{
 						break;
 					}
@@ -397,7 +401,7 @@ void  BOSS::Shot()
 						shot[index].color = 1;
 					}
 					shot[index].type = 2;
-					shot[index].speed = 4;
+					shot[index].speed = 5;
 					shot[index].pattern = 1;
 					shot[index].rad = atan2(py - y, px - x) + (rand() % 41 - 20) * DX_PI / 180;	// プレイヤーの両側20度までの範囲内でランダム
 					shotSound = true;
@@ -419,8 +423,8 @@ void  BOSS::Shot()
 						shot[index].color = 1;
 					}
 					shot[index].type = 0;
-					shot[index].speed = 3;
-					shot[index].pattern = 3;
+					shot[index].speed = 2;
+					shot[index].pattern = 1;
 					shot[index].rad = ((360 / 40) * DX_PI / 180) * num + ((shotCount / 15) * 0.08);
 
 					++num;
@@ -452,7 +456,7 @@ void  BOSS::Shot()
 					shot[index].type = 0;
 					shot[index].speed = 3;
 					shot[index].rad = trad + num * ((360 / 20) * DX_PI / 180);
-					shot[index].pattern = 2;
+					shot[index].pattern = 1;
 					
 					++num;
 
@@ -482,7 +486,7 @@ void  BOSS::Shot()
 					}
 					shot[index].type = 0;
 					shot[index].speed = 3;
-					shot[index].pattern = 3;
+					shot[index].pattern = 1;
 					shot[index].rad = ((360 / 20) * DX_PI / 180) * num + ((shotCount / 15) * 0.08);
 
 					++num;
@@ -513,7 +517,7 @@ void  BOSS::Shot()
 					}
 					shot[index].type = 1;
 					shot[index].speed = 6;
-					shot[index].pattern = 3;
+					shot[index].pattern = 1;
 
 					if (num == 0)
 					{
@@ -563,14 +567,6 @@ void  BOSS::Shot()
 					}
 					break;
 				case 1:
-					shot[i].x += shot[i].speed * cos(shot[i].rad);
-					shot[i].y += shot[i].speed * sin(shot[i].rad);
-					break;
-				case 2:
-					shot[i].x += shot[i].speed * cos(shot[i].rad);
-					shot[i].y += shot[i].speed * sin(shot[i].rad);
-					break;
-				case 3:
 					shot[i].x += shot[i].speed * cos(shot[i].rad);
 					shot[i].y += shot[i].speed * sin(shot[i].rad);
 					break;
