@@ -452,7 +452,7 @@ void ENEMY::Shot()
 							shot[i].flag = true;
 							shot[i].x = enemyX + shot[i].width + shot[i].width * 2 / 3;
 							shot[i].y = enemyY + shot[i].height / 2;
-							rad = atan2(py - (enemyY + height / 2), px - (enemyX + width / 2));	// プレイヤーの両側30度までの範囲内でランダム
+							rad = atan2(py - (enemyY + height / 2), px - (enemyX + width / 2));
 
 							// 0の時は左より
 							if (shotNum == 0)
