@@ -28,7 +28,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	// ゲームクラス生成
-	// Game &game = Game::GetInstance();
 	SceneMgr &sceneMgr = SceneMgr::GetInstance();
 
 	sceneMgr.Initialize();
@@ -40,7 +39,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 画面を初期化(真っ黒にする)
 		ClearDrawScreen();
 
-		// game.All();
 		sceneMgr.All();
 
 		// 裏画面の内容を表画面にコピーする（描画の確定）.
