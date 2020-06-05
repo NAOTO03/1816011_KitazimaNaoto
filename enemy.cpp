@@ -58,6 +58,7 @@ ENEMY::ENEMY(int type, int shotType, int movePattern, int shotPattern, int inTim
 	endFlag = false;   // エネミークラス消滅フラグ
 	shotFlag = false;  // ショットが撃てるようになったかのフラグ
 	shotSound = false; // ショット音が鳴ったかどうかを示すフラグ 
+	continuationShotSound = false;
 
 	// 弾の画像とサイズを取得
 	// int shotGraph = NULL;
@@ -262,6 +263,8 @@ void ENEMY::Shot()
 	{
 		// ショット音フラグを戻す
 		shotSound = false;
+		continuationShotSound = false;
+
 
 		// エネミーが生きているときだけ
 		if (!deadFlag)
@@ -386,9 +389,9 @@ void ENEMY::Shot()
 							++shotNum;
 							break;
 						}
-						// ショットサウンドフラグを立てる
-						shotSound = true;
 					}
+					// ショットサウンドフラグを立てる
+					continuationShotSound = true;
 				}
 				break;
 				// 全方位弾
@@ -478,7 +481,7 @@ void ENEMY::Shot()
 							{
 								shotNum = 0;
 								// ショットサウンドフラグを立てる
-								shotSound = true;
+								continuationShotSound = true;
 								break;
 							}
 						}
@@ -647,9 +650,9 @@ bool ENEMY::GetShotSound()
 	return shotSound;
 }
 
-void ENEMY::SetShotSound()
+bool ENEMY::GetContinuationShotSound()
 {
-	shotSound = false;
+	return continuationShotSound;
 }
 
 int ENEMY::GetItem()

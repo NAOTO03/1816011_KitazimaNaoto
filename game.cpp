@@ -111,6 +111,7 @@ out:
 	// サウンドファイル読み込み
 	pShotSound = LoadSoundMem("data/se/playerShot.mp3");
 	eShotSound = LoadSoundMem("data/se/enemyShot.mp3");
+	continuationShotSound = LoadSoundMem("data/se/enemyShot.mp3");
 	bShotSound = eShotSound;
 	pDeadSound = LoadSoundMem("data/se/playerDead.mp3");
 	eDeadSound = LoadSoundMem("data/se/enemyDead.mp3");
@@ -118,6 +119,7 @@ out:
 
 	pShotFlag = false;
 	eShotFlag = false;
+	continuationShotFlag = false;
 	bShotFlag = false;
 	pDeadFlag = false;
 	eDeadFlag = false;
@@ -285,6 +287,7 @@ out:
 	// サウンドファイル読み込み
 	pShotSound = LoadSoundMem("data/se/playerShot.mp3");
 	eShotSound = LoadSoundMem("data/se/enemyShot.mp3");
+	continuationShotSound = LoadSoundMem("data/se/enemyShot.mp3");
 	bShotSound = eShotSound;
 	pDeadSound = LoadSoundMem("data/se/playerDead.mp3");
 	eDeadSound = LoadSoundMem("data/se/enemyDead.mp3");
@@ -292,6 +295,7 @@ out:
 
 	pShotFlag = false;
 	eShotFlag = false;
+	continuationShotFlag = false;
 	bShotFlag = false;
 	pDeadFlag = false;
 	eDeadFlag = false;
@@ -315,6 +319,7 @@ void Game::All()
 	// サウンドフラグを初期化
 	pShotFlag = false;
 	eShotFlag = false;
+	continuationShotFlag = false;
 	bShotFlag = false;
 	pDeadFlag = false;
 	eDeadFlag = false;
@@ -341,6 +346,11 @@ void Game::All()
 				if (enemy[i]->GetShotSound())
 				{
 					eShotFlag = true;
+				}
+
+				if (enemy[i]->GetContinuationShotSound())
+				{
+					continuationShotFlag = true;
 				}
 
 				if (enemy[i]->All())
@@ -371,7 +381,7 @@ void Game::All()
 			// ボスショットサウンドフラグチェック
 			if (boss.GetShotSound())
 			{
-				eShotFlag = true;
+				bShotFlag = true;
 			}
 			// ボスとの当たり判定
 			BossCollisionAll();
@@ -492,14 +502,16 @@ void Game::SoundAll()
 	if (eShotFlag)
 	{
 		PlaySoundMem(eShotSound, DX_PLAYTYPE_BACK);
-		for (int i = 0; i < ENEMY_NUM; ++i)
-		{
-			// インスタンスがまだ生成されているときだけ
-			if (enemy[i] != NULL)
-			{
-				enemy[i]->SetShotSound();
-			}
-		}
+	}
+
+	if (continuationShotFlag)
+	{
+		PlaySoundMem(continuationShotSound, DX_PLAYTYPE_BACK);
+	}
+
+	if (bShotFlag)
+	{
+		PlaySoundMem(bShotSound, DX_PLAYTYPE_BACK);
 	}
 
 	if (pDeadFlag)

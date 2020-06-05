@@ -36,6 +36,7 @@ class Game
 	// サウンドハンドル
 	int pShotSound;
 	int eShotSound;
+	int continuationShotSound;
 	int bShotSound;
 	int pDeadSound;
 	int eDeadSound;
@@ -44,6 +45,7 @@ class Game
 	// サウンドを鳴らすかどうかのフラグ
 	bool pShotFlag;
 	bool eShotFlag;
+	bool continuationShotFlag;
 	bool bShotFlag;
 	bool pDeadFlag;
 	bool eDeadFlag;

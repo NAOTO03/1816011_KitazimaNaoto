@@ -18,7 +18,7 @@ public:
 	void SetDeadFlag();
 	bool GetDeadFlag();
 	bool GetShotSound();
-	void SetShotSound();
+	bool GetContinuationShotSound();
 	int GetItem();
 	int GetHp();
 	void SetHp(int eHp);
@@ -65,6 +65,7 @@ private:
 	int shotCount;
 	// ショット音が鳴ったかどうかを示すフラグ
 	bool shotSound; 
+	bool continuationShotSound;
 };
 
 
