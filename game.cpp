@@ -492,6 +492,14 @@ void Game::SoundAll()
 	if (eShotFlag)
 	{
 		PlaySoundMem(eShotSound, DX_PLAYTYPE_BACK);
+		for (int i = 0; i < ENEMY_NUM; ++i)
+		{
+			// インスタンスがまだ生成されているときだけ
+			if (enemy[i] != NULL)
+			{
+				enemy[i]->SetShotSound();
+			}
+		}
 	}
 
 	if (pDeadFlag)
