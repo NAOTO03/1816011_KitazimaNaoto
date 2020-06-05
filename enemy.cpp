@@ -386,9 +386,9 @@ void ENEMY::Shot()
 							++shotNum;
 							break;
 						}
+						// ショットサウンドフラグを立てる
+						shotSound = true;
 					}
-					// ショットサウンドフラグを立てる
-					shotSound = true;
 				}
 				break;
 				// 全方位弾
@@ -409,10 +409,11 @@ void ENEMY::Shot()
 
 							if (shotNum == 30)
 							{
+								// ショットサウンドフラグを立てる
+								shotSound = true;
+								shotNum = 0;
 								break;
 							}
-							// ショットサウンドフラグを立てる
-							shotSound = true;
 						}
 					}
 				}
@@ -433,11 +434,11 @@ void ENEMY::Shot()
 							shot[i].rad = ((360 / 60) * DX_PI / 180) * shotNum + ((shotCount / 15) * 0.08);
 
 							++shotNum;
-							// ショットサウンドフラグを立てる
-							shotSound = true;
 							break;
 						}
 					}
+					// ショットサウンドフラグを立てる
+					shotSound = true;
 				}
 				break;
 				// ワインダー(3方向の弾幕の檻)
@@ -476,12 +477,12 @@ void ENEMY::Shot()
 							if (shotNum == 3)
 							{
 								shotNum = 0;
+								// ショットサウンドフラグを立てる
+								shotSound = true;
 								break;
 							}
 						}
 					}
-					// ショットサウンドフラグを立てる
-					shotSound = true;
 				}
 				break;
 			}
@@ -644,6 +645,11 @@ bool ENEMY::GetDeadFlag()
 bool ENEMY::GetShotSound()
 {
 	return shotSound;
+}
+
+void ENEMY::SetShotSound()
+{
+	shotSound = false;
 }
 
 int ENEMY::GetItem()

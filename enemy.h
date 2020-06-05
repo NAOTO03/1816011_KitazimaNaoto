@@ -18,6 +18,7 @@ public:
 	void SetDeadFlag();
 	bool GetDeadFlag();
 	bool GetShotSound();
+	void SetShotSound();
 	int GetItem();
 	int GetHp();
 	void SetHp(int eHp);
