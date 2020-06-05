@@ -7,7 +7,7 @@ void GameOver::Initialize()
 {
 	graph = LoadGraph("data/png/Transition/GameOver.png");
 	scoreGraph = LoadGraph("data/png/Score/score.png");
-	LoadDivGraph("data/png/Score/number02.png", 10, 10, 1, 19, 28, graphNumber);
+	LoadDivGraph("data/png/Score/number.png", 10, 10, 1, 19, 28, graphNumber);
 
 	score = new SCORE;
 	LoadData();
