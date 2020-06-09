@@ -10,6 +10,13 @@ enum SCOREDATA
 
 class SCORE
 {
+public:
+	void SetScore(SCOREDATA data, int val);
+	int GetScore(SCOREDATA data);
+	void All();
+	SCORE();
+private:
+	void Draw();
 private:
 	int graph[4];
 	int graphNumber[10];
@@ -17,11 +24,4 @@ private:
 	int score;
 	int life;
 	int power;
-private:
-	void Draw();
-public:
-	void SetScore(SCOREDATA data, int val);
-	int GetScore(SCOREDATA data);
-	void All();
-	SCORE();
 };

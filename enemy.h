@@ -22,8 +22,7 @@ public:
 	int GetItem();
 	int GetHp();
 	void SetHp(int eHp);
-	bool All();
-	
+	bool All();	
 private:
 	void Update();
 	void Shot();

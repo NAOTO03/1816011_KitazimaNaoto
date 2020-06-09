@@ -10,6 +10,14 @@ struct PLAYER_EFFECT
 
 class EFFECT_PDEAD 
 {
+public:
+	EFFECT_PDEAD();
+	void SetFlag(double x, double y, int index);
+	bool GetFlag();
+	void All();
+private:
+	void Updata();
+	void Draw();
 private:
 	//À•W
 	double x, y;
@@ -25,13 +33,4 @@ private:
 	//‚Ç‚Ì‰æ‘œ‚ğg‚¤‚©‚Ì“Yš
 	int index;
 	PLAYER_EFFECT pEffect[EFFECT_PDEADNUM];
-
-private:
-	void Updata();
-	void Draw();
-public:
-	EFFECT_PDEAD();
-	void SetFlag(double x, double y, int index);
-	bool GetFlag();
-	void All();
 };

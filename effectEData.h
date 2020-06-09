@@ -2,6 +2,14 @@
 
 class EFFECT_EDEAD
 {
+public:
+	EFFECT_EDEAD();
+	bool GetFlag();
+	void SetFlag(double x, double y, int index);
+	void All();
+private:
+	void Updata();
+	void Draw();
 private:
 	//座標
 	double x, y;
@@ -19,13 +27,5 @@ private:
 	int count;
 	//実行中かどうかのフラグ
 	bool flag;
-private:
-	void Updata();
-	void Draw();
-public:
-	EFFECT_EDEAD();
-	bool GetFlag();
-	void SetFlag(double x, double y, int index);
-	void All();
 };
 

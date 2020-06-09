@@ -3,50 +3,45 @@
 //グローバルカウント
 extern int gameCount;
 
-//当たり判定用半径定義
-#define PLAYER_COLLISION 4
-#define ENEMY_COLLISION 12
+// ---------- 当たり判定用半径定義 ----------
 
-#define PSHOT_COLLISION 4
-#define ESHOT0_COLLISION 6
-#define ESHOT1_COLLISION 4
-#define ESHOT2_COLLISION 4
+#define PLAYER_COLLISION 4	// プレイヤーの当たり判定用
+#define ENEMY_COLLISION 12  // エネミーの当たり判定用
 
-#define BOSS_COLLISION 60
+#define PSHOT_COLLISION 4	// プレイヤーの弾
+#define ESHOT0_COLLISION 6  // エネミーの弾(丸い弾)
+#define ESHOT1_COLLISION 4	// 縦長の弾
+#define ESHOT2_COLLISION 4  // ひし形の小さな弾
 
+#define BOSS_COLLISION 60   // ボスの当たり判定用
+
+#define ITEM_COLLISION 10   // アイテムの当たり判定用半径
+
+
+// ---------- プレイヤー関連 ----------
 
 //プレイヤーの初期位置
 #define PLAYER_INITX 310
 #define PLAYER_INITY 550
-
 //プレイヤーの移動スピード
 #define PLAYER_SPEED 3
-
 //プレイヤーの弾の数
 #define PSHOT_NUM 200
 //弾スピード
-
 #define PSHOT_SPEED 8
-
-// エネミーの数
-#define ENEMY_NUM 54
-
-// エネミーの弾の数
-#define ESHOT_NUM 300
-
-// エネミーのエフェクトの数
-#define EFFECT_EDEADNUM 50
-
 // プレイヤーのエフェクトの数
 #define EFFECT_PDEADNUM 80
 
-// スコアの文字描画の基準となるX座標
-#define SCORE_X 660
+// ---------- エネミー関連 ----------
 
-//アイテムの当たり判定用半径
-#define ITEM_COLLISION 10
-//アイテムの総数
-#define ITEM_NUM 30
+// エネミーの数
+#define ENEMY_NUM 54
+// エネミーの弾の数
+#define ESHOT_NUM 300
+// エネミーのエフェクトの数
+#define EFFECT_EDEADNUM 50
+
+// ---------- ボス関連 ----------
 
 // ボスの弾の数
 #define BOSS_SHOTNUM 300
@@ -54,6 +49,36 @@ extern int gameCount;
 #define BOSS_SHAKE 20
 // ボスのHP
 #define BOSS_HP 1500
+
+// ---------- 背景関連 ----------
+
+// スコアの文字描画の基準となるX座標
+#define SCORE_X 660
+
+//アイテムの総数
+#define ITEM_NUM 30
+
+
+
+// ---------- プレイヤー関連 ----------
+
+struct PSHOT
+{
+	bool flag;         //弾が発射中かどうか
+	double x;
+	double y;
+	int graph[2];
+	int width, height; //画像の幅と高さ
+	double rad;		   // 角度
+};
+
+enum PLAYER_COLOR
+{
+	BLACK,
+	WHITE
+};
+
+// ---------- エネミー関連 ----------
 
 struct ENEMYDATA
 {
@@ -85,6 +110,8 @@ struct ESHOT
 	int type;
 	int color;
 };
+
+// ---------- 背景関連 ----------
 
 struct FILE_DATA
 {

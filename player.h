@@ -5,21 +5,6 @@
 #include "define.h"
 #include "effectPData.h"
 
-struct PSHOT 
-{
-	bool flag;         //弾が発射中かどうか
-	double x;
-	double y; 
-	int graph[2];
-	int width, height; //画像の幅と高さ
-	double rad;		   // 角度
-};
-
-enum PLAYER_COLOR
-{
-	BLACK,
-	WHITE
-};
 
 // プレイヤー構造体
 class PLAYER

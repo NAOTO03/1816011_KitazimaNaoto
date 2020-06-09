@@ -4,6 +4,38 @@
 
 class BOSS
 {
+public:
+	BOSS();
+	void Initialize();
+	void Finalize();
+	void SetDamageSetting();
+	void SetFlag(bool bFlag);
+	void SetBossFlag(bool flag);
+	bool GetFlag();
+	bool GetBossFlag();
+	bool GetShotSound();
+	void GetPosition(double *x, double *y);
+	bool GetShotPosition(int index, double *x, double *y, int *type);
+	void SetShotFlag(int index, bool flag);
+	int SetHp(int damage);
+	int GetPrevHp();
+	bool GetNoDamageFlag();
+	int GetShotColor(int index);
+	void All();
+private:
+	void Updata();
+	void Appear();
+	void MovePattern1();
+	void MovePattern2();
+	void MovePattern3();
+	void MoveInit(double bx, double by, int state);
+	void Shot();
+	int ShotSearch();
+	bool ShotOutCheck(int i);
+	void MoveToDefault();
+	void SetMovePattern(int pattern);
+	void SetShotPattern(int pattern);
+	void Draw();
 private:
 	// 座標
 	double x, y;
@@ -57,37 +89,5 @@ private:
 	bool shotFlag;
 	// ショット音が鳴ったかどうかを示すフラグ
 	bool shotSound;
-private:
-	void Updata();
-	void Appear();
-	void MovePattern1();
-	void MovePattern2();
-	void MovePattern3();
-	void MoveInit(double bx, double by, int state);
-	void Shot();
-	int ShotSearch();
-	bool ShotOutCheck(int i);
-	void MoveToDefault();
-	void SetMovePattern(int pattern);
-	void SetShotPattern(int pattern);
-	void Draw();
-public:
-	BOSS();
-	void Initialize();
-	void Finalize();
-	void SetDamageSetting();
-	void SetFlag(bool bFlag);
-	void SetBossFlag(bool flag);
-	bool GetFlag();
-	bool GetBossFlag();
-	bool GetShotSound();
-	void GetPosition(double *x, double *y);
-	bool GetShotPosition(int index, double *x, double *y, int *type);
-	void SetShotFlag(int index, bool flag);
-	int SetHp(int damage);
-	int GetPrevHp();
-	bool GetNoDamageFlag();
-	int GetShotColor(int index);
-	void All();
 };
 

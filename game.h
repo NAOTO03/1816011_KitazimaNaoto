@@ -16,6 +16,30 @@
 
 class Game
 {
+public:
+	~Game();
+	void All();
+	void Initialize();
+	void GetPlayerPosition(double *x, double *y);
+	void GetEnemyPosiition(int index, double *x, double *y);
+	void GetBossPosition(double *x, double *y);
+	static Game& GetInstance()
+	{
+		static Game game;
+		return game;
+	}
+private:
+	Game();
+	bool CircleCollision(double c1, double c2, double cx1, double cx2, double cy1, double cy2);
+	void CollisionAll();
+	void EnemyCollisionAll();
+	void BossCollisionAll();
+	void SoundAll();
+	void BossBgm(bool flag);
+	void EnemyDeadEffect(double x, double y, int index);
+	bool SaveData();
+	bool LoadData();
+private:
 	// 背景クラス
 	BACK *back;
 	// プレイヤークラス
@@ -59,29 +83,5 @@ class Game
 	int defeatCount;
 	// スコア保存用
 	FILE_DATA fileData;
-
-public:
-	~Game();
-	void All();
-	void Initialize();
-	void GetPlayerPosition(double *x, double *y);
-	void GetEnemyPosiition(int index, double *x, double *y);
-	void GetBossPosition(double *x, double *y);
-	static Game& GetInstance()
-	{
-		static Game game;
-		return game;
-	}
-private:
-	Game();
-	bool CircleCollision(double c1, double c2, double cx1, double cx2, double cy1, double cy2);
-	void CollisionAll();
-	void EnemyCollisionAll();
-	void BossCollisionAll();
-	void SoundAll();
-	void BossBgm(bool flag);
-	void EnemyDeadEffect(double x, double y, int index);
-	bool SaveData();
-	bool LoadData();
 };
 
