@@ -11,13 +11,20 @@ class PLAYER
 {
 public:
 	PLAYER();
+	// プレイヤーの座標を返す
 	void GetPosition(double *x, double *y);
 	bool GetShotPosition(int index, double *x, double *y);
-	bool GetShotSound();
+	// 当たった弾を元に戻す
 	void SetShotFlag(int index, bool flag);
+	// ショットサウンドを鳴らすタイミングを返す
+	bool GetShotSound();
+	// ダメージを受けたときにライフを減らす
 	void SetDamageFlag();
+	// ダメージを受けた際の無敵時間用
 	bool GetDamageFlag();
+	// プレイヤーの色を返す
 	int GetPlayerColor();
+	// ----- スコア関連 -----
 	int GetLife();
 	void SetPower(int p);
 	int GetPower();
@@ -27,22 +34,24 @@ private:
 	void Shot();
 	void Draw();
 private:
-	double playerX, playerY;	//x座標,y座標
-	int width, height;	//画像幅
-	int graph[2];	//グラフィックハンドル格納用配列
+	double playerX, playerY; //x座標,y座標
+	int width, height;	     //画像幅
+	int graph[2];	         //グラフィックハンドル格納用配列
 	int rGraph[2];
-	double rad;		//回転角度
+	PSHOT shot[PSHOT_NUM];
+	double rad;		         //回転角度
 	int count;
-	float move;		// 移動係数	
-	int life;		// プレイヤーのライフ
-	int power;		// プレイヤーのパワー
+	float move;		         // 移動係数	
+	int life;		         // プレイヤーのライフ
+	int power;			     // プレイヤーのパワー
 	bool damageFlag;
 	bool moveFlag;
 	bool endFlag;
-	int damageCount;// ダメージ中のカウント
-	PSHOT shot[PSHOT_NUM];
+	int damageCount;         // ダメージ中のカウント
 	int shotCount;
-	bool shotSound; // ショット音が鳴ったかどうかを示すフラグ
+	// ショット音が鳴ったかどうかを示すフラグ
+	bool shotSound;
+	// プレイヤーの色
 	PLAYER_COLOR color;
 	//プレイヤー消滅エフェクトクラス
 	EFFECT_PDEAD effectPDead;

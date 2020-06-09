@@ -2,24 +2,24 @@
 
 #pragma once
 
-#include "DxLib.h"
-#include <time.h>
-#include "back.h"
-#include "player.h"
-#include "enemy.h"
-#include "effectEData.h"
-#include "effectPData.h"
-#include "score.h"
-#include "item.h"
+#include "define.h"
 #include "boss.h"
+
+// プロトタイプ宣言
+class BACK;
+class PLAYER;
+class ENEMY;
+class EFFECT_EDEAD;
+class EFFECT_PDEAD;
+class SCORE;
+class ITEM;
 
 
 class Game
 {
 public:
-	~Game();
-	void All();
 	void Initialize();
+	void Finalize();
 	void GetPlayerPosition(double *x, double *y);
 	void GetEnemyPosiition(int index, double *x, double *y);
 	void GetBossPosition(double *x, double *y);
@@ -28,8 +28,8 @@ public:
 		static Game game;
 		return game;
 	}
+	void All();
 private:
-	Game();
 	bool CircleCollision(double c1, double c2, double cx1, double cx2, double cy1, double cy2);
 	void CollisionAll();
 	void EnemyCollisionAll();

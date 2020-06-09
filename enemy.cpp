@@ -1,9 +1,8 @@
 // ------ エネミー ------
-
 #include "DxLib.h"
+#include <time.h>
 #include "math.h"
 #include "Game.h"
-#include "define.h"
 #include "enemy.h"
 
 // エネミーを初期化する

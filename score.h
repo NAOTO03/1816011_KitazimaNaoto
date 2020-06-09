@@ -11,10 +11,10 @@ enum SCOREDATA
 class SCORE
 {
 public:
+	SCORE();
 	void SetScore(SCOREDATA data, int val);
 	int GetScore(SCOREDATA data);
 	void All();
-	SCORE();
 private:
 	void Draw();
 private:

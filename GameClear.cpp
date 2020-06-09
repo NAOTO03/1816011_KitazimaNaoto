@@ -1,5 +1,6 @@
 #include "GameClear.h"
 #include "DxLib.h"
+#include "score.h"
 #include "sceneMgr.h"
 
 

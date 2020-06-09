@@ -7,8 +7,8 @@ void Title::Initialize()
 {
 	graph[0] = LoadGraph("data/png/Transition/Title.png");
 	graph[1] = LoadGraph("data/png/Transition/Press.png");
-	keySound = LoadSoundMem("data/se/button.mp3");
 
+	keySound = LoadSoundMem("data/se/button.mp3");
 	PlayMusic("data/bgm/TitleBgm.mp3", DX_PLAYTYPE_LOOP);	// ƒ^ƒCƒgƒ‹BGM‚ÌÄ¶
 
 	keyFlag = false;

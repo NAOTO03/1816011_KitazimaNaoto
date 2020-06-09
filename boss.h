@@ -5,7 +5,6 @@
 class BOSS
 {
 public:
-	BOSS();
 	void Initialize();
 	void Finalize();
 	void SetDamageSetting();
@@ -39,8 +38,14 @@ private:
 private:
 	// 座標
 	double x, y;
+	// 前の座標
 	double prevX, prevY;
+	// 画像幅
 	int width, height;
+
+	// 弾構造体
+	ESHOT shot[BOSS_SHOTNUM];
+
 	// グラフィックハンドル
 	int graph;
 	int blackShot[3];
@@ -53,31 +58,22 @@ private:
 	int prevMovePattern;
 	// 前回のショットパターン
 	int prevShotPattern;
-
-	//弾構造体
-	ESHOT shot[BOSS_SHOTNUM];
-
-	//合計角度と増加量
+	// 合計角度と増加量
 	int angle, raise;
-
-	//横移動時の増加量
+	// 横移動時の増加量
 	int raise2;
 	int waitCount;
 	bool wait;
-
-	//次の移動場所までの距離
+	// 次の移動場所までの距離
 	double moveX, moveY;
 	int state;
-
 	// カウント
 	int shotCount;
 	int tempShotCount;
-
-	//HP
+	// HP
 	int hp;
-	//前回HP
+	// 前回HP
 	int prevHp;
-
 	//ダメージを負ったかどうかのフラグ
 	bool damageFlag;
 	// ダメージを負わないフラグ

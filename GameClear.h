@@ -1,12 +1,13 @@
 #pragma once
 
-#include "score.h"
 #include "define.h"
+
+// プロトタイプ宣言
+class SCORE;
 
 class GameClear
 {
 public:
-	void All();
 	void Initialize();
 	void Finalize();
 	static GameClear& GetInstance()
@@ -14,6 +15,7 @@ public:
 		static GameClear gameClear;
 		return gameClear;
 	}
+	void All();
 private:
 	void Update();
 	void Draw();

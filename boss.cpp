@@ -1,60 +1,9 @@
 #include "DxLib.h"
 #include "math.h"
+#include <time.h>
 #include "define.h"
 #include "boss.h"
 #include "Game.h"
-
-
-BOSS::BOSS()
-{
-	x = 320;
-	y = -100;
-	prevX = 320;
-	prevY = -100;
-
-	graph = LoadGraph("data/png/Boss/boss.png");
-	blackShot[0] = LoadGraph("data/png/EShot/BlackShot1.png");
-	blackShot[1] = LoadGraph("data/png/EShot/BlackShot2.png");
-	blackShot[2] = LoadGraph("data/png/EShot/BlackShot3.png");
-	whiteShot[0] = LoadGraph("data/png/EShot/WhiteShot1.png");
-	whiteShot[1] = LoadGraph("data/png/EShot/WhiteShot2.png");
-	whiteShot[2] = LoadGraph("data/png/EShot/WhiteShot3.png");
-
-	GetGraphSize(graph, &width, &height);
-
-	for (int i = 0; i < BOSS_SHOTNUM; ++i)
-	{
-		shot[i].flag = false;
-		shot[i].graph = 0;
-		shot[i].pattern = 0;
-		shot[i].rad = 0;
-		shot[i].speed = 0;
-		shot[i].x = 0;
-		shot[i].y = 0;
-		shot[i].color = 0;
-	}
-
-	raise = 2;
-	raise2 = 2;
-	angle = 0;
-	movePattern = 0;
-	shotPattern = 0;
-	moveX = 0;
-	moveY = 220;
-	waitCount = 0;
-	wait = false;
-	state = 0;
-	shotCount = 0;
-	tempShotCount = 0;
-	hp = BOSS_HP;
-	prevHp = 0;
-	damageFlag = false;
-	noDamageFlag = false;
-	flag = false;
-	bossFlag = true;
-	shotFlag = false;
-	shotSound = false;
-}
 
 void BOSS::Initialize()
 {

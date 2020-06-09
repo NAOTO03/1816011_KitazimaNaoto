@@ -130,7 +130,7 @@ static void FinalizeModule(SCENE scene)
 		title.Finalize();
 		break;
 	case SCENE_GAME:
-		game.~Game();
+		game.Finalize();
 		break;
 	case SCENE_CLEAR:
 		gameClear.Finalize();

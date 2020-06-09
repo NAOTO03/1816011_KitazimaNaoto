@@ -1,12 +1,13 @@
 #pragma once
 
-#include "score.h"
 #include "define.h"
+
+// プロトタイプ宣言
+class SCORE;
 
 class GameOver
 {
 public:
-	void All();
 	void Initialize();
 	void Finalize();
 	static GameOver& GetInstance()
@@ -14,6 +15,7 @@ public:
 		static GameOver gameOver;
 		return gameOver;
 	}
+	void All();
 private:
 	void Update();
 	void Draw();

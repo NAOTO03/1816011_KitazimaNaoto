@@ -1,4 +1,5 @@
-#include "Game.h"
+#include "DxLib.h"
+#include <time.h>
 #include "math.h"
 #include "effectPData.h"
 

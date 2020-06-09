@@ -2,24 +2,29 @@
 
 #pragma once
 
-#include "define.h"
-
 // エネミー構造体
 class ENEMY
 {
 public:
 	ENEMY(int type, int shotType, int movePattern, int shotPattern, int inTime, int stopTime, int shotTime, int outTime,
 		  int x, int y, int speed, int hp, int item);	
+	// エネミー自身と弾の座標を返す
 	void GetPosition(double *x, double *y);
 	bool GetShotPosition(int index, double *x, double *y);
+	// 当たった弾を元に戻す
 	void SetShotFlag(int index, bool flag);
+	// エネミー自身と弾の色を返す
 	int GetEnemyType();
 	int  GetShotType();
-	void SetDeadFlag();
-	bool GetDeadFlag();
+	// ショットサウンドを鳴らすタイミングを返す
 	bool GetShotSound();
 	bool GetContinuationShotSound();
+	// どの種類のアイテムかを示す
 	int GetItem();
+	// 死んだかどうかの判定
+	void SetDeadFlag();
+	bool GetDeadFlag();
+	// 現在のHPを返す・HPを変更する
 	int GetHp();
 	void SetHp(int eHp);
 	bool All();	
@@ -27,8 +32,10 @@ private:
 	void Update();
 	void Shot();
 	void Draw();
+	// 画面外に出たかどうかの判定
 	bool OutCheck();
 	bool ShotOutCheck(int i);
+	// エネミーの動きの種類
 	void EnemyPattern0();
 	void EnemyPattern1();
 	void EnemyPattern2();
@@ -64,7 +71,7 @@ private:
 	int shotCount;
 	// ショット音が鳴ったかどうかを示すフラグ
 	bool shotSound; 
-	bool continuationShotSound;
+	bool continuationShotSound;	// 弾を連続で発射するショットパターン用のフラグ
 };
 
 

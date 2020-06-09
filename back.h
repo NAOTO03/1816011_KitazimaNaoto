@@ -4,12 +4,12 @@
 class BACK
 {
 public:
-	void All();
 	BACK();
+	void All();
 private:
 	void Draw();
 private:
-	double x, y;	// 座標
-	int graph;		// グラフィックハンドル
+	int x, y;	// 座標
+	int graph;	// グラフィックハンドル
 };
 

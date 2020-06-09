@@ -18,7 +18,6 @@ typedef enum
 class SceneMgr
 {
 public:
-	void All();
 	void Initialize();
 	void Finalize();
 	void ChangeScene(SCENE nextScene);	// 引数　nextScene にシーンを変更する
@@ -27,6 +26,7 @@ public:
 		static SceneMgr sceneMgr;
 		return sceneMgr;
 	}
+	void All();
 private:
 	Title* title;
 	Game* game;

@@ -1,4 +1,5 @@
-#include "Game.h"
+#include "DxLib.h"
+#include <time.h>
 #include "effectEData.h"
 
 int EFFECT_EDEAD::graph[2];
