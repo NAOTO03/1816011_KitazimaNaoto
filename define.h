@@ -1,5 +1,8 @@
 #pragma once
 
+//extern宣言してkey配列にどこからでもアクセスできるようにする
+extern char key[256];
+
 //グローバルカウント
 extern int gameCount;
 
