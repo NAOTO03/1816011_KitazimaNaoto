@@ -121,6 +121,7 @@ out:
 	boss.Initialize();
 
 	// サウンドファイル読み込み
+	pChangeColor = LoadSoundMem("data/se/changeColor.mp3");
 	pShotSound = LoadSoundMem("data/se/playerShot.mp3");
 	eShotSound = LoadSoundMem("data/se/enemyShot.mp3");
 	continuationShotSound = LoadSoundMem("data/se/enemyShot.mp3");
@@ -129,6 +130,7 @@ out:
 	eDeadSound = LoadSoundMem("data/se/enemyDead.mp3");
 	itemSound = LoadSoundMem("data/se/item.mp3");
 
+	pChangeColorFlag = false;
 	pShotFlag = false;
 	eShotFlag = false;
 	continuationShotFlag = false;
@@ -189,6 +191,7 @@ void Game::Finalize()
 void Game::All()
 {
 	// サウンドフラグを初期化
+	pChangeColorFlag = false;
 	pShotFlag = false;
 	eShotFlag = false;
 	continuationShotFlag = false;
@@ -205,6 +208,10 @@ void Game::All()
 	if (player->GetShotSound())
 	{
 		pShotFlag = true;
+	}
+	if (player->GetChangeColor())
+	{
+		pChangeColorFlag = true;
 	}
 
 	if (!boss.GetFlag())
@@ -366,6 +373,11 @@ void Game::GetBossPosition(double *x, double *y)
 
 void Game::SoundAll()
 {
+	if (pChangeColorFlag)
+	{
+		PlaySoundMem(pChangeColor, DX_PLAYTYPE_BACK);
+	}
+
 	if (pShotFlag)
 	{
 		PlaySoundMem(pShotSound, DX_PLAYTYPE_BACK);

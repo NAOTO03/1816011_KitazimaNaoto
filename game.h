@@ -58,6 +58,7 @@ private:
 	BOSS boss;
 
 	// サウンドハンドル
+	int pChangeColor;
 	int pShotSound;
 	int eShotSound;
 	int continuationShotSound;
@@ -67,6 +68,7 @@ private:
 	int itemSound;
 
 	// サウンドを鳴らすかどうかのフラグ
+	bool pChangeColorFlag;
 	bool pShotFlag;
 	bool eShotFlag;
 	bool continuationShotFlag;

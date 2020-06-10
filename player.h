@@ -18,6 +18,8 @@ public:
 	void SetShotFlag(int index, bool flag);
 	// ショットサウンドを鳴らすタイミングを返す
 	bool GetShotSound();
+	// 色の変更音を鳴らすタイミングを返す
+	bool GetChangeColor();
 	// ダメージを受けたときにライフを減らす
 	void SetDamageFlag();
 	// ダメージを受けた際の無敵時間用
@@ -28,6 +30,7 @@ public:
 	int GetLife();
 	void SetPower(int p);
 	int GetPower();
+	int UpdataKey();
 	void All();
 private:
 	void Update();
@@ -51,6 +54,8 @@ private:
 	int shotCount;
 	// ショット音が鳴ったかどうかを示すフラグ
 	bool shotSound;
+	//// 色の変更音をなったかどうかを示すフラグ
+	bool changeColor;
 	// プレイヤーの色
 	PLAYER_COLOR color;
 	//プレイヤー消滅エフェクトクラス

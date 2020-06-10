@@ -35,6 +35,7 @@ PLAYER::PLAYER()
 	moveFlag = false;
 	endFlag = false;
 	shotSound = false; // ショット音が鳴ったかどうかを示すフラグ 
+	changeColor = false;
 
 	//フラグを全部falseにしとく
 	//グラフィックハンドルと画像のサイズを代入しとく
@@ -58,9 +59,11 @@ PLAYER::PLAYER()
 // プレイヤーの更新
 void PLAYER::Update()
 {
-	if (CheckHitKey(KEY_INPUT_LEFT) == 1 || CheckHitKey(KEY_INPUT_RIGHT) == 1) 
+	changeColor = false;
+
+	if (key[KEY_INPUT_LEFT] >= 1 || key[KEY_INPUT_RIGHT] >= 1)
 	{
-		if (CheckHitKey(KEY_INPUT_UP) == 1 || CheckHitKey(KEY_INPUT_DOWN) == 1) 
+		if (key[KEY_INPUT_UP] >= 1 || key[KEY_INPUT_DOWN] >= 1)
 		{
 				//移動係数を０．７１に設定
 				move = 0.71f;
@@ -70,25 +73,25 @@ void PLAYER::Update()
 				move = 1.0f;
 		}
 	}
-	else if (CheckHitKey(KEY_INPUT_UP) == 1 || CheckHitKey(KEY_INPUT_DOWN) == 1)
+	else if (key[KEY_INPUT_UP] >= 1 || key[KEY_INPUT_DOWN] >= 1)
 	{
 			move = 1.0f;
 	}
 
 	// 矢印キーを押していたらプレイヤーを移動させる
-	if (CheckHitKey(KEY_INPUT_UP) == 1)
+	if (key[KEY_INPUT_UP] >= 1)
 	{
 		 playerY -= PLAYER_SPEED*move;
 	}
-	if (CheckHitKey(KEY_INPUT_DOWN) == 1)
+	if (key[KEY_INPUT_DOWN] >= 1)
 	{
 		playerY += PLAYER_SPEED*move;
 	}
-	if (CheckHitKey(KEY_INPUT_LEFT) == 1)
+	if (key[KEY_INPUT_LEFT] >= 1)
 	{
 		playerX -= PLAYER_SPEED*move;
 	}
-	if (CheckHitKey(KEY_INPUT_RIGHT) == 1)
+	if (key[KEY_INPUT_RIGHT] >= 1)
 	{
 		playerX += PLAYER_SPEED*move;
 	}
@@ -116,15 +119,24 @@ void PLAYER::Update()
 
 	++count;
 
-	if (CheckHitKey(KEY_INPUT_X))
+	if (key[KEY_INPUT_X] == 1)
 	{
-		color = BLACK;
-	}
-	if (CheckHitKey(KEY_INPUT_C))
-	{
-		color = WHITE;
+		if (color == WHITE && color != BLACK)
+		{
+			color = BLACK;
+			changeColor = true;
+		}
 	}
 
+	if (key[KEY_INPUT_C] == 1)
+	{
+		if (color == BLACK && color != WHITE)
+		{
+			color = WHITE;
+			changeColor = true;
+		}
+	}
+	
 }
 
 void PLAYER::Shot()
@@ -135,7 +147,7 @@ void PLAYER::Shot()
 	if (!damageFlag)
 	{
 		// キーが押されててかつ、6ループに一回発射
-		if (CheckHitKey(KEY_INPUT_Z) == 1 && shotCount % 6 == 0) 
+		if (CheckHitKey(KEY_INPUT_Z) && shotCount % 6 == 0)
 		{
 			for (int i = 0; i < PSHOT_NUM; ++i)
 			{
@@ -175,7 +187,7 @@ void PLAYER::Shot()
 						{
 							shot[i].flag = true;
 							// 弾の位置をセット、位置はプレイヤーの左
-							shot[i].x = playerX - width * 2;
+							shot[i].x = playerX - 10;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.57;
 						}
@@ -184,7 +196,7 @@ void PLAYER::Shot()
 							shot[i].flag = true;
 							// 弾の位置をセット、位置はプレイヤーの左から２番目
 							shot[i].x = playerX - width / 6;
-							shot[i].y = playerY - height / 4;
+							shot[i].y = playerY - height;
 							shot[i].rad = -1.57;
 						}
 						else if (num == 2)	
@@ -192,14 +204,14 @@ void PLAYER::Shot()
 							shot[i].flag = true;
 							// 弾の位置をセット、位置はプレイヤーの右から２番目
 							shot[i].x = playerX + width;
-							shot[i].y = playerY - height / 4;
+							shot[i].y = playerY - height;
 							shot[i].rad = -1.57;
 						}
 						else if (num == 3) 
 						{
 							shot[i].flag = true;
 							// 弾の位置をセット、位置はプレイヤーの右
-							shot[i].x = playerX + width * 3;
+							shot[i].x = playerX + 18;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.57;
 						}
@@ -218,7 +230,7 @@ void PLAYER::Shot()
 						{
 							shot[i].flag = true;
 							// 弾の位置をセット、位置はプレイヤーの左
-							shot[i].x = playerX - width * 2;
+							shot[i].x = playerX - 10;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.57;
 						}
@@ -227,7 +239,7 @@ void PLAYER::Shot()
 							shot[i].flag = true;
 							// 弾の位置をセット、位置はプレイヤーの左から２番目
 							shot[i].x = playerX - width / 6;
-							shot[i].y = playerY - height / 4;
+							shot[i].y = playerY - height;
 							shot[i].rad = -1.57;
 						}
 						else if (num == 2)
@@ -235,28 +247,28 @@ void PLAYER::Shot()
 							shot[i].flag = true;
 							// 弾の位置をセット、位置はプレイヤーの右から2番目z
 							shot[i].x = playerX + width;
-							shot[i].y = playerY - height / 4;
+							shot[i].y = playerY - height;
 							shot[i].rad = -1.57;
 						}
 						else if (num == 3)
 						{
 							shot[i].flag = true;
 							// 弾の位置をセット、位置はプレイヤーの右
-							shot[i].x = playerX + width * 3;
+							shot[i].x = playerX + 18;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.57;
 						}
 						else if (num == 4)	// 4の時が左斜め上
 						{
 							shot[i].flag = true;
-							shot[i].x = playerX - width * 3;
+							shot[i].x = playerX - 18;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.69;
 						}
 						else if (num == 5) // 5の時が右斜め上
 						{
 							shot[i].flag = true;
-							shot[i].x = playerX + width * 4;
+							shot[i].x = playerX + 28;
 							shot[i].y = playerY - height / 4;
 							shot[i].rad = -1.45;
 						}
@@ -397,6 +409,11 @@ bool PLAYER::GetShotSound()
 	return shotSound;
 }
 
+bool PLAYER::GetChangeColor()
+{
+	return changeColor;
+}
+
 void PLAYER::SetShotFlag(int index, bool flag)
 {
 	shot[index].flag = flag;
@@ -452,6 +469,7 @@ int PLAYER::GetPower()
 {
 	return power;
 }
+
 
 void PLAYER::All()
 {
