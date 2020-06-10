@@ -30,7 +30,6 @@ public:
 	int GetLife();
 	void SetPower(int p);
 	int GetPower();
-	int UpdataKey();
 	void All();
 private:
 	void Update();

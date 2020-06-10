@@ -148,7 +148,7 @@ out:
 
 	LoadData();
 	score->SetScore(HIGH_SCORE, fileData.highScore);
-	fileData.score = 0;	// ‰Šú‰»
+	fileData.score = 0;	 // ‰Šú‰»
 	SaveData();
 }
 

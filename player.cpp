@@ -59,6 +59,7 @@ PLAYER::PLAYER()
 // プレイヤーの更新
 void PLAYER::Update()
 {
+	// 色変更時の効果音フラグ
 	changeColor = false;
 
 	if (key[KEY_INPUT_LEFT] >= 1 || key[KEY_INPUT_RIGHT] >= 1)

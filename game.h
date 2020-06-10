@@ -66,7 +66,6 @@ private:
 	int pDeadSound;
 	int eDeadSound;
 	int itemSound;
-
 	// サウンドを鳴らすかどうかのフラグ
 	bool pChangeColorFlag;
 	bool pShotFlag;
