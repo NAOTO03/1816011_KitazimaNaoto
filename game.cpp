@@ -209,6 +209,7 @@ void Game::All()
 	{
 		pShotFlag = true;
 	}
+	// プレイヤーのチェンジカラーフラグチェック
 	if (player->GetChangeColor())
 	{
 		pChangeColorFlag = true;
@@ -462,7 +463,7 @@ void Game::CollisionAll()
 					switch (item[i]->GetType())
 					{
 					case 0:
-						score->SetScore(CURRENT_SCORE, 5000);
+						score->SetScore(CURRENT_SCORE, 50000);
 						break;
 					case 1:
 						player->SetPower(1);
@@ -517,7 +518,7 @@ void Game::EnemyCollisionAll()
 							//敵消滅エフェクトセット
 							EnemyDeadEffect(ex, ey, enemy[j]->GetEnemyType());
 							// 得点を加える
-							score->SetScore(CURRENT_SCORE, 1000);
+							score->SetScore(CURRENT_SCORE, 10000);
 							for (int k = 0; k < ITEM_NUM; ++k)
 							{
 								item[k]->GetSize(&itemW, &itemH);
@@ -622,7 +623,7 @@ void Game::EnemyCollisionAll()
 						//敵消滅エフェクトセット
 						EnemyDeadEffect(ex, ey, enemy[i]->GetEnemyType());
 						// 得点を加える
-						score->SetScore(CURRENT_SCORE, 500);
+						score->SetScore(CURRENT_SCORE, 5000);
 						// プレイヤーのパワーを増やす
 						player->SetPower(1);
 					}
@@ -671,7 +672,7 @@ void Game::BossCollisionAll()
 					//当たった弾のフラグを戻す
 					player->SetShotFlag(i, false);
 					//得点を加える
-					score->SetScore(CURRENT_SCORE, 100);
+					score->SetScore(CURRENT_SCORE, 1000);
 
 					// デバック用(HP表示)
 					/*char buf[100];
@@ -713,7 +714,7 @@ void Game::BossCollisionAll()
 						//消滅音を鳴らす
 						eDeadFlag = true;
 						//さらに得点を加える
-						score->SetScore(CURRENT_SCORE, 10000);
+						score->SetScore(CURRENT_SCORE, 100000);
 						//アイテムを出す。
 						for (int j = 0; j < ITEM_NUM; ++j)
 						{
@@ -744,7 +745,7 @@ void Game::BossCollisionAll()
 						eDeadFlag = true;
 						BossBgm(false);
 						//さらに得点を加える
-						score->SetScore(CURRENT_SCORE, 100000);
+						score->SetScore(CURRENT_SCORE, 1000000);
 						// アイテムを出す。
 						for (int j = 0; j < ITEM_NUM; ++j)
 						{
