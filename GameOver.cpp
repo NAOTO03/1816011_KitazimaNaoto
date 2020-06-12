@@ -7,8 +7,8 @@
 void GameOver::Initialize()
 {
 	graph = LoadGraph("data/png/Transition/GameOver.png");
-	scoreGraph = LoadGraph("data/png/Score/score.png");
-	LoadDivGraph("data/png/Score/number.png", 10, 10, 1, 19, 28, graphNumber);
+	scoreGraph = LoadGraph("data/png/Score/ResultScore.png");
+	LoadDivGraph("data/png/Score/ResultNumber.png", 10, 10, 1, 57, 100, graphNumber);
 
 	score = new SCORE;
 	LoadData();
@@ -41,14 +41,14 @@ void GameOver::Draw()
 	char buf[100];
 	int num;
 
-	DrawGraph(100, 160, graph, TRUE);
-	DrawGraph(300, 400, scoreGraph, TRUE);  // 現在のスコア
+	DrawGraph(100, 100, graph, TRUE);
+	DrawGraph(150, 300, scoreGraph, TRUE);  // 現在のスコア
 
 	// スコア描画
 	num = snprintf(buf, sizeof(buf), "%d", fileData.score);
 	for (int i = 0; i < num; ++i)
 	{
-		DrawGraph(400 + 20 + i * 19, 401, graphNumber[buf[i] - '0'], TRUE);
+		DrawGraph(190 + i * 48, 400, graphNumber[buf[i] - '0'], TRUE);
 	}
 }
 
