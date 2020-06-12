@@ -36,8 +36,6 @@ int UpdateKey()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	ChangeWindowMode(TRUE);
-
 	// 画面モードの設定
 	SetGraphMode(900, 600, 16);		// 解像度を900*600、colorを16bitに設定.
 	ChangeWindowMode(TRUE);			// ウインドウモードに.
