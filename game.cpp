@@ -3,7 +3,9 @@
 //-----------------------------------------------------------------------------
 #include "DxLib.h"
 #include <time.h>
+#include "define.h"
 #include "Game.h"
+#include "boss.h"
 #include "back.h"
 #include "player.h"
 #include "enemy.h"
@@ -45,6 +47,8 @@ void Game::Initialize()
 	{
 		item[i] = new ITEM;
 	}
+
+	boss = new BOSS();
 
 	FILE *fp = NULL;
 	ENEMYDATA data[ENEMY_NUM];
@@ -118,7 +122,7 @@ out:
 			data[i].outTime, data[i].x, data[i].y, data[i].speed, data[i].hp, data[i].item);
 	}
 
-	boss.Initialize();
+	boss->Initialize();
 
 	// サウンドファイル読み込み
 	pChangeColor = LoadSoundMem("data/se/changeColor.mp3");
@@ -185,7 +189,7 @@ void Game::Finalize()
 		delete(item[i]);
 	}
 
-	boss.Finalize();
+	boss->Finalize();
 }
 
 void Game::All()
@@ -215,7 +219,7 @@ void Game::All()
 		pChangeColorFlag = true;
 	}
 
-	if (!boss.GetFlag())
+	if (!boss->GetFlag())
 	{
 		for (int i = 0; i < ENEMY_NUM; ++i)
 		{
@@ -245,21 +249,21 @@ void Game::All()
 				{
 					StopMusic();	// 通常時のBGMを止める
 					BossBgm(true);	// BOSS戦のBGMのフラグを立てる
-					boss.SetFlag(true);
+					boss->SetFlag(true);
 				}
 			}
 		}
 		// 敵との当たり判定
 		EnemyCollisionAll();
-		// boss.SetFlag(true);	//	デバック用
+		// boss->SetFlag(true);	//	デバック用
 	}
 	else
 	{
-		if (boss.GetBossFlag())
+		if (boss->GetBossFlag())
 		{
-			boss.All();
+			boss->All();
 			// ボスショットサウンドフラグチェック
-			if (boss.GetShotSound())
+			if (boss->GetShotSound())
 			{
 				bShotFlag = true;
 			}
@@ -366,7 +370,7 @@ void Game::GetBossPosition(double *x, double *y)
 {
 	double tempX, tempY;
 	// 指定した添字のプレイヤーの座標を取得
-	boss.GetPosition(&tempX, &tempY);
+	boss->GetPosition(&tempX, &tempY);
 	// 代入
 	*x = tempX;
 	*y = tempY;
@@ -657,18 +661,18 @@ void Game::BossCollisionAll()
 	bool hitFlag = false;
 
 	//まず無敵フラグがたってないかをチェック。
-	if (!boss.GetNoDamageFlag()) {
+	if (!boss->GetNoDamageFlag()) {
 		//プレイヤーのショットとボスとの当たり判定
 		for (int i = 0; i < PSHOT_NUM; ++i)
 		{
 			if (player->GetShotPosition(i, &px, &py))
 			{
-				boss.GetPosition(&bx, &by);
+				boss->GetPosition(&bx, &by);
 				//当たり判定
 				if (CircleCollision(PSHOT_COLLISION, BOSS_COLLISION, px, bx, py, by))
 				{
 					//当たっていれば、hpを減らす
-					bHp = boss.SetHp(1);
+					bHp = boss->SetHp(1);
 					//当たった弾のフラグを戻す
 					player->SetShotFlag(i, false);
 					//得点を加える
@@ -680,7 +684,7 @@ void Game::BossCollisionAll()
 					SetMainWindowText(buf);*/
 
 					//ボスの前回HPがHPの2/3以上で、現HPが2/3以下なら
-   					if (BOSS_HP * 2 / 3 >= bHp && boss.GetPrevHp() > BOSS_HP * 2 / 3)
+   					if (BOSS_HP * 2 / 3 >= bHp && boss->GetPrevHp() > BOSS_HP * 2 / 3)
 					{
 						//消滅エフェクトを出す
 						EnemyDeadEffect(bx, by, 0);
@@ -705,9 +709,9 @@ void Game::BossCollisionAll()
 								}
 							}
 						}
-						boss.SetDamageSetting();
+						boss->SetDamageSetting();
 					}
-					else if (BOSS_HP / 3 >= bHp && boss.GetPrevHp() > BOSS_HP / 3)  // ボスの前回HPがHPの1/3以上で、現HPが1/3以下なら
+					else if (BOSS_HP / 3 >= bHp && boss->GetPrevHp() > BOSS_HP / 3)  // ボスの前回HPがHPの1/3以上で、現HPが1/3以下なら
 					{
 						//消滅エフェクトを出す
 						EnemyDeadEffect(bx, by, 0);
@@ -732,13 +736,13 @@ void Game::BossCollisionAll()
 								}
 							}
 						}
-						boss.SetDamageSetting();
+						boss->SetDamageSetting();
 					}
 					else if(bHp <= 0)  //もしボスのHPが0以下なら
 					{
 						defeatFlag = true;
 						//フラグを戻す
-						boss.SetBossFlag(false);
+						boss->SetBossFlag(false);
 						//消滅エフェクトを出す
 						EnemyDeadEffect(bx, by, 0);
 						//消滅音を鳴らす
@@ -775,7 +779,7 @@ void Game::BossCollisionAll()
 		player->GetPosition(&px, &py);
 		for (int i = 0; i < BOSS_SHOTNUM; ++i)
 		{
-			if (boss.GetShotPosition(i, &bx, &by, &type))
+			if (boss->GetShotPosition(i, &bx, &by, &type))
 			{
 				switch (type)
 				{
@@ -803,10 +807,10 @@ void Game::BossCollisionAll()
 
 			if (hitFlag)
 			{
-				if (player->GetPlayerColor() == boss.GetShotColor(i))
+				if (player->GetPlayerColor() == boss->GetShotColor(i))
 				{
 					// 弾を消す
-					boss.SetShotFlag(i, false);
+					boss->SetShotFlag(i, false);
 					// 一時フラグを元に戻す
 					hitFlag = false;
 				}
@@ -817,7 +821,7 @@ void Game::BossCollisionAll()
 					// プレイヤーのパワーを減らす
 					player->SetPower(-2);
 					// 弾を消す
-					boss.SetShotFlag(i, false);
+					boss->SetShotFlag(i, false);
 					// プレイヤー消滅音フラグ
 					pDeadFlag = true;
 					// 一時フラグを元に戻す

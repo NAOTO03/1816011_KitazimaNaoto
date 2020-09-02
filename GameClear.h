@@ -1,7 +1,5 @@
 #pragma once
 
-#include "define.h"
-
 // プロトタイプ宣言
 class SCORE;
 

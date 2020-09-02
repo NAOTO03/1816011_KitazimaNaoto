@@ -1,7 +1,5 @@
 #pragma once
 
-#include "define.h"
-
 struct PLAYER_EFFECT 
 {
 	double x;

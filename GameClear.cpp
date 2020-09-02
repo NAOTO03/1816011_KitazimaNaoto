@@ -1,7 +1,8 @@
-#include "GameClear.h"
 #include "DxLib.h"
+#include "define.h"
 #include "score.h"
 #include "sceneMgr.h"
+#include "GameClear.h"
 
 
 void GameClear::Initialize()
@@ -47,7 +48,7 @@ void GameClear::Draw()
 	num = snprintf(buf, sizeof(buf), "%d", fileData.score);
 	for (int i = 0; i < num; ++i)
 	{
-		DrawGraph(190 + i * 48, 400, graphNumber[buf[i] - '0'], TRUE);
+		DrawGraph(250 + i * 48, 400, graphNumber[buf[i] - '0'], TRUE);
 	}
 }
 

@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include <time.h>
 #include "math.h"
+#include "define.h"
 #include "Game.h"
 #include "enemy.h"
 

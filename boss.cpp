@@ -2,8 +2,8 @@
 #include "math.h"
 #include <time.h>
 #include "define.h"
-#include "boss.h"
 #include "Game.h"
+#include "boss.h"
 
 void BOSS::Initialize()
 {

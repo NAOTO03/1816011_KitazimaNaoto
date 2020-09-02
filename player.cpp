@@ -1,8 +1,10 @@
 // ------ ƒvƒŒƒCƒ„[@------
 
 #include "DxLib.h"
-#include "player.h"
 #include "math.h"
+#include "define.h"
+#include "player.h"
+#include "effectPData.h"
 
 // ƒvƒŒƒCƒ„[‚ð‰Šú‰»‚·‚é
 PLAYER::PLAYER()
@@ -54,6 +56,8 @@ PLAYER::PLAYER()
 	// ‰ñ“]‚·‚é˜g
 	rGraph[0] = LoadGraph("data/png/Player/RotateBlack.png");
 	rGraph[1] = LoadGraph("data/png/Player/RotateWhite.png");
+
+	effectPDead = new EFFECT_PDEAD();
 }
 
 // ƒvƒŒƒCƒ„[‚ÌXV
@@ -66,12 +70,13 @@ void PLAYER::Update()
 	{
 		if (key[KEY_INPUT_UP] >= 1 || key[KEY_INPUT_DOWN] >= 1)
 		{
-				//ˆÚ“®ŒW”‚ð‚OD‚V‚P‚ÉÝ’è
-				move = 0.71f;
+			//ˆÚ“®ŒW”‚ð‚OD‚V‚P‚ÉÝ’è
+			move = 0.71f;
 		}
-		else {
-				//ŽÎ‚ß‚¶‚á‚È‚¯‚ê‚Î‚PD‚O‚ÉÝ’è
-				move = 1.0f;
+		else 
+		{
+			//ŽÎ‚ß‚¶‚á‚È‚¯‚ê‚Î‚PD‚O‚ÉÝ’è
+			move = 1.0f;
 		}
 	}
 	else if (key[KEY_INPUT_UP] >= 1 || key[KEY_INPUT_DOWN] >= 1)
@@ -326,60 +331,60 @@ void PLAYER::Draw()
 	}
 
 	// ¶‚«‚Ä‚¢‚ê‚Î•`‰æ
-	if (damageFlag)
+	if (life > 0)
 	{
-		if (damageCount % 2 == 0)	// 2‚ÅŠ„‚Á‚Ä—]‚è‚ª0‚É‚È‚Á‚½‚Æ‚«‚É­‚µ“§‰ß‚³‚¹‚Ä•`‰æ
+		if (damageFlag)
 		{
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);	// “§‰ßƒ‚[ƒh
-			switch (color)
+			if (damageCount % 2 == 0)	// 2‚ÅŠ„‚Á‚Ä—]‚è‚ª0‚É‚È‚Á‚½‚Æ‚«‚É­‚µ“§‰ß‚³‚¹‚Ä•`‰æ
 			{
-			case BLACK:
-				DrawGraph(playerX, playerY, graph[0], TRUE);
-				break;
-			case WHITE:
-				DrawGraph(playerX, playerY, graph[1], TRUE);
-				break;
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);	// “§‰ßƒ‚[ƒh
+				switch (color)
+				{
+				case BLACK:
+					DrawGraph(playerX, playerY, graph[0], TRUE);
+					break;
+				case WHITE:
+					DrawGraph(playerX, playerY, graph[1], TRUE);
+					break;
+				}
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 			}
-			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			else
+			{
+				switch (color)
+				{
+				case BLACK:
+					DrawGraph(playerX, playerY, graph[0], TRUE);
+					break;
+				case WHITE:
+					DrawGraph(playerX, playerY, graph[1], TRUE);
+					break;
+				}
+			}
+			++damageCount;
+			moveFlag = true;
+			if (damageCount == 140)
+			{
+				damageFlag = false;
+				damageCount = 0;
+			}
 		}
 		else
 		{
+			// ’Êí•`‰æ
 			switch (color)
 			{
 			case BLACK:
 				DrawGraph(playerX, playerY, graph[0], TRUE);
+				DrawRotaGraph(playerX + width / 2, playerY + height / 2, 1.0, rad, rGraph[0], TRUE);
+				DrawRotaGraph(playerX + width / 2, playerY + height / 2, 1.0, -rad, rGraph[0], TRUE);
 				break;
 			case WHITE:
 				DrawGraph(playerX, playerY, graph[1], TRUE);
+				DrawRotaGraph(playerX + width / 2, playerY + height / 2, 1.0, rad, rGraph[1], TRUE);
+				DrawRotaGraph(playerX + width / 2, playerY + height / 2, 1.0, -rad, rGraph[1], TRUE);
 				break;
 			}
-		}
-		++damageCount;
-		moveFlag = true;
-		if (damageCount == 140)
-		{
-			damageFlag = false;
-			damageCount = 0;
-			// À•W‚ð‰Šú’n‚É–ß‚·
-			playerX = playerX;
-			playerY = playerY;
-		}
-	}
-	else
-	{
-		// ’Êí•`‰æ
-		switch (color)
-		{
-		case BLACK:
-			DrawGraph(playerX, playerY, graph[0], TRUE);
-			DrawRotaGraph(playerX + width / 2, playerY + height / 2, 1.0, rad, rGraph[0], TRUE);
-			DrawRotaGraph(playerX + width / 2, playerY + height / 2, 1.0, -rad, rGraph[0], TRUE);
-			break;
-		case WHITE:
-			DrawGraph(playerX, playerY, graph[1], TRUE);
-			DrawRotaGraph(playerX + width / 2, playerY + height / 2, 1.0, rad, rGraph[1], TRUE);
-			DrawRotaGraph(playerX + width / 2, playerY + height / 2, 1.0, -rad, rGraph[1], TRUE);
-			break;
 		}
 	}
 	// DrawCircle(playerX + width / 2, playerY + height / 2, 4, 0xff0000, true);
@@ -433,7 +438,7 @@ void PLAYER::SetDamageFlag()
 		life = 0;
 	}
 	// Á–ÅƒGƒtƒFƒNƒg‚Ìƒtƒ‰ƒO‚ð—§‚Ä‚é
-	effectPDead.SetFlag(playerX, playerY, color);
+	effectPDead->SetFlag(playerX, playerY, color);
 }
 
 bool PLAYER::GetDamageFlag()
@@ -480,8 +485,8 @@ void PLAYER::All()
 		Update();
 	}
 	Shot();
-	effectPDead.All();
 	Draw();
+	effectPDead->All();
 	++shotCount;
 }
 

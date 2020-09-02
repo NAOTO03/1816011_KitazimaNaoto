@@ -1,5 +1,5 @@
-#include "SceneMgr.h"
 #include "DxLib.h"
+#include "SceneMgr.h"
 #include "Title.h"
 #include "Game.h"
 #include "GameClear.h"

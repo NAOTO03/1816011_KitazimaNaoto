@@ -2,9 +2,7 @@
 
 #pragma once
 
-#include "define.h"
-#include "effectPData.h"
-
+class EFFECT_PDEAD;
 
 // プレイヤー構造体
 class PLAYER
@@ -58,5 +56,5 @@ private:
 	// プレイヤーの色
 	PLAYER_COLOR color;
 	//プレイヤー消滅エフェクトクラス
-	EFFECT_PDEAD effectPDead;
+	EFFECT_PDEAD *effectPDead;
 };

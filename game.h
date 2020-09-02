@@ -3,9 +3,9 @@
 #pragma once
 
 #include "define.h"
-#include "boss.h"
 
 // プロトタイプ宣言
+class BOSS;
 class BACK;
 class PLAYER;
 class ENEMY;
@@ -55,7 +55,7 @@ private:
 	//アイテムクラス
 	ITEM *item[ITEM_NUM];
 	// ボスクラス
-	BOSS boss;
+	BOSS *boss;
 
 	// サウンドハンドル
 	int pChangeColor;

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "define.h"
-
 class BOSS
 {
 public:
