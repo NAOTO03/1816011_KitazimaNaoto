@@ -1,4 +1,4 @@
-#include "DxLib.h"
+#include <DxLib.h>
 #include "item.h"
 
 int ITEM::graph[2];

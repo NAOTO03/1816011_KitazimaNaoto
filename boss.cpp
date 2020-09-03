@@ -1,5 +1,5 @@
-#include "DxLib.h"
-#include "math.h"
+#include <DxLib.h>
+#include <math.h>
 #include <time.h>
 #include "define.h"
 #include "Game.h"

@@ -1,6 +1,6 @@
-#include "DxLib.h"
+#include <DxLib.h>
 #include <time.h>
-#include "math.h"
+#include <math.h>
 #include "define.h"
 #include "effectPData.h"
 

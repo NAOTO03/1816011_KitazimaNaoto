@@ -1,4 +1,4 @@
-#include "DxLib.h"
+#include <DxLib.h>
 #include "define.h"
 #include "score.h"
 #include "sceneMgr.h"

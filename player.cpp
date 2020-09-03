@@ -1,7 +1,7 @@
 // ------ プレイヤー　------
 
-#include "DxLib.h"
-#include "math.h"
+#include <DxLib.h>
+#include <math.h>
 #include "define.h"
 #include "player.h"
 #include "effectPData.h"
