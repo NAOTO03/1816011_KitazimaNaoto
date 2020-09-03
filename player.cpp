@@ -1,5 +1,3 @@
-// ------ プレイヤー　------
-
 #include <DxLib.h>
 #include <math.h>
 #include "define.h"
@@ -153,7 +151,7 @@ void PLAYER::Shot()
 	if (!damageFlag)
 	{
 		// キーが押されててかつ、6ループに一回発射
-		if (CheckHitKey(KEY_INPUT_Z) && shotCount % 6 == 0)
+		if (key[KEY_INPUT_Z] && shotCount % 6 == 0)
 		{
 			for (int i = 0; i < PSHOT_NUM; ++i)
 			{
