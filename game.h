@@ -83,7 +83,5 @@ private:
 	bool defeatFlag;
 	// ボスを倒してからのカウント
 	int defeatCount;
-	// スコア保存用
-	// FILE_DATA fileData;
 };
 

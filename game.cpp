@@ -3,7 +3,6 @@
 //-----------------------------------------------------------------------------
 #include <DxLib.h>
 #include <time.h>
-#include "define.h"
 #include "Game.h"
 #include "boss.h"
 #include "back.h"

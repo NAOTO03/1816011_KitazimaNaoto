@@ -4,6 +4,7 @@
 class SCORE;
 class FILE_DATA;
 
+
 class GameClear
 {
 public:

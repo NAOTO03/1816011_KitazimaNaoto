@@ -5,7 +5,6 @@
 #include "GameOver.h"
 #include "FileData.h"
 
-
 void GameOver::Initialize()
 {
 	graph = LoadGraph("data/png/Transition/GameOver.png");
