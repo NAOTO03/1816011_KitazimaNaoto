@@ -13,6 +13,7 @@ class EFFECT_EDEAD;
 class EFFECT_PDEAD;
 class SCORE;
 class ITEM;
+class FILE_DATA;
 
 
 class Game
@@ -37,8 +38,6 @@ private:
 	void SoundAll();
 	void BossBgm(bool flag);
 	void EnemyDeadEffect(double x, double y, int index);
-	bool SaveData();
-	bool LoadData();
 private:
 	// 背景クラス
 	BACK *back;
@@ -56,6 +55,8 @@ private:
 	ITEM *item[ITEM_NUM];
 	// ボスクラス
 	BOSS *boss;
+	// スコア保存クラス
+	FILE_DATA *fileData;
 
 	// サウンドハンドル
 	int pChangeColor;
@@ -83,6 +84,6 @@ private:
 	// ボスを倒してからのカウント
 	int defeatCount;
 	// スコア保存用
-	FILE_DATA fileData;
+	// FILE_DATA fileData;
 };
 

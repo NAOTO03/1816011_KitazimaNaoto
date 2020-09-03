@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // ゲームの処理.
 //-----------------------------------------------------------------------------
-#include "DxLib.h"
+#include <DxLib.h>
 #include <time.h>
 #include "define.h"
 #include "Game.h"
@@ -14,6 +14,7 @@
 #include "score.h"
 #include "item.h"
 #include "sceneMgr.h"
+#include "FileData.h"
 
 void Game::Initialize()
 {
@@ -49,6 +50,8 @@ void Game::Initialize()
 	}
 
 	boss = new BOSS();
+
+	fileData = new FILE_DATA();
 
 	FILE *fp = NULL;
 	ENEMYDATA data[ENEMY_NUM];
@@ -150,10 +153,9 @@ out:
 	// ボスを倒してからのカウント
 	defeatCount = 0;
 
-	LoadData();
-	score->SetScore(HIGH_SCORE, fileData.highScore);
-	fileData.score = 0;	 // 初期化
-	SaveData();
+	fileData->LoadData();
+	score->SetScore(HIGH_SCORE, fileData->GetHighScore());
+	fileData->SaveData();
 }
 
 void Game::Finalize()
@@ -302,16 +304,16 @@ void Game::All()
 		if (!scoreFlag)
 		{
 			// ハイスコアの更新
-			if (fileData.highScore <= score->GetScore(CURRENT_SCORE))
+			if (fileData->GetHighScore() <= score->GetScore(CURRENT_SCORE))
 			{
-				score->SetScore(HIGH_SCORE, -fileData.highScore);
+				score->SetScore(HIGH_SCORE, -fileData->GetHighScore());
 				score->SetScore(HIGH_SCORE, score->GetScore(CURRENT_SCORE));
-				fileData.highScore = score->GetScore(HIGH_SCORE);
-				SaveData();
+				fileData->SetHighScore(score->GetScore(HIGH_SCORE));
+				fileData->SaveData();
 			}
 			// スコアの保存
-			fileData.score = score->GetScore(CURRENT_SCORE);
-			SaveData();
+			fileData->SetScore(score->GetScore(CURRENT_SCORE));
+			fileData->SaveData();
 			scoreFlag = true;
 			SceneMgr &sceneMgr = SceneMgr::GetInstance();
 			sceneMgr.ChangeScene(SCENE_GAMEOVER);
@@ -321,22 +323,22 @@ void Game::All()
 	if (defeatFlag)
 	{
 		defeatCount++;
-		// 10秒たったら
+		// カウントが600を超えたら
 		if (defeatCount >= 600)
 		{
 			if (!scoreFlag)
 			{
 				// ハイスコアの更新
-				if (fileData.highScore <= score->GetScore(CURRENT_SCORE))
+				if (fileData->GetHighScore() <= score->GetScore(CURRENT_SCORE))
 				{
-					score->SetScore(HIGH_SCORE, -fileData.highScore);
+					score->SetScore(HIGH_SCORE, -fileData->GetHighScore());
 					score->SetScore(HIGH_SCORE, score->GetScore(CURRENT_SCORE));
-					fileData.highScore = score->GetScore(HIGH_SCORE);
-					SaveData();
+					fileData->SetHighScore(score->GetScore(HIGH_SCORE));
+					fileData->SaveData();
 				}
 				// スコアの保存
-				fileData.score = score->GetScore(CURRENT_SCORE);
-				SaveData();
+				fileData->SetScore(score->GetScore(CURRENT_SCORE));
+				fileData->SaveData();
 				SceneMgr &sceneMgr = SceneMgr::GetInstance();
 				sceneMgr.ChangeScene(SCENE_CLEAR);
 				scoreFlag = true;
@@ -845,45 +847,5 @@ void Game::EnemyDeadEffect(double x, double y, int index)
 			effectEData[i]->SetFlag(x, y, index);
 			break;
 		}
-	}
-}
-
-// ---------- データのセーブ ----------
-bool Game::SaveData()
-{
-	FILE *fp;
-
-	fopen_s(&fp, "SaveData/saveData.dat", "wb");
-	if (fp == NULL)
-	{
-		return false;
-	}
-	else
-	{
-
-		fwrite(&fileData, sizeof(fileData), 1, fp);		// 書き込む
-		fclose(fp);
-
-		return true;
-	}
-}
-
-
-// ----------- データのロード ----------
-bool Game::LoadData()
-{
-	FILE *fp;
-
-	fopen_s(&fp, "SaveData/saveData.dat", "rb");
-	if (fp == NULL)
-	{
-		return false;
-	}
-	else
-	{
-		fread(&fileData, sizeof(fileData), 1, fp);
-		fclose(fp);
-
-		return true;
 	}
 }

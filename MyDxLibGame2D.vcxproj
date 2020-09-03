@@ -166,6 +166,7 @@
     <ClCompile Include="effectEData.cpp" />
     <ClCompile Include="effectPData.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="FileData.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameOver.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="effectEData.h" />
     <ClInclude Include="effectPData.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="FileData.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameOver.h" />

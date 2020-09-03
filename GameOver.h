@@ -2,6 +2,7 @@
 
 // プロトタイプ宣言
 class SCORE;
+class FILE_DATA;
 
 class GameOver
 {
@@ -17,12 +18,11 @@ public:
 private:
 	void Update();
 	void Draw();
-	bool LoadData();
 private:
 	// スコアクラス
 	SCORE *score;
 	int graph;
 	int scoreGraph;
 	int graphNumber[10];
-	FILE_DATA fileData;
+	FILE_DATA *fileData;
 };

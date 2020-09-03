@@ -3,6 +3,7 @@
 #include "score.h"
 #include "sceneMgr.h"
 #include "GameClear.h"
+#include "FileData.h"
 
 
 void GameClear::Initialize()
@@ -12,7 +13,8 @@ void GameClear::Initialize()
 	LoadDivGraph("data/png/Score/ResultNumber.png", 10, 10, 1, 57, 100, graphNumber);
 
 	score = new SCORE;
-	LoadData();
+	fileData = new FILE_DATA;
+	fileData->LoadData();
 }
 
 void GameClear::Finalize()
@@ -45,7 +47,7 @@ void GameClear::Draw()
 	DrawGraph(150, 300, scoreGraph, TRUE);  // 現在のスコア
 
 	// スコア描画
-	num = snprintf(buf, sizeof(buf), "%d", fileData.score);
+	num = snprintf(buf, sizeof(buf), "%d", fileData->GetScore());
 	for (int i = 0; i < num; ++i)
 	{
 		DrawGraph(250 + i * 48, 400, graphNumber[buf[i] - '0'], TRUE);
@@ -56,23 +58,4 @@ void GameClear::All()
 {
 	Update();
 	Draw();
-}
-
-// ----------- データのロード ----------
-bool GameClear::LoadData()
-{
-	FILE *fp;
-
-	fopen_s(&fp, "SaveData/saveData.dat", "rb");
-	if (fp == NULL)
-	{
-		return false;
-	}
-	else
-	{
-		fread(&fileData, sizeof(fileData), 1, fp);
-		fclose(fp);
-
-		return true;
-	}
 }
