@@ -2,7 +2,6 @@
 
 class ITEM
 {
-
 public:
 	ITEM();
 	void SetFlag(double x, double y, int type);
