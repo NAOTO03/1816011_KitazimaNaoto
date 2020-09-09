@@ -88,7 +88,7 @@ void Game::Initialize()
 		// ここに来たということは、1是る分の文字列が出来上がったということ
 		switch (col)
 		{
-			// 1行目はエネミー種類を表す atoi関数で数値として代入
+		// 1行目はエネミー種類を表す atoi関数で数値として代入
 		case 1: data[row].type = atoi(buf); break;
 		case 2: data[row].shotType = atoi(buf); break;
 		case 3: data[row].movePattern = atoi(buf); break;
@@ -699,8 +699,8 @@ void Game::BossCollisionAll()
 							if (!item[j]->GetFlag())
 							{
 								//アイテムの初期座標をばらけさせる。
-								ix = (rand() % 100 - 51) + bx;
-								iy = (rand() % 100 - 51) + by;
+								ix = ((double)(rand() % 100) - 51) + bx;
+								iy = ((double)(rand() % 100) - 51) + by;
 								item[j]->SetFlag(ix, iy, rand() % 2);
 								++itemNum;
 								//5個出したらループを抜ける
@@ -726,8 +726,8 @@ void Game::BossCollisionAll()
 							if (!item[j]->GetFlag())
 							{
 								//アイテムの初期座標をばらけさせる。
-								ix = (rand() % 100 - 51) + bx;
-								iy = (rand() % 100 - 51) + by;
+								ix = ((double)(rand() % 100) - 51) + bx;
+								iy = ((double)(rand() % 100) - 51) + by;
 								item[j]->SetFlag(ix, iy, rand() % 2);
 								++itemNum;
 								//5個出したらループを抜ける
@@ -757,8 +757,8 @@ void Game::BossCollisionAll()
 							if (!item[j]->GetFlag())
 							{
 								//アイテムの初期座標をばらけさせる。
-								ix = (rand() % 100 - 51) + bx;
-								iy = (rand() % 100 - 51) + by;
+								ix = ((double)(rand() % 100) - 51) + bx;
+								iy = ((double)(rand() % 100) - 51) + by;
 								item[j]->SetFlag(ix, iy, rand() % 2);
 								++itemNum;
 								//10個出したらループを抜ける

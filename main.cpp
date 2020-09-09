@@ -34,7 +34,7 @@ int UpdateKey()
 	return 0;
 }
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 {
 	// 画面モードの設定
 	SetGraphMode(900, 600, 16);		// 解像度を900*600、colorを16bitに設定.

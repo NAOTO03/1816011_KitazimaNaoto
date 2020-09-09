@@ -352,7 +352,7 @@ void  BOSS::Shot()
 					shot[index].type = 2;
 					shot[index].speed = 5;
 					shot[index].pattern = 1;
-					shot[index].rad = atan2(py - y, px - x) + (rand() % 41 - 20) * DX_PI / 180;	// プレイヤーの両側20度までの範囲内でランダム
+					shot[index].rad = atan2(py - y, px - x) + ((double)(rand() % 41) - 20) * DX_PI / 180;	// プレイヤーの両側20度までの範囲内でランダム
 					shotSound = true;
 				}
 			}
