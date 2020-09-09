@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include "SceneMgr.h"
 #include "Title.h"
+#include "Description.h"
 #include "Game.h"
 #include "GameClear.h"
 #include "GameOver.h"
@@ -27,6 +28,8 @@ void SceneMgr::All()
 {
 	// タイトルクラス作成
 	Title &title = Title::GetInstance();
+	// 操作説明クラス作成
+	DESCRIPTION &description = DESCRIPTION::GetInstance();
 	// ゲームクラス生成
 	Game &game = Game::GetInstance();
 	// ゲームクリアクラス生成
@@ -63,6 +66,9 @@ void SceneMgr::All()
 	case SCENE_TITLE:   
 		title.All();
 		break;
+	case SCENE_DESCRIPTION:
+		description.All();
+		break;
 	case SCENE_GAME:
 		game.All();
 		break;
@@ -86,6 +92,8 @@ static void InitializeModule(SCENE scene)
 {
 	// タイトルクラス作成
 	Title &title = Title::GetInstance();
+	// 操作説明クラス作成
+	DESCRIPTION &description = DESCRIPTION::GetInstance();
 	// ゲームクラス生成
 	Game &game = Game::GetInstance();
 	// ゲームクリアクラス生成
@@ -98,6 +106,9 @@ static void InitializeModule(SCENE scene)
 	{
 	case SCENE_TITLE:
 		title.Initialize();
+		break;
+	case SCENE_DESCRIPTION:
+		description.Initialize();
 		break;
 	case SCENE_GAME:
 		game.Initialize();
@@ -116,6 +127,8 @@ static void FinalizeModule(SCENE scene)
 {
 	// タイトルクラス作成
 	Title &title = Title::GetInstance();
+	// 操作説明クラス作成
+	DESCRIPTION &description = DESCRIPTION::GetInstance();
 	// ゲームクラス生成
 	Game &game = Game::GetInstance();
 	// ゲームクリアクラス生成
@@ -128,6 +141,9 @@ static void FinalizeModule(SCENE scene)
 	{
 	case SCENE_TITLE:
 		title.Finalize();
+		break;
+	case SCENE_DESCRIPTION:
+		description.Finalize();
 		break;
 	case SCENE_GAME:
 		game.Finalize();
