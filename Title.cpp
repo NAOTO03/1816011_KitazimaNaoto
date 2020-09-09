@@ -27,8 +27,8 @@ void Title::Update()
 
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
-		sceneMgr.ChangeScene(SCENE_GAME);
-		StopMusic();
+		sceneMgr.ChangeScene(SCENE_DESCRIPTION);
+		// StopMusic();
 		if(!keyFlag) KeySound(true);
 		keyFlag = true;
 	}
